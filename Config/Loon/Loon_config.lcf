@@ -97,6 +97,7 @@ https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/
 https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/Furrybar/Furrybar.list, policy = PornSite, tag = Furrybar, enabled = true
 https://ruleset.skk.moe/List/non_ip/stream_us.conf, policy = US Media, tag = US Media, enabled = true
 https://ruleset.skk.moe/List/non_ip/stream_tw.conf, policy = Taiwan Media, tag = Taiwan Media, enabled = true
+https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/Playhorny/Playhorny.list, policy = Taiwan Media, tag = Playhorny, enabled = true
 https://ruleset.skk.moe/List/non_ip/stream_jp.conf, policy = Japan Media, tag = Japan Media, enabled = true
 https://ruleset.skk.moe/List/non_ip/stream.conf, policy = Global Media, tag = Global Media, enabled = true
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Apple/Apple.list, policy = Apple, tag = Apple, enabled = true

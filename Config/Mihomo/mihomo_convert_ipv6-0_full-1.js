@@ -439,6 +439,14 @@ const ruleProviders = {
     "interval": 86400,
     "url": "https://ruleset.skk.moe/Clash/ip/lan.txt",
     "path": "./ruleset/LocalNetwork_IP.list"
+  },
+  "Playhorny": {
+    "type": "http",
+    "behavior": "classical",
+    "format": "text",
+    "interval": 86400,
+    "url": "https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/Playhorny/Playhorny.list",
+    "path": "./ruleset/Playhorny.list"
   }
 };
 
@@ -455,6 +463,7 @@ const baseRules = [
   "RULE-SET,Furrybar,PornSite",
   "RULE-SET,Stream_US,US Media",
   "RULE-SET,Stream_TW,Taiwan Media",
+  "RULE-SET,Playhorny,Taiwan Media",
   "RULE-SET,Stream_JP,Japan Media",
   "RULE-SET,Stream_Global,Global Media",
   "RULE-SET,Apple,Apple",
