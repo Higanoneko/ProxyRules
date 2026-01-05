@@ -244,6 +244,7 @@ class RuleLoader:
             'Furrybar': ('PornSite', 'Furrybar'),
             'Stream_US': ('US Media', 'US Media'),
             'Stream_TW': ('Taiwan Media', 'Taiwan Media'),
+            'Playhorny': ('Taiwan Media', 'Playhorny'),
             'Stream_JP': ('Japan Media', 'Japan Media'),
             'Stream_Global': ('Global Media', 'Global Media'),
             'Apple': ('Apple', 'Apple'),
@@ -260,7 +261,7 @@ class RuleLoader:
         rule_order = [
             'AI', 'Telegram', 'YouTube', 'YouTubeMusic', 'Netflix', 
             'TikTok', 'Spotify', 'Steam', 'Game', 'E-Hentai', 
-            'PornSite', 'Furrybar', 'Stream_US', 'Stream_TW', 
+            'PornSite', 'Furrybar', 'Stream_US', 'Stream_TW', 'Playhorny',
             'Stream_JP', 'Stream_Global', 'Apple', 'Microsoft', 
             'Google', 'GoogleFCM', 'SogouPrivacy', 'ADBlock',
             'LocalNetwork_Non-IP', 'LocalNetwork_IP'
@@ -315,6 +316,7 @@ class RuleLoader:
             'Furrybar': ('PornSite', 'Furrybar', ''),
             'Stream_US': ('US Media', 'US Media', ''),
             'Stream_TW': ('Taiwan Media', 'Taiwan Media', ''),
+            'Playhorny': ('Taiwan Media', 'Playhorny', ''),
             'Stream_JP': ('Japan Media', 'Japan Media', ''),
             'Stream_Global': ('Global Media', 'Global Media', ''),
             'Apple': ('Apple', 'Apple', ''),
@@ -332,7 +334,7 @@ class RuleLoader:
             'ADBlock',  # 广告拦截放在最前面
             'AI', 'Telegram', 'YouTube', 'YouTubeMusic', 'Netflix', 
             'TikTok', 'Spotify', 'Steam', 'Game', 'E-Hentai', 
-            'PornSite', 'Furrybar', 'Stream_US', 'Stream_TW', 
+            'PornSite', 'Furrybar', 'Stream_US', 'Stream_TW', 'Playhorny',
             'Stream_JP', 'Stream_Global', 'Apple', 'Microsoft', 
             'Google', 'GoogleFCM', 'SogouPrivacy',
             'LocalNetwork_Non-IP', 'LocalNetwork_IP'

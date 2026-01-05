@@ -179,3 +179,10 @@ rules:
     category: "Sukka"
     behavior: "classical"
     remotefile: "./ip/lan"
+
+# SpecialSites
+  Playhorny:
+    name: "Playhorny"
+    category: "PianCat"
+    behavior: "classical"
+    remotefile: "./Playhorny/Playhorny.list"

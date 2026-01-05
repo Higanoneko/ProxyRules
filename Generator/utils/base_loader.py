@@ -232,6 +232,7 @@ class BaseLoader:
             'Furrybar': ('Furrybar', 'PornSite'),
             'Stream_US': ('Stream_US', 'US Media'),
             'Stream_TW': ('Stream_TW', 'Taiwan Media'),
+            'Playhorny': ('Playhorny', 'Taiwan Media'),
             'Stream_JP': ('Stream_JP', 'Japan Media'),
             'Stream_Global': ('Stream_Global', 'Global Media'),
             'Apple': ('Apple', 'Apple'),
@@ -248,7 +249,7 @@ class BaseLoader:
         rule_order = [
             'AI', 'Telegram', 'YouTube', 'YouTubeMusic', 'Netflix', 
             'TikTok', 'Spotify', 'Steam', 'Game', 'E-Hentai', 
-            'PornSite', 'Furrybar', 'Stream_US', 'Stream_TW', 
+            'PornSite', 'Furrybar', 'Stream_US', 'Stream_TW', 'Playhorny',
             'Stream_JP', 'Stream_Global', 'Apple', 'Microsoft', 
             'Google', 'GoogleFCM', 'SogouPrivacy', 'ADBlock',
             'LocalNetwork_Non-IP', 'LocalNetwork_IP'
