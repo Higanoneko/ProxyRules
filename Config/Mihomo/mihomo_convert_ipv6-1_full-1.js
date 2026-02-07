@@ -328,7 +328,7 @@ const ruleProviders = {
     "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/EHGallery/EHGallery.list",
     "path": "./ruleset/E-Hentai.list"
   },
-  "Main": {
+  "PornSite": {
     "type": "http",
     "behavior": "classical",
     "format": "text",
@@ -424,7 +424,7 @@ const ruleProviders = {
     "url": "https://adrules.top/adrules-mihomo.mrs",
     "path": "./ruleset/ADBlock.mrs"
   },
-  "LocalNetwork_Non-IP": {
+  "LocalNetwork": {
     "type": "http",
     "behavior": "classical",
     "format": "text",
@@ -432,7 +432,7 @@ const ruleProviders = {
     "url": "https://ruleset.skk.moe/Clash/non_ip/lan.txt",
     "path": "./ruleset/LocalNetwork_Non-IP.list"
   },
-  "LocalNetwork_IP": {
+  "LocalNetworkIP": {
     "type": "http",
     "behavior": "classical",
     "format": "text",
@@ -460,6 +460,7 @@ const baseRules = [
   "RULE-SET,Steam,Steam",
   "RULE-SET,Game,Game",
   "RULE-SET,E-Hentai,E-Hentai",
+  "RULE-SET,PornSite,PornSite",
   "RULE-SET,Furrybar,PornSite",
   "RULE-SET,Stream_US,US Media",
   "RULE-SET,Stream_TW,Taiwan Media",
@@ -472,8 +473,6 @@ const baseRules = [
   "RULE-SET,GoogleFCM,Google FCM",
   "RULE-SET,SogouPrivacy,Sogou Privacy",
   "RULE-SET,ADBlock,ADBlock",
-  "RULE-SET,LocalNetwork_Non-IP,直接连接",
-  "RULE-SET,LocalNetwork_IP,直接连接",
   "GEOIP,CN,直接连接",
   "MATCH,选择代理"
 ];

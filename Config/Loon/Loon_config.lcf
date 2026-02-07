@@ -94,6 +94,7 @@ https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Steam/Steam.list, policy = Steam, tag = Steam, enabled = true
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Game/Game.list, policy = Game, tag = Game, enabled = true
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/EHGallery/EHGallery.list, policy = E-Hentai, tag = E-Hentai, enabled = true
+https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/PornSite/PornSite.list, policy = PornSite, tag = PornSite, enabled = true
 https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/Furrybar/Furrybar.list, policy = PornSite, tag = Furrybar, enabled = true
 https://ruleset.skk.moe/List/non_ip/stream_us.conf, policy = US Media, tag = US Media, enabled = true
 https://ruleset.skk.moe/List/non_ip/stream_tw.conf, policy = Taiwan Media, tag = Taiwan Media, enabled = true
@@ -106,8 +107,6 @@ https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/GoogleFCM/GoogleFCM.list, policy = Google FCM, tag = Google FCM, enabled = true
 https://ruleset.skk.moe/List/non_ip/sogouinput.conf, policy = Sogou Privacy, tag = Sogou Privacy, enabled = true
 https://adrules.top/adrules-surge.conf, policy = ADBlock, tag = ADBlock, enabled = true
-https://ruleset.skk.moe/List/non_ip/lan.conf, policy = 直接连接, tag = LocalNetwork Non-IP, enabled = true
-https://ruleset.skk.moe/List/ip/lan.conf, policy = 直接连接, tag = LocalNetwork IP, enabled = true
 
 [Rule]
 GEOIP, CN, 直接连接
