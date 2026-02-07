@@ -241,8 +241,8 @@ class BaseLoader:
             'GoogleFCM': ('GoogleFCM', 'Google FCM'),
             'SogouPrivacy': ('SogouPrivacy', 'Sogou Privacy'),
             'ADBlock': ('ADBlock', 'ADBlock'),
-            'LocalNetwork_Non-IP': ('LocalNetwork_Non-IP', '直接连接'),
-            'LocalNetwork_IP': ('LocalNetwork_IP', '直接连接'),
+            'LocalNetwork_Non-IP': ('LocalNetwork_Non-IP', 'DIRECT'),
+            'LocalNetwork_IP': ('LocalNetwork_IP', 'DIRECT'),
         }
         
         # 按顺序添加规则
