@@ -15,9 +15,10 @@ from Generator.core.node_parser import NodeParser, CountryInfo
 
 class ProxyGroupsGenerator:
     """代理组生成器"""
-    
+
     # 图标 CDN 基础 URL
     ICON_CDN = "https://cdn.jsdelivr.net/gh"
+    DEFAULT_COUNTRIES = ("香港", "台湾", "新加坡", "日本", "美国")
     
     def __init__(self, node_parser: Optional[NodeParser] = None):
         """
@@ -377,6 +378,59 @@ class ProxyGroupsGenerator:
         })
         
         return groups
+
+    def _build_default_country_info(self) -> List[CountryInfo]:
+        """构建默认地区信息（无节点输入时使用）。"""
+        default_country_info: List[CountryInfo] = []
+
+        for country_name in self.DEFAULT_COUNTRIES:
+            if country_name not in self.node_parser.COUNTRIES_META:
+                continue
+            country_meta = self.node_parser.COUNTRIES_META[country_name]
+            default_country_info.append(
+                CountryInfo(
+                    name=country_name,
+                    count=0,
+                    pattern=country_meta['pattern'],
+                    icon_url=country_meta['icon'],
+                )
+            )
+
+        default_country_info.append(
+            CountryInfo(
+                name='其他',
+                count=0,
+                pattern=self.node_parser._generate_other_pattern(),
+                icon_url='https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png',
+            )
+        )
+        return default_country_info
+
+    def generate_groups_for_nodes(
+        self,
+        node_names: Optional[List[str]],
+        min_country_nodes: int = 2,
+    ) -> List[Dict[str, Any]]:
+        """
+        根据节点输入生成代理组。
+
+        Args:
+            node_names: 节点名称列表。为 None/空时生成默认代理组结构。
+            min_country_nodes: 地区最小节点数量，仅在有节点输入时生效。
+
+        Returns:
+            代理组列表（基础组 + 策略组 + 地区组）。
+        """
+        if node_names:
+            return self.generate_all_groups(node_names, min_country_nodes)['proxy-groups']
+
+        default_country_info = self._build_default_country_info()
+        country_group_names = [f"{info.name}节点" for info in default_country_info]
+
+        base_groups = self.generate_base_groups(country_group_names)
+        policy_groups = self.generate_policy_groups(country_group_names)
+        country_groups = self.generate_country_groups(default_country_info)
+        return base_groups + policy_groups + country_groups
     
     def generate_all_groups(self, node_names: List[str], 
                            min_country_nodes: int = 2) -> Dict[str, Any]:

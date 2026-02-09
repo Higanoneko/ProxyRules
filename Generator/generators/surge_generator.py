@@ -10,7 +10,6 @@ import sys
 project_root = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(project_root))
 
-from Generator.core.rule_loader import RuleLoader
 from Generator.core.proxy_groups import ProxyGroupsGenerator
 from Generator.core.node_parser import NodeParser
 from Generator.utils.file_helper import FileHelper
@@ -250,7 +249,7 @@ http-api-web-dashboard = false
         # 添加基础规则
         lines.append("")
         lines.append("# 局域网地址")
-        lines.append("RULE-SET,LAN,直接连接")
+        lines.append("RULE-SET,LAN,DIRECT")
         lines.append("")
         lines.append("# GeoIP CN")
         lines.append("GEOIP,CN,直接连接")
@@ -290,47 +289,7 @@ http-api-web-dashboard = false
         sections.append("")
         
         # 生成 Proxy Group 段
-        if node_names:
-            proxy_result = self.proxy_groups_generator.generate_all_groups(node_names)
-            proxy_groups = proxy_result['proxy-groups']
-        else:
-            # 即使没有节点列表，也生成完整的代理组结构
-            default_country_names = ['香港', '台湾', '新加坡', '日本', '美国']
-            default_country_group_names = [f"{name}节点" for name in default_country_names] + ['其他节点']
-            
-            # 生成基础代理组
-            base_groups = self.proxy_groups_generator.generate_base_groups(default_country_group_names)
-            
-            # 生成策略代理组
-            policy_groups = self.proxy_groups_generator.generate_policy_groups(default_country_group_names)
-            
-            # 生成地区代理组（使用默认地区）
-            from Generator.core.node_parser import CountryInfo
-            default_country_info = []
-            for country_name in default_country_names:
-                if country_name in self.node_parser.COUNTRIES_META:
-                    meta = self.node_parser.COUNTRIES_META[country_name]
-                    default_country_info.append(
-                        CountryInfo(
-                            name=country_name,
-                            count=0,
-                            pattern=meta['pattern'],
-                            icon_url=meta['icon']
-                        )
-                    )
-            # 添加"其他节点"组
-            default_country_info.append(
-                CountryInfo(
-                    name='其他',
-                    count=0,
-                    pattern=self.node_parser._generate_other_pattern(),
-                    icon_url='https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png'
-                )
-            )
-            country_groups = self.proxy_groups_generator.generate_country_groups(default_country_info)
-            
-            # 组合所有代理组
-            proxy_groups = base_groups + policy_groups + country_groups
+        proxy_groups = self.proxy_groups_generator.generate_groups_for_nodes(node_names)
         
         sections.append(self._generate_proxy_groups_section(proxy_groups))
         sections.append("")

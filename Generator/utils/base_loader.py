@@ -207,66 +207,12 @@ class BaseLoader:
     
     def get_rules(self) -> List[str]:
         """
-        获取规则列表
-        
+        获取规则列表。
+
         Returns:
-            规则字符串列表
+            规则字符串列表。
         """
-        all_rules = self.rule_loader.get_all_rules()
-        rules = []
-        
-        # 规则映射：规则键 -> (rule-provider 键, 策略组名称)
-        # rule-provider 键与规则键一致（如 SogouPrivacy），策略组名称用于规则匹配
-        rule_mapping = {
-            'AI': ('AI', 'AI'),
-            'Telegram': ('Telegram', 'Telegram'),
-            'YouTube': ('YouTube', 'YouTube'),
-            'YouTubeMusic': ('YouTubeMusic', 'YouTube'),
-            'Netflix': ('Netflix', 'Netflix'),
-            'TikTok': ('TikTok', 'TikTok'),
-            'Spotify': ('Spotify', 'Spotify'),
-            'Steam': ('Steam', 'Steam'),
-            'Game': ('Game', 'Game'),
-            'E-Hentai': ('E-Hentai', 'E-Hentai'),
-            'PornSite': ('PornSite', 'PornSite'),
-            'Furrybar': ('Furrybar', 'PornSite'),
-            'Stream_US': ('Stream_US', 'US Media'),
-            'Stream_TW': ('Stream_TW', 'Taiwan Media'),
-            'Playhorny': ('Playhorny', 'Taiwan Media'),
-            'Stream_JP': ('Stream_JP', 'Japan Media'),
-            'Stream_Global': ('Stream_Global', 'Global Media'),
-            'Apple': ('Apple', 'Apple'),
-            'Microsoft': ('Microsoft', 'Microsoft'),
-            'Google': ('Google', 'Google'),
-            'GoogleFCM': ('GoogleFCM', 'Google FCM'),
-            'SogouPrivacy': ('SogouPrivacy', 'Sogou Privacy'),
-            'ADBlock': ('ADBlock', 'ADBlock'),
-            'LocalNetwork_Non-IP': ('LocalNetwork_Non-IP', 'DIRECT'),
-            'LocalNetwork_IP': ('LocalNetwork_IP', 'DIRECT'),
-        }
-        
-        # 按顺序添加规则
-        rule_order = [
-            'AI', 'Telegram', 'YouTube', 'YouTubeMusic', 'Netflix', 
-            'TikTok', 'Spotify', 'Steam', 'Game', 'E-Hentai', 
-            'PornSite', 'Furrybar', 'Stream_US', 'Stream_TW', 'Playhorny',
-            'Stream_JP', 'Stream_Global', 'Apple', 'Microsoft', 
-            'Google', 'GoogleFCM', 'SogouPrivacy', 'ADBlock',
-            'LocalNetwork_Non-IP', 'LocalNetwork_IP'
-        ]
-        
-        for rule_key in rule_order:
-            if rule_key in rule_mapping:
-                rule_name, policy_name = rule_mapping[rule_key]
-                # 检查规则是否存在
-                if rule_key in all_rules:
-                    rules.append(f'RULE-SET,{rule_name},{policy_name}')
-        
-        # 添加最终规则
-        rules.append('GEOIP,CN,直接连接')
-        rules.append('MATCH,选择代理')
-        
-        return rules
+        return self.rule_loader.generate_mihomo_rules()
 
 
 if __name__ == '__main__':

@@ -48,12 +48,12 @@ rules:
     remotefile: "./non_ip/telegram"
 
   YouTube:
-    Video:
+    YouTubeVideo:
       name: "YouTube"
       category: "blackmatrix"
       behavior: "classical"
       remotefile: "./YouTube/YouTube.list"
-    Music:
+    YouTubeMusic:
       name: "YouTubeMusic"
       category: "blackmatrix"
       behavior: "classical"
@@ -170,12 +170,12 @@ rules:
 
 # LocalNetwork
   LocalNetwork:
-    name: "LocalNetwork_Non-IP"
+    name: "LocalNetwork"
     category: "Sukka"
     behavior: "classical"
     remotefile: "./non_ip/lan"
   LocalNetworkIP:
-    name: "LocalNetwork_IP"
+    name: "LocalNetworkIP"
     category: "Sukka"
     behavior: "classical"
     remotefile: "./ip/lan"
