@@ -1,0 +1,17 @@
+#!name=Easytier 组网接入
+#!desc=连接到 Easytier WireGuard 节点
+
+[Proxy]
+Easytier = wireguard, section-name=Easytier
+
+[WireGuard Easytier]
+private-key = <填入你的客户端 PrivateKey>
+self-ip = <填入你的客户端 Address，例如 10.14.14.2>
+mtu = 1280
+peer = (public-key = <填入服务端 PublicKey>, allowed-ips = "0.0.0.0/0, ::/0", endpoint = <填入 Endpoint，例如 1.2.3.4:11013>, keepalive = 25)
+
+[Rule]
+# 将 Easytier 相关的虚拟网段流量路由到 WireGuard 代理
+# 请根据你实际配置的 IP 段进行修改
+IP-CIDR,10.19.19.0/24,Easytier,no-resolve
+IP-CIDR,10.11.45.0/24,Easytier,no-resolve

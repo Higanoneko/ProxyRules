@@ -10,6 +10,7 @@ on:
       - 'Base/**'
       - '.github/workflows/auto_generate.yml'
       - 'Generator/**'
+      - 'Wireguard_Easytier/**'
       - 'requirements.txt'
   
   # Allow manual trigger
@@ -44,16 +45,20 @@ jobs:
         run: |
           python Generator/config_generator.py --tool all
       
+      - name: Merge Wireguard_Easytier into Mihomo scripts
+        run: |
+          python Wireguard_Easytier/Mihomo/merge_easytier.py
+      
       - name: Check for changes
         id: check_changes
         run: |
-          if [ -n "$(git status --porcelain Config)" ]; then
+          if [ -n "$(git status --porcelain Config Wireguard_Easytier)" ]; then
             echo "has_changes=true" >> $GITHUB_OUTPUT
-            echo "Changes detected in Config directory"
-            git status --short Config
+            echo "Changes detected in Config/Wireguard_Easytier directory"
+            git status --short Config Wireguard_Easytier
           else
             echo "has_changes=false" >> $GITHUB_OUTPUT
-            echo "No changes detected in Config directory"
+            echo "No changes detected in Config/Wireguard_Easytier directory"
           fi
       
       - name: Commit and push changes
@@ -61,7 +66,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add Config/
+          git add Config/ Wireguard_Easytier/Mihomo/mihomo_convert_*.js
           
           # 获取最近一次 Base 文件夹的 commit 消息
           BASE_COMMIT_MSG=$(git log -1 --pretty=format:"%s" -- Base/)
