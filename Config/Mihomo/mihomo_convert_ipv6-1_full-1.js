@@ -111,8 +111,6 @@ function buildBaseLists({ countryGroupNames }) {
 const DNS_IP_LIST = [
   "119.29.29.29",
   "2402:4e00::",
-  "223.5.5.5",
-  "2400:3200::1",
   "1.1.1.1",
   "2606:4700:4700::1111",
   "8.8.8.8",
@@ -120,7 +118,6 @@ const DNS_IP_LIST = [
 ];
 const DNS_DOH_LIST = [
   "https://doh.pub/dns-query",
-  "https://dns.alidns.com/dns-query",
   "https://cloudflare-dns.com/dns-query",
   "https://dns.google/dns-query"
 ];
