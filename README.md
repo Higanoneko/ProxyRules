@@ -22,7 +22,7 @@
 
 ### Mihomo (Clash Meta)
 
-**覆写文件 (.yaml)**
+**覆写文件 (.yaml) ⭐ 优先使用**
   - [mihomo_config_ipv6-1_full-0.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_config_ipv6-1_full-0.yaml) - 启用 IPv6，基础配置 ⭐ 推荐
   - [mihomo_config_ipv6-0_full-0.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_config_ipv6-0_full-0.yaml) - 禁用 IPv6，基础配置
   - [mihomo_config_ipv6-0_full-1.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_config_ipv6-0_full-1.yaml) - 禁用 IPv6，完整配置
@@ -63,14 +63,15 @@ https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_c
 
 ### Stash
 
+**覆写文件 (.stoverride) ⭐ 优先使用**
+- 点击以下链接直接导入到 Stash（推荐）：
+  - [一键导入 Stash_override.stoverride](https://intradeus.github.io/http-protocol-redirector?r=stash://install-override?url=https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Stash/Stash_override.stoverride) - 启用 IPv6 版本 ⭐ 推荐
+  - [一键导入 Stash_override_no_ipv6.stoverride](https://intradeus.github.io/http-protocol-redirector?r=stash://install-override?url=https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Stash/Stash_override_no_ipv6.stoverride) - 禁用 IPv6 版本
+
 **配置文件 (.yaml)**
   - [Stash_config_full.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Stash/Stash_config_full.yaml) - 启用 IPv6 版本 ⭐ 推荐
   - [Stash_config_full_no_ipv6.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Stash/Stash_config_full_no_ipv6.yaml) - 禁用 IPv6 版本
 
-**覆写文件 (.stoverride)**
-- 点击以下链接直接导入到 Stash（推荐）：
-  - [一键导入 Stash_override.stoverride](https://intradeus.github.io/http-protocol-redirector?r=stash://install-override?url=https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Stash/Stash_override.stoverride) - 启用 IPv6 版本 ⭐ 推荐
-  - [一键导入 Stash_override_no_ipv6.stoverride](https://intradeus.github.io/http-protocol-redirector?r=stash://install-override?url=https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Stash/Stash_override_no_ipv6.stoverride) - 禁用 IPv6 版本
 
 ### Surge
 
