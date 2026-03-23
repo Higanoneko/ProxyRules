@@ -28,9 +28,8 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version-file: program/go.mod
-          cache-dependency-path: program/go.sum
-          cache: true
+          go-version: '1.23'
+          cache: false
 
       - name: Generate configuration files
         working-directory: program
