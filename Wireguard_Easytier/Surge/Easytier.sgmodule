@@ -1,5 +1,7 @@
 #!name=Easytier 组网接入
 #!desc=连接到 Easytier WireGuard 节点
+# Generated at (UTC): 2026-03-23T16:36:17Z
+
 
 [Proxy]
 Easytier = wireguard, section-name=Easytier

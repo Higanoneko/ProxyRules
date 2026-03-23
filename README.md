@@ -5,6 +5,7 @@
 *  集成 [SukkaW/Surge](https://github.com/SukkaW/Surge) 、 [Cats-Team/AdRules](https://github.com/Cats-Team/AdRules) 、 [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script) 和 [dler-io/Rules](https://github.com/dler-io/Rules) 规则
 *  包含多种分流策略
 *  支持 Mihomo、Stash、Loon 等代理工具的覆写文件或配置文件自动生成
+*  Go 生成程序现已集中放在 `program/` 目录
 
 
 ## 当前支持情况
@@ -33,6 +34,12 @@
   - [mihomo_convert_ipv6-0_full-0.js](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_convert_ipv6-0_full-0.js) - 禁用 IPv6，基础配置
   - [mihomo_convert_ipv6-0_full-1.js](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_convert_ipv6-0_full-1.js) - 禁用 IPv6，完整配置
   - [mihomo_convert_ipv6-1_full-1.js](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_convert_ipv6-1_full-1.js) - 启用 IPv6，完整配置
+
+**TUN 完整配置 (.yaml)**
+
+用于 ShellCrash、Box4Root 等运行在 Shell 环境中的工具，或其他需要完整配置的工具。
+  - [mihomo_config_tun.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_config_tun.yaml) - 启用 IPv6，TUN 完整配置 ⭐ 推荐
+  - [mihomo_config_tun_no_ipv6.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_config_tun_no_ipv6.yaml) - 禁用 IPv6，TUN 完整配置
 
 
 **Sparkle/Clash Party 使用方法**
@@ -74,6 +81,10 @@ https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_c
 
 
 ### Surge
+
+**Surge 模块 (.sgmodule) ⭐ 优先使用**
+  - [一键导入 Surge_override.sgmodule](https://intradeus.github.io/http-protocol-redirector?r=surge:///install-module?url=https%3A%2F%2Fraw%2Egithubusercontent%2Ecom%2FPianCat%2FProxyRules%2Fmain%2FConfig%2FSurge%2FSurge_override%2Esgmodule) - 启用 IPv6 版本 ⭐ 推荐
+  - [一键导入 Surge_override_no_ipv6.sgmodule](https://intradeus.github.io/http-protocol-redirector?r=surge:///install-module?url=https%2F%2Fraw%2Egithubusercontent%2Ecom%2FPianCat%2FProxyRules%2Fmain%2FConfig%2FSurge%2FSurge_override_no_ipv6%2Esgmodule) - 禁用 IPv6 版本
 
 **配置文件 (.conf)**
   - [一键导入 Surge_config.conf](https://intradeus.github.io/http-protocol-redirector?r=surge:///install-config?url=https%3A%2F%2Fraw%2Egithubusercontent%2Ecom%2FPianCat%2FProxyRules%2Fmain%2FConfig%2FSurge%2FSurge_config%2Econf) - 启用 IPv6 版本 ⭐ 推荐
@@ -128,6 +139,25 @@ https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_c
   - Japan                 # 日本节点
   - Others                # 其他地区节点
 ```
+
+## Wireguard 配置（Easytier）
+
+本仓库还提供了适用于 Wireguard 的 Easytier 配置文件，仅拥有适用于 JavaScript 的 Mihomo 覆写脚本版本以及 Surge Module 。
+
+相关文件位置处于 `Wireguard_Easytier` 文件夹下，请自行查阅使用。
+
+## 开发
+
+生成器源码、`go.mod` 和内部包都位于 `program/`。
+
+本地重新生成配置时，请在 `program/` 目录执行：
+
+```bash
+cd program
+go run ./cmd/proxyrules --tool all
+```
+
+GitHub Actions 现在只保留 `auto_generate.yml`，专门负责生成并提交 `Config/` 与 `Wireguard_Easytier/`。
 
 ## 感谢
 

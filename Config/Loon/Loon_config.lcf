@@ -1,5 +1,7 @@
-# UpdateTime: 2025.11.05 18:00:00 +0000
-# Author: PianCat
+# Generated at (UTC): 2026-03-23T16:36:17Z
+
+#Update Date: 2025.11.05 18:00:00 +0800
+#author: PianCat
 
 [General]
 ip-mode = dual
@@ -24,31 +26,33 @@ interface-mode = auto
 
 # resource-parser = https://www.nsloon.com/openloon/import?parser=https://github.com/sub-store-org/Sub-Store/releases/latest/download/sub-store-parser.loon.min.js
 
-[Proxy]
-
-[Remote Proxy]
-
 [Plugin]
 https://raw.githubusercontent.com/Peng-YM/Loon-Gallery/master/loon-gallery.plugin, enable = true
+
+[Proxy]
+# Your Proxy Nodes Here
+
+[Remote Proxy]
+# Your Node or Proxy Subscription Links Here
 
 [Remote Filter]
 # 全部节点筛选
 ALL_Filter = NameRegex, FilterKey = ".*"
 
 # 香港节点筛选
-HK_Filter = NameRegex, FilterKey = "(?i)(香港|港|HK|Hong Kong|HongKong|hongkong|🇭🇰)"
+HK_Filter = NameRegex, FilterKey = "(?i)香港|港|HK|hk|Hong Kong|HongKong|hongkong|🇭🇰"
 
 # 台湾节点筛选
-TW_Filter = NameRegex, FilterKey = "(?i)(台|新北|彰化|TW|Taiwan|🇹🇼)"
+TW_Filter = NameRegex, FilterKey = "(?i)台|新北|彰化|TW|Taiwan|🇹🇼"
 
 # 新加坡节点筛选
-SG_Filter = NameRegex, FilterKey = "(?i)(新加坡|坡|狮城|SG|Singapore|🇸🇬)"
+SG_Filter = NameRegex, FilterKey = "(?i)新加坡|坡|狮城|SG|Singapore|🇸🇬"
 
 # 日本节点筛选
-JP_Filter = NameRegex, FilterKey = "(?i)(日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|🇯🇵)"
+JP_Filter = NameRegex, FilterKey = "(?i)日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|🇯🇵"
 
 # 美国节点筛选
-US_Filter = NameRegex, FilterKey = "(?i)(美国|美|US|United States|🇺🇸)"
+US_Filter = NameRegex, FilterKey = "(?i)美国|美|US|United States|🇺🇸"
 
 # 其他节点筛选（排除以上所有地区）
 # 使用负向预查来排除特定关键词：不含香港、台湾、新加坡、日本、美国

@@ -9,9 +9,9 @@ find-process-mode: strict
 global-client-fingerprint: chrome
 log-level: info
 geodata-loader: standard
-external-controller: :9999
-external-ui: ui
-external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+external-controller: :9090
+external-ui: ./dashboard
+external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
 disable-keep-alive: true
 profile:
   store-selected: true
@@ -19,10 +19,10 @@ profile:
 # Normal Start From Here
 dns:
   enable: true
-  ipv6: false
+  ipv6: true
   enhanced-mode: fake-ip
   default-nameserver: {DNS_IP_List}
-  nameserver: {DNS_IP_List}
+  nameserver: {DNS_DoH_List}
   fake-ip-filter: {Fake_IP_Filter_List}
 
 sniffer:

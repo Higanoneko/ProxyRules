@@ -1,3 +1,9 @@
+# Generated at (UTC): 2026-03-23T16:36:17Z
+
+# Full Start From Here
+
+# Normal Start From Here
+
 dns:
   enable: true
   ipv6: false
@@ -134,22 +140,16 @@ dns:
 sniffer:
   sniff:
     HTTP:
-      ports:
-        - 80
-        - 8080-8880
+      ports: [80, 8080-8880]
       override-destination: true
     TLS:
-      ports:
-        - 443
-        - 8443
+      ports: [443, 8443]
     QUIC:
-      ports:
-        - 443
-        - 8443
+      ports: [443, 8443]
   skip-domain:
-    - Mijia Cloud
-    - dlg.io.mi.com
-    - +.push.apple.com
+    - "Mijia Cloud"
+    - "dlg.io.mi.com"
+    - "+.push.apple.com"
 
 geodata-mode: true
 geox-url:
@@ -175,7 +175,6 @@ proxy-groups:
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Round_Robin_1.png
     include-all: true
     type: select
-
   - name: AI
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/AI.png
     type: select
@@ -193,47 +192,38 @@ proxy-groups:
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png
     type: select
     proxies: *a1
-
   - name: YouTube
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png
     type: select
     proxies: *a1
-
   - name: Netflix
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Netflix.png
     type: select
     proxies: *a1
-
   - name: Spotify
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Spotify.png
     type: select
     proxies: *a1
-
   - name: TikTok
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/TikTok.png
     type: select
     proxies: *a1
-
   - name: Steam
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Steam.png
     type: select
     proxies: *a1
-
   - name: Game
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Game.png
     type: select
     proxies: *a1
-
   - name: E-Hentai
     icon: https://cdn.jsdelivr.net/gh/PianCat/CustomProxyRuleset@main/Icons/Ehentai.png
     type: select
     proxies: *a1
-
   - name: PornSite
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Pornhub.png
     type: select
     proxies: *a1
-
   - name: US Media
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png
     type: select
@@ -262,7 +252,6 @@ proxy-groups:
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/DomesticMedia.png
     type: select
     proxies: *a1
-
   - name: Apple
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Apple.png
     type: select
@@ -293,7 +282,6 @@ proxy-groups:
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google_Search.png
     type: select
     proxies: *a1
-
   - name: Google FCM
     icon: https://cdn.jsdelivr.net/gh/PianCat/CustomProxyRuleset@main/Icons/Firebase.png
     type: select
@@ -319,67 +307,61 @@ proxy-groups:
     proxies:
       - DIRECT
       - 选择代理
+  - name: 香港节点
+    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png
+    include-all: true
+    filter: "(?i)香港|港|HK|hk|Hong Kong|HongKong|hongkong|\U0001F1ED\U0001F1F0"
+    type: url-test
+    url: https://cp.cloudflare.com/generate_204
+    interval: 60
+    tolerance: 20
+    lazy: false
+  - name: 台湾节点
+    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png
+    include-all: true
+    filter: "(?i)台|新北|彰化|TW|Taiwan|\U0001F1F9\U0001F1FC"
+    type: url-test
+    url: https://cp.cloudflare.com/generate_204
+    interval: 60
+    tolerance: 20
+    lazy: false
+  - name: 新加坡节点
+    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png
+    include-all: true
+    filter: "(?i)新加坡|坡|狮城|SG|Singapore|\U0001F1F8\U0001F1EC"
+    type: url-test
+    url: https://cp.cloudflare.com/generate_204
+    interval: 60
+    tolerance: 20
+    lazy: false
+  - name: 日本节点
+    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png
+    include-all: true
+    filter: "(?i)日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|\U0001F1EF\U0001F1F5"
+    type: url-test
+    url: https://cp.cloudflare.com/generate_204
+    interval: 60
+    tolerance: 20
+    lazy: false
+  - name: 美国节点
+    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png
+    include-all: true
+    filter: "(?i)美国|美|US|United States|\U0001F1FA\U0001F1F8"
+    type: url-test
+    url: https://cp.cloudflare.com/generate_204
+    interval: 60
+    tolerance: 20
+    lazy: false
+  - name: 其他节点
+    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png
+    include-all: true
+    exclude-filter: "(?i)香港|港|HK|hk|Hong Kong|HongKong|hongkong|\U0001F1ED\U0001F1F0|台|新北|彰化|TW|Taiwan|\U0001F1F9\U0001F1FC|新加坡|坡|狮城|SG|Singapore|\U0001F1F8\U0001F1EC|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|\U0001F1EF\U0001F1F5|美国|美|US|United States|\U0001F1FA\U0001F1F8"
+    type: select
   - name: GLOBAL
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png
     include-all: true
     type: select
     proxies: *a1
-
-  - name: 香港节点
-    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png
-    include-all: true
-    filter: (?i)香港|港|HK|hk|Hong Kong|HongKong|hongkong|🇭🇰
-    type: url-test
-    url: https://cp.cloudflare.com/generate_204
-    interval: 60
-    tolerance: 20
-    lazy: false
-
-  - name: 台湾节点
-    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png
-    include-all: true
-    filter: (?i)台|新北|彰化|TW|Taiwan|🇹🇼
-    type: url-test
-    url: https://cp.cloudflare.com/generate_204
-    interval: 60
-    tolerance: 20
-    lazy: false
-
-  - name: 新加坡节点
-    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png
-    include-all: true
-    filter: (?i)新加坡|坡|狮城|SG|Singapore|🇸🇬
-    type: url-test
-    url: https://cp.cloudflare.com/generate_204
-    interval: 60
-    tolerance: 20
-    lazy: false
-
-  - name: 日本节点
-    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png
-    include-all: true
-    filter: (?i)日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|🇯🇵
-    type: url-test
-    url: https://cp.cloudflare.com/generate_204
-    interval: 60
-    tolerance: 20
-    lazy: false
-
-  - name: 美国节点
-    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png
-    include-all: true
-    filter: (?i)美国|美|US|United States|🇺🇸
-    type: url-test
-    url: https://cp.cloudflare.com/generate_204
-    interval: 60
-    tolerance: 20
-    lazy: false
-
-  - name: 其他节点
-    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png
-    include-all: true
-    type: select
-    exclude-filter: (?i)香港|港|HK|hk|Hong Kong|HongKong|hongkong|🇭🇰|台|新北|彰化|TW|Taiwan|🇹🇼|美国|美|US|United States|🇺🇸|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|🇯🇵|新加坡|坡|狮城|SG|Singapore|🇸🇬
 
 rule-providers:
   AI:

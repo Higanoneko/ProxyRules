@@ -4,6 +4,7 @@ log-level: info
 
 dns:
   ipv6: true
+  enhanced-mode: fake-ip
   default-nameserver: {DNS_IP_List}
   nameserver: {DNS_DoH_List}
   fake-ip-filter: {Fake_IP_Filter_List}
