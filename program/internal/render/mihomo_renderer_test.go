@@ -12,7 +12,7 @@ import (
 	"github.com/PianCat/ProxyRules/internal/service"
 )
 
-func TestRenderTunConfigPreservesTemplateAndCoreSections(t *testing.T) {
+func TestRenderBox4RootConfigPreservesTemplateAndCoreSections(t *testing.T) {
 	base, err := repository.NewBaseRepository(mihomoProjectRoot()).Load()
 	if err != nil {
 		t.Fatalf("load base: %v", err)
@@ -23,9 +23,9 @@ func TestRenderTunConfigPreservesTemplateAndCoreSections(t *testing.T) {
 		t.Fatalf("build plan: %v", err)
 	}
 
-	content, err := render.NewMihomoRenderer(base).RenderTun(plan)
+	content, err := render.NewMihomoRenderer(base).RenderBox4Root(plan, true)
 	if err != nil {
-		t.Fatalf("render tun: %v", err)
+		t.Fatalf("render box4root: %v", err)
 	}
 
 	if !strings.Contains(content, "# 此为精简配置") {
@@ -43,6 +43,30 @@ func TestRenderTunConfigPreservesTemplateAndCoreSections(t *testing.T) {
 	}
 	if strings.Contains(content, "{DNS_IP_List}") {
 		t.Fatal("expected placeholders resolved")
+	}
+	if !strings.Contains(content, "tun:\n  enable: true") {
+		t.Fatal("expected tun enabled in box4root config")
+	}
+}
+
+func TestRenderBox4RootConfigSupportsTunDisabled(t *testing.T) {
+	base, err := repository.NewBaseRepository(mihomoProjectRoot()).Load()
+	if err != nil {
+		t.Fatalf("load base: %v", err)
+	}
+
+	plan, err := service.NewPolicyPlanBuilder(base).Build(true, nil)
+	if err != nil {
+		t.Fatalf("build plan: %v", err)
+	}
+
+	content, err := render.NewMihomoRenderer(base).RenderBox4Root(plan, false)
+	if err != nil {
+		t.Fatalf("render box4root disabled tun: %v", err)
+	}
+
+	if !strings.Contains(content, "tun:\n  enable: false") {
+		t.Fatal("expected tun disabled in box4root config")
 	}
 }
 

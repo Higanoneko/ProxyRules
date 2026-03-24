@@ -35,11 +35,13 @@
   - [mihomo_convert_ipv6-0_full-1.js](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_convert_ipv6-0_full-1.js) - 禁用 IPv6，完整配置
   - [mihomo_convert_ipv6-1_full-1.js](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_convert_ipv6-1_full-1.js) - 启用 IPv6，完整配置
 
-**TUN 完整配置 (.yaml)**
+**Box4Root 配置 (.yaml)**
 
-用于 ShellCrash、Box4Root 等运行在 Shell 环境中的工具，或其他需要完整配置的工具。
-  - [mihomo_config_tun.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_config_tun.yaml) - 启用 IPv6，TUN 完整配置 ⭐ 推荐
-  - [mihomo_config_tun_no_ipv6.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_config_tun_no_ipv6.yaml) - 禁用 IPv6，TUN 完整配置
+用于 [Box4Root](https://github.com/boxproxy/box) 等运行在 Shell 环境中的工具。
+  - [Box4Root_config.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Box4Root/Box4Root_config.yaml) - 启用 IPv6，禁用 TUN。 ⭐ 推荐（需要更改 Box4Root 的运行模式为 Enhanced 等非 TUN 模式）
+  - [Box4Root_config_no_ipv6.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Box4Root/Box4Root_config_no_ipv6.yaml) - 禁用 IPv6，禁用 TUN。（需要更改 Box4Root 的运行模式为 Enhanced 等非 TUN 模式）
+  - [Box4Root_config_tun.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Box4Root/Box4Root_config_tun.yaml) - 启用 IPv6，启用 TUN。
+  - [Box4Root_config_tun_no_ipv6.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Box4Root/Box4Root_config_tun_no_ipv6.yaml) - 禁用 IPv6，启用 TUN。
 
 
 **Sparkle/Clash Party 使用方法**
@@ -67,6 +69,26 @@
 ```
 https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_convert_args.js#ipv6=1&full=0
 ```
+
+**ShellCrash 使用方法**
+
+使用 `curl` 下载配置文件到本地：
+
+```bash
+curl -o /path/to/config/mihomo_config.yaml https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_config_ipv6-1_full-0.yaml
+```
+
+使用 `wget` 下载配置文件到本地：
+
+```bash
+wget -P /path/to/config/mihomo_config.yaml https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_config_ipv6-1_full-0.yaml
+```
+> 以上 Sample 均使用启用 IPv6 的基础配置文件作为示例，请根据需要替换为其他版本的配置文件链接。
+
+
+在 [ShellCrash](https://github.com/juewuy/ShellCrash) 的 配置文件管理中选择 `本地生成配置文件(基于内核providers,推荐！)`
+
+先选择 `选择规则模版` 修改为下载的配置文件路径，再选择 `生成配置文件` 即可生成最终配置文件。
 
 ### Stash
 

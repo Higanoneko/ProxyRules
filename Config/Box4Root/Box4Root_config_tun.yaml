@@ -1,17 +1,95 @@
 # Generated at (UTC): 2026-03-24T08:22:19Z
 
-# Full Start From Here
+# 此为精简配置，如需更为详细的配置，可参考 https://wiki.metacubex.one/config
 
+# 如不会配置，也可自行寻找懒人配置，例如(Surfing 模块配置)：https://raw.githubusercontent.com/GitMetaio/Surfing/refs/heads/main/box_bll/clash/config.yaml
+
+proxy-providers:
+  proxy1:
+    type: http
+    url: "填写订阅链接"
+    path: ./proxy_provider/proxy1.yaml
+    interval: 3600
+    health-check:
+      enable: true
+      url: https://cp.cloudflare.com
+      interval: 300
+      timeout: 1000
+      tolerance: 100
+  # 多订阅按照下面照葫芦画瓢即可
+# proxy2:
+
+#   type: http
+
+#   url: "填写订阅链接"
+
+#   path: ./proxy_provider/proxy2.yaml
+
+#   interval: 3600
+
+#   health-check:
+
+#     enable: true
+
+#     url: https://cp.cloudflare.com
+
+#     interval: 300
+
+#     timeout: 1000
+
+#     tolerance: 100
+
+mixed-port: 56365
+redir-port: 9797
+tproxy-port: 9898
+mode: Rule
+bind-address: '*'
+ipv6: true
+allow-lan: true
+unified-delay: true
+tcp-concurrent: true
+log-level: error
+find-process-mode: always
+# global-client-fingerprint: random
+
+external-controller: 0.0.0.0:9090
+external-ui: ./dashboard
+external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
+geodata-mode: false
+geo-auto-update: true
+geo-update-interval: 24
+geox-url:
+  geoip: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
+  geosite: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
+  mmdb: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
+  asn: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/GeoLite2-ASN.mmdb"
+tun:
+  enable: true
+  device: umihomo
+  stack: mixed
+  dns-hijack: ['any:53', 'tcp://any:53']
+  udp-timeout: 300
+  auto-route: true
+  strict-route: true
+  auto-redirect: false
+  auto-detect-interface: true
+profile:
+  store-selected: true
+  store-fake-ip: true
+proxies:
+  - {name: DNS_Hijack, type: dns}
 # Normal Start From Here
-
 dns:
   enable: true
-  ipv6: false
+  ipv6: true
   enhanced-mode: fake-ip
   default-nameserver:
     - 119.29.29.29
+    - '2402:4e00::'
     - 1.1.1.1
+    - 2606:4700:4700::1111
     - 8.8.8.8
+    - 2001:4860:4860::8888
   proxy-server-nameserver:
     - https://doh.pub/dns-query
   direct-nameserver:
@@ -139,7 +217,6 @@ dns:
     - '*.cmbchina.com'
     - '*.10099.com.cn'
     - '*.microdone.cn'
-
 sniffer:
   sniff:
     HTTP:
@@ -153,14 +230,6 @@ sniffer:
     - "Mijia Cloud"
     - "dlg.io.mi.com"
     - "+.push.apple.com"
-
-geodata-mode: true
-geox-url:
-  geoip: https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat
-  geosite: https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat
-  mmdb: https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb
-  asn: https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb
-
 proxy-groups:
   - name: 选择代理
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Proxy.png
@@ -365,7 +434,6 @@ proxy-groups:
     include-all: true
     type: select
     proxies: *a1
-
 rule-providers:
   AI:
     type: http
@@ -542,7 +610,6 @@ rule-providers:
     interval: 86400
     url: https://ruleset.skk.moe/Clash/ip/lan.txt
     path: ./ruleset/LocalNetworkIP.list
-
 rules:
   - RULE-SET,AI,AI
   - RULE-SET,Telegram,Telegram
