@@ -1,4 +1,4 @@
-# 此为精简配置，如需更为详细的配置，可参考 https://wiki.metacubex.one/config
+# PianCat's ProxyRules - Box4Root 复杂配置
 # 如不会配置，也可自行寻找懒人配置，例如(Surfing 模块配置)：https://raw.githubusercontent.com/GitMetaio/Surfing/refs/heads/main/box_bll/clash/config.yaml
 
 proxy-providers:
@@ -94,3 +94,11 @@ sniffer:
     - "Mijia Cloud"
     - "dlg.io.mi.com"
     - "+.push.apple.com"
+
+proxy-groups:
+
+rule-providers:
+
+rules: 
+  - DST-PORT,53,DNS_Hijack
+  - <ProxyRules_Pack>

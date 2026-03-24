@@ -117,11 +117,11 @@ func (r *BaseRepository) Load() (BaseData, error) {
 
 	heads := map[string]string{}
 	for key, filename := range map[string]string{
-		"mihomo":     "Head_Mihomo.yaml",
-		"mihomo_tun": "Head_Mihomo_Tun.yaml",
-		"stash":      "Head_Stash.yaml",
-		"loon":       "Head_Loon.conf",
-		"surge":      "Head_Surge.conf",
+		"mihomo":   "Head_Mihomo.yaml",
+		"box4root": "Head_Box4Root.yaml",
+		"stash":    "Head_Stash.yaml",
+		"loon":     "Head_Loon.conf",
+		"surge":    "Head_Surge.conf",
 	} {
 		content, err := os.ReadFile(filepath.Join(baseDir, "Head", filename))
 		if err != nil {

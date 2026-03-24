@@ -1,4 +1,4 @@
-# Generated at (UTC): 2026-03-24T08:25:25Z
+# Generated at (UTC): 2026-03-24T11:04:01Z
 
 mode: rule
 log-level: info
@@ -55,6 +55,7 @@ dns:
     - music.163.com
     - '*.music.163.com'
     - '*.126.net'
+    - '*.netease.com'
     - musicapi.taihe.com
     - music.taihe.com
     - songsearch.kugou.com
@@ -63,6 +64,8 @@ dns:
     - api-jooxtt.sanook.com
     - api.joox.com
     - joox.com
+    - '*.tencent.com'
+    - '*.qq.com'
     - y.qq.com
     - '*.y.qq.com'
     - streamoc.music.tc.qq.com
@@ -72,6 +75,8 @@ dns:
     - aqqmusic.tc.qq.com
     - amobile.music.tc.qq.com
     - '*.xiami.com'
+    - '*.xiaomi.com'
+    - '*.mi.com'
     - '*.music.migu.cn'
     - music.migu.cn
     - '*.msftconnecttest.com'

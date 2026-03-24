@@ -28,8 +28,8 @@ func TestRenderBox4RootConfigPreservesTemplateAndCoreSections(t *testing.T) {
 		t.Fatalf("render box4root: %v", err)
 	}
 
-	if !strings.Contains(content, "# 此为精简配置") {
-		t.Fatal("expected tun template comments")
+	if !strings.Contains(content, "Box4Root") {
+		t.Fatal("expected Box4Root template comments")
 	}
 	for _, section := range []string{"proxy-groups:", "rule-providers:", "rules:"} {
 		if !strings.Contains(content, section) {
@@ -46,6 +46,12 @@ func TestRenderBox4RootConfigPreservesTemplateAndCoreSections(t *testing.T) {
 	}
 	if !strings.Contains(content, "tun:\n  enable: true") {
 		t.Fatal("expected tun enabled in box4root config")
+	}
+	if !strings.Contains(content, "\nrules:\n  - DST-PORT,53,DNS_Hijack\n") {
+		t.Fatal("expected DNS_Hijack rule from head template")
+	}
+	if strings.Index(content, "\n  - DST-PORT,53,DNS_Hijack\n") > strings.Index(content, "\n  - RULE-SET,") {
+		t.Fatal("expected DNS_Hijack rule to stay before generated rules")
 	}
 }
 

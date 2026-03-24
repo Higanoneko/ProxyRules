@@ -6,6 +6,8 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
+const proxyRulesPackPlaceholder = "<ProxyRules_Pack>"
+
 var mihomoFullOnlyKeys = []string{
 	"mixed-port",
 	"allow-lan",
@@ -46,7 +48,12 @@ func (r *MihomoRenderer) RenderStandard(plan domain.PolicyPlan, full bool) (stri
 		return "", err
 	}
 
-	explicit, err := r.standardOverrides(plan, full)
+	rules, err := resolveMihomoRules(head, yamlHeadPlaceholders(plan), r.ruleResolver.MihomoRules(plan.Rules))
+	if err != nil {
+		return "", err
+	}
+
+	explicit, err := r.standardOverrides(plan, full, rules)
 	if err != nil {
 		return "", err
 	}
@@ -75,12 +82,17 @@ func (r *MihomoRenderer) RenderStandard(plan domain.PolicyPlan, full bool) (stri
 }
 
 func (r *MihomoRenderer) RenderBox4Root(plan domain.PolicyPlan, tunEnabled bool) (string, error) {
-	head, err := r.base.Head("mihomo_tun")
+	head, err := r.base.Head("box4root")
 	if err != nil {
 		return "", err
 	}
 
-	explicit, err := r.box4RootOverrides(plan, tunEnabled)
+	rules, err := resolveMihomoRules(head, yamlHeadPlaceholders(plan), r.ruleResolver.MihomoRules(plan.Rules))
+	if err != nil {
+		return "", err
+	}
+
+	explicit, err := r.box4RootOverrides(plan, tunEnabled, rules)
 	if err != nil {
 		return "", err
 	}
@@ -115,7 +127,7 @@ func (r *MihomoRenderer) FullDefaultsNode(plan domain.PolicyPlan) (*yaml.Node, e
 	return root, nil
 }
 
-func (r *MihomoRenderer) standardOverrides(plan domain.PolicyPlan, full bool) (*yaml.Node, error) {
+func (r *MihomoRenderer) standardOverrides(plan domain.PolicyPlan, full bool, rules []string) (*yaml.Node, error) {
 	providers, err := r.ruleResolver.MihomoRuleProviders(plan.Rules)
 	if err != nil {
 		return nil, err
@@ -127,7 +139,7 @@ func (r *MihomoRenderer) standardOverrides(plan domain.PolicyPlan, full bool) (*
 	appendMappingValue(root, "geox-url", geoxNode())
 	appendMappingValue(root, "proxy-groups", proxyGroupsNode(plan.Proxy.Groups))
 	appendMappingValue(root, "rule-providers", providers)
-	appendMappingValue(root, "rules", stringSequenceNode(r.ruleResolver.MihomoRules(plan.Rules)))
+	appendMappingValue(root, "rules", stringSequenceNode(rules))
 
 	if full {
 		appendMappingValue(root, "mixed-port", newScalarNode(plan.Ports.Mixed))
@@ -137,7 +149,7 @@ func (r *MihomoRenderer) standardOverrides(plan domain.PolicyPlan, full bool) (*
 	return root, nil
 }
 
-func (r *MihomoRenderer) box4RootOverrides(plan domain.PolicyPlan, tunEnabled bool) (*yaml.Node, error) {
+func (r *MihomoRenderer) box4RootOverrides(plan domain.PolicyPlan, tunEnabled bool, rules []string) (*yaml.Node, error) {
 	providers, err := r.ruleResolver.MihomoRuleProviders(plan.Rules)
 	if err != nil {
 		return nil, err
@@ -151,6 +163,40 @@ func (r *MihomoRenderer) box4RootOverrides(plan domain.PolicyPlan, tunEnabled bo
 	appendMappingValue(root, "dns", mihomoDNSNode(plan, true))
 	appendMappingValue(root, "proxy-groups", proxyGroupsNode(plan.Proxy.Groups))
 	appendMappingValue(root, "rule-providers", providers)
-	appendMappingValue(root, "rules", stringSequenceNode(r.ruleResolver.MihomoRules(plan.Rules)))
+	appendMappingValue(root, "rules", stringSequenceNode(rules))
 	return root, nil
+}
+
+func resolveMihomoRules(head string, placeholders map[string]any, generatedRules []string) ([]string, error) {
+	preparedHead, err := applyYAMLPlaceholders(head, placeholders)
+	if err != nil {
+		return nil, err
+	}
+
+	document, err := loadYAMLDocument(preparedHead)
+	if err != nil {
+		return nil, err
+	}
+
+	root := document.Content[0]
+	rulesNode := mappingValue(root, "rules")
+	if rulesNode == nil || rulesNode.Kind != yaml.SequenceNode {
+		return append([]string(nil), generatedRules...), nil
+	}
+
+	resolved := make([]string, 0, len(rulesNode.Content)+len(generatedRules))
+	placeholderFound := false
+	for _, entry := range rulesNode.Content {
+		if entry.Value == proxyRulesPackPlaceholder {
+			resolved = append(resolved, generatedRules...)
+			placeholderFound = true
+			continue
+		}
+		resolved = append(resolved, entry.Value)
+	}
+
+	if !placeholderFound {
+		resolved = append(resolved, generatedRules...)
+	}
+	return resolved, nil
 }
