@@ -36,6 +36,11 @@ func TestRenderTunConfigPreservesTemplateAndCoreSections(t *testing.T) {
 			t.Fatalf("expected %s in tun config", section)
 		}
 	}
+	for _, marker := range []string{"proxy-server-nameserver:", "direct-nameserver:"} {
+		if !strings.Contains(content, marker) {
+			t.Fatalf("expected %s in tun config", marker)
+		}
+	}
 	if strings.Contains(content, "{DNS_IP_List}") {
 		t.Fatal("expected placeholders resolved")
 	}
@@ -57,13 +62,18 @@ func TestRenderArgsScriptContainsSharedPayload(t *testing.T) {
 		t.Fatalf("render args script: %v", err)
 	}
 
-	for _, marker := range []string{"const POLICY_TEMPLATES", "function buildPolicyGroup", "const RULE_PROVIDERS"} {
+	for _, marker := range []string{"const POLICY_TEMPLATES", "function buildPolicyGroup", "const RULE_PROVIDERS", "const DNS_TEMPLATE ="} {
 		if !strings.Contains(content, marker) {
 			t.Fatalf("expected %s in args script", marker)
 		}
 	}
 	if !strings.Contains(content, "const proxyGroups = [...policyGroups, ...countryGroups, ...globalGroups];") {
 		t.Fatal("expected GLOBAL groups to be appended after country groups")
+	}
+	for _, marker := range []string{"proxy-server-nameserver", "direct-nameserver"} {
+		if !strings.Contains(content, marker) {
+			t.Fatalf("expected %s in args script", marker)
+		}
 	}
 }
 

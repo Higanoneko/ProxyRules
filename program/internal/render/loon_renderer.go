@@ -77,16 +77,18 @@ func (r *LoonRenderer) generalOverrides(plan domain.PolicyPlan) map[string]strin
 		ipMode = "ipv4-only"
 		ipv6VIF = "off"
 	}
+
+	dns := projectGenericDNS(plan.DNS)
 	return map[string]string{
 		"ip-mode":                  ipMode,
 		"ipv6-vif":                 ipv6VIF,
-		"dns-server":               strings.Join(plan.DNS.DefaultNameserver, ", ") + ", system",
-		"doh-server":               strings.Join(plan.DNS.Nameserver, ", "),
+		"dns-server":               strings.Join(dns.BootstrapResolvers, ", ") + ", system",
+		"doh-server":               strings.Join(dns.Nameserver, ", "),
 		"wifi-access-http-port":    fmt.Sprintf("%d", plan.Ports.HTTP),
 		"wifi-access-socket5-port": fmt.Sprintf("%d", plan.Ports.Socks5),
 		"internet-test-url":        plan.TestURLs.Internet,
 		"proxy-test-url":           plan.TestURLs.Proxy,
-		"real-ip":                  strings.Join(plan.DNS.FakeIPFilter, ", "),
+		"real-ip":                  strings.Join(dns.FakeIPFilter, ", "),
 	}
 }
 

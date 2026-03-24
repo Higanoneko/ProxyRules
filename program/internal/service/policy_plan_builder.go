@@ -38,22 +38,22 @@ func (b *PolicyPlanBuilder) Build(ipv6 bool, nodeNames []string) (domain.PolicyP
 	}, nil
 }
 
-func (b *PolicyPlanBuilder) buildDNS(ipv6 bool) domain.DNSSettings {
-	defaultNameserver := make([]string, 0, len(b.base.DNSIP))
-	for _, dnsIP := range b.base.DNSIP {
+func (b *PolicyPlanBuilder) buildDNS(ipv6 bool) domain.DNSPolicy {
+	bootstrapResolvers := make([]string, 0, len(b.base.DNS.BootstrapResolvers))
+	for _, dnsIP := range b.base.DNS.BootstrapResolvers {
 		if !ipv6 && containsColon(dnsIP) {
 			continue
 		}
-		defaultNameserver = append(defaultNameserver, dnsIP)
+		bootstrapResolvers = append(bootstrapResolvers, dnsIP)
 	}
 
-	return domain.DNSSettings{
-		Enable:            true,
-		IPv6:              ipv6,
-		EnhancedMode:      "fake-ip",
-		DefaultNameserver: defaultNameserver,
-		Nameserver:        append([]string(nil), b.base.DNSDoH...),
-		FakeIPFilter:      append([]string(nil), b.base.FakeIPFilter...),
+	return domain.DNSPolicy{
+		Enable:             true,
+		IPv6:               ipv6,
+		EnhancedMode:       "fake-ip",
+		BootstrapResolvers: bootstrapResolvers,
+		Upstreams:          cloneDNSUpstreamPolicy(b.base.DNS.Upstreams),
+		FakeIPFilter:       append([]string(nil), b.base.FakeIPFilter...),
 	}
 }
 
@@ -197,4 +197,13 @@ func containsColon(value string) bool {
 		}
 	}
 	return false
+}
+
+func cloneDNSUpstreamPolicy(policy domain.DNSUpstreamPolicy) domain.DNSUpstreamPolicy {
+	return domain.DNSUpstreamPolicy{
+		Default:        append([]string(nil), policy.Default...),
+		ProxyBootstrap: append([]string(nil), policy.ProxyBootstrap...),
+		Direct:         append([]string(nil), policy.Direct...),
+		Proxy:          append([]string(nil), policy.Proxy...),
+	}
 }

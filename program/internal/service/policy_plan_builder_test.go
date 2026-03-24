@@ -26,8 +26,14 @@ func TestBuildPolicyPlanKeepsCoreSections(t *testing.T) {
 	if len(plan.Rules) == 0 {
 		t.Fatal("expected canonical rules")
 	}
-	if len(plan.DNS.Nameserver) == 0 {
+	if len(plan.DNS.Upstreams.Default) == 0 {
 		t.Fatal("expected dns nameserver")
+	}
+	if len(plan.DNS.Upstreams.ProxyBootstrap) == 0 || len(plan.DNS.Upstreams.Direct) == 0 || len(plan.DNS.Upstreams.Proxy) == 0 {
+		t.Fatal("expected split dns resolver lists")
+	}
+	if len(plan.DNS.BootstrapResolvers) == 0 {
+		t.Fatal("expected bootstrap dns resolvers")
 	}
 	if len(plan.Proxy.Countries) == 0 {
 		t.Fatal("expected country fallback inventory")

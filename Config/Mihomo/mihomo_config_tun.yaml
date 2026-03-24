@@ -1,6 +1,7 @@
-# Generated at (UTC): 2026-03-23T16:46:58Z
+# Generated at (UTC): 2026-03-24T07:59:59Z
 
 # 此为精简配置，如需更为详细的配置，可参考 https://wiki.metacubex.one/config
+
 # 如不会配置，也可自行寻找懒人配置，例如(Surfing 模块配置)：https://raw.githubusercontent.com/GitMetaio/Surfing/refs/heads/main/box_bll/clash/config.yaml
 
 proxy-providers:
@@ -16,17 +17,28 @@ proxy-providers:
       timeout: 1000
       tolerance: 100
   # 多订阅按照下面照葫芦画瓢即可
-  # proxy2:
-  #   type: http
-  #   url: "填写订阅链接"
-  #   path: ./proxy_provider/proxy2.yaml
-  #   interval: 3600
-  #   health-check:
-  #     enable: true
-  #     url: https://cp.cloudflare.com
-  #     interval: 300
-  #     timeout: 1000
-  #     tolerance: 100
+# proxy2:
+
+#   type: http
+
+#   url: "填写订阅链接"
+
+#   path: ./proxy_provider/proxy2.yaml
+
+#   interval: 3600
+
+#   health-check:
+
+#     enable: true
+
+#     url: https://cp.cloudflare.com
+
+#     interval: 300
+
+#     timeout: 1000
+
+#     tolerance: 100
+
 mixed-port: 56365
 redir-port: 9797
 tproxy-port: 9898
@@ -39,17 +51,18 @@ tcp-concurrent: true
 log-level: error
 find-process-mode: always
 # global-client-fingerprint: random
+
 external-controller: 0.0.0.0:9090
 external-ui: ./dashboard
 external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
-geodata-mode: true
+geodata-mode: false
 geo-auto-update: true
 geo-update-interval: 24
 geox-url:
-  geoip: https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat
-  geosite: https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat
-  mmdb: https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb
-  asn: https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb
+  geoip: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
+  geosite: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
+  mmdb: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
+  asn: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/GeoLite2-ASN.mmdb"
 tun:
   enable: true
   device: umihomo
@@ -70,8 +83,6 @@ dns:
   enable: true
   ipv6: true
   enhanced-mode: fake-ip
-  listen: 0.0.0.0:1053
-  fake-ip-range: 198.18.0.1/16
   default-nameserver:
     - 119.29.29.29
     - '2402:4e00::'
@@ -79,8 +90,11 @@ dns:
     - 2606:4700:4700::1111
     - 8.8.8.8
     - 2001:4860:4860::8888
-  nameserver:
+  proxy-server-nameserver:
     - https://doh.pub/dns-query
+  direct-nameserver:
+    - https://doh.pub/dns-query
+  nameserver:
     - https://cloudflare-dns.com/dns-query
     - https://dns.google/dns-query
   fake-ip-filter:

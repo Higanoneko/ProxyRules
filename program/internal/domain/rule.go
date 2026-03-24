@@ -1,14 +1,5 @@
 package domain
 
-type DNSSettings struct {
-	Enable            bool
-	IPv6              bool
-	EnhancedMode      string
-	DefaultNameserver []string
-	Nameserver        []string
-	FakeIPFilter      []string
-}
-
 type TestURLs struct {
 	Internet string
 	Proxy    string
@@ -45,7 +36,7 @@ type RuleBinding struct {
 }
 
 type PolicyPlan struct {
-	DNS      DNSSettings
+	DNS      DNSPolicy
 	Sniffer  map[string]any
 	Proxy    ProxyPlan
 	Rules    []RuleBinding

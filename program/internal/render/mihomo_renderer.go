@@ -26,7 +26,7 @@ var mihomoFullOnlyKeys = []string{
 	"geo-update-interval",
 }
 
-var mihomoReplacePaths = []string{"proxy-groups", "rule-providers", "rules"}
+var mihomoReplacePaths = []string{"dns", "proxy-groups", "rule-providers", "rules"}
 
 type MihomoRenderer struct {
 	base         repository.BaseData

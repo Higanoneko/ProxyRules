@@ -11,9 +11,8 @@ https://github.com/PianCat/ProxyRules
 */
 
 const NODE_SUFFIX = "节点";
-const DNS_IP_LIST = __DNS_IP_LIST__;
-const DNS_DOH_LIST = __DNS_DOH_LIST__;
-const FAKE_IP_FILTER = __FAKE_IP_FILTER__;
+const DNS_BOOTSTRAP_LIST = __DNS_BOOTSTRAP_LIST__;
+const DNS_TEMPLATE = __DNS_TEMPLATE__;
 const MIXED_PORT = __MIXED_PORT__;
 const FULL_CONFIG_DEFAULTS = __FULL_DEFAULTS__;
 const RULE_PROVIDERS = __RULE_PROVIDERS__;
@@ -168,14 +167,11 @@ function buildCountryGroups(countryInventory) {
 }
 
 function buildDnsConfig(ipv6Enabled) {
-    const defaultNameserver = DNS_IP_LIST.filter((dns) => ipv6Enabled || !String(dns).includes(":"));
+    const defaultNameserver = DNS_BOOTSTRAP_LIST.filter((dns) => ipv6Enabled || !String(dns).includes(":"));
     return {
-        enable: true,
+        ...DNS_TEMPLATE,
         ipv6: ipv6Enabled,
-        "enhanced-mode": "fake-ip",
         "default-nameserver": defaultNameserver,
-        nameserver: DNS_DOH_LIST,
-        "fake-ip-filter": FAKE_IP_FILTER,
     };
 }
 

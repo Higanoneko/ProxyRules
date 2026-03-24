@@ -26,8 +26,7 @@ type CategoryConfig struct {
 
 type BaseData struct {
 	Root              string
-	DNSIP             []string
-	DNSDoH            []string
+	DNS               domain.DNSSource
 	FakeIPFilter      []string
 	SurgeAlwaysRealIP []string
 	Ports             domain.Ports
@@ -40,8 +39,18 @@ type BaseData struct {
 }
 
 type dnsConfig struct {
-	DNSIP  []string `yaml:"DNS_IP"`
-	DNSDoH []string `yaml:"DNS_DoH"`
+	DNS struct {
+		IP             []string `yaml:"IP"`
+		DefaultDoH     []string `yaml:"Default_DoH"`
+		ProxyServerDoH []string `yaml:"Proxy_Server_DoH"`
+		DirectDoH      []string `yaml:"Direct_DoH"`
+		ProxyDoH       []string `yaml:"Proxy_DoH"`
+	} `yaml:"DNS"`
+	LegacyDNSIP             []string `yaml:"DNS_IP"`
+	LegacyDNSDoH            []string `yaml:"DNS_DoH"`
+	LegacyDNSDoHProxyServer []string `yaml:"DNS_DoH_Proxy_Server"`
+	LegacyDNSDoHDirect      []string `yaml:"DNS_DoH_Direct"`
+	LegacyDNSDoHProxy       []string `yaml:"DNS_DoH_Proxy"`
 }
 
 type portsConfig struct {
@@ -123,8 +132,7 @@ func (r *BaseRepository) Load() (BaseData, error) {
 
 	return BaseData{
 		Root:              r.root,
-		DNSIP:             cloneStrings(dns.DNSIP),
-		DNSDoH:            cloneStrings(dns.DNSDoH),
+		DNS:               dns.source(),
 		FakeIPFilter:      cloneStrings(fakeIP.FakeIPFilter),
 		SurgeAlwaysRealIP: cloneStrings(fakeIP.SurgeAlwaysRealIP),
 		Ports: domain.Ports{
@@ -212,4 +220,25 @@ func cloneStrings(values []string) []string {
 	result := make([]string, len(values))
 	copy(result, values)
 	return result
+}
+
+func (c dnsConfig) source() domain.DNSSource {
+	return domain.DNSSource{
+		BootstrapResolvers: cloneStrings(firstConfiguredGroup(c.DNS.IP, c.LegacyDNSIP)),
+		Upstreams: domain.DNSUpstreamPolicy{
+			Default:        cloneStrings(firstConfiguredGroup(c.DNS.DefaultDoH, c.LegacyDNSDoH)),
+			ProxyBootstrap: cloneStrings(firstConfiguredGroup(c.DNS.ProxyServerDoH, c.LegacyDNSDoHProxyServer)),
+			Direct:         cloneStrings(firstConfiguredGroup(c.DNS.DirectDoH, c.LegacyDNSDoHDirect)),
+			Proxy:          cloneStrings(firstConfiguredGroup(c.DNS.ProxyDoH, c.LegacyDNSDoHProxy)),
+		},
+	}
+}
+
+func firstConfiguredGroup(groups ...[]string) []string {
+	for _, group := range groups {
+		if len(group) > 0 {
+			return group
+		}
+	}
+	return nil
 }

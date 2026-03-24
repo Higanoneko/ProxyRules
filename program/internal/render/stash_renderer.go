@@ -84,7 +84,7 @@ func (r *StashRenderer) compose(plan domain.PolicyPlan) (*yaml.Node, error) {
 	appendMappingValue(root, "rule-providers", providers)
 	appendMappingValue(root, "rules", stringSequenceNode(r.ruleResolver.MihomoRules(plan.Rules)))
 
-	return ComposeYAML(head, root, yamlHeadPlaceholders(plan), nil, []string{"proxy-groups", "rule-providers", "rules"})
+	return ComposeYAML(head, root, yamlHeadPlaceholders(plan), nil, []string{"dns", "proxy-groups", "rule-providers", "rules"})
 }
 
 func injectStashSubscriptionPlaceholders(content string) string {

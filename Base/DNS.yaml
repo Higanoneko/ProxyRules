@@ -1,12 +1,20 @@
-DNS_IP:
-  - 119.29.29.29
-  - '2402:4e00::'
-  - 1.1.1.1
-  - 2606:4700:4700::1111
-  - 8.8.8.8
-  - 2001:4860:4860::8888
+DNS:
+  IP:
+    - 119.29.29.29
+    - '2402:4e00::'
+    - 1.1.1.1
+    - 2606:4700:4700::1111
+    - 8.8.8.8
+    - 2001:4860:4860::8888
+  Default_DoH:
+    - https://doh.pub/dns-query
+    - https://cloudflare-dns.com/dns-query
+    - https://dns.google/dns-query
+  Proxy_Server_DoH:
+    - https://doh.pub/dns-query
+  Direct_DoH:
+    - https://doh.pub/dns-query
+  Proxy_DoH:
+    - https://cloudflare-dns.com/dns-query
+    - https://dns.google/dns-query
 
-DNS_DoH:
-  - https://doh.pub/dns-query
-  - https://cloudflare-dns.com/dns-query
-  - https://dns.google/dns-query

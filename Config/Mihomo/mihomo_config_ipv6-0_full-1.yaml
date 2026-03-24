@@ -1,6 +1,7 @@
-# Generated at (UTC): 2026-03-23T16:46:58Z
+# Generated at (UTC): 2026-03-24T07:59:59Z
 
 # Full Start From Here
+
 mixed-port: 56365
 allow-lan: true
 ipv6: false
@@ -27,8 +28,11 @@ dns:
     - 119.29.29.29
     - 1.1.1.1
     - 8.8.8.8
-  nameserver:
+  proxy-server-nameserver:
     - https://doh.pub/dns-query
+  direct-nameserver:
+    - https://doh.pub/dns-query
+  nameserver:
     - https://cloudflare-dns.com/dns-query
     - https://dns.google/dns-query
   fake-ip-filter:

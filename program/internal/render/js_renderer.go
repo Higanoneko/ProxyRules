@@ -69,15 +69,14 @@ func (r *MihomoScriptRenderer) render(plan domain.PolicyPlan, parameterBlock str
 		return "", err
 	}
 
-	dnsIPJSON, err := json.Marshal(r.base.DNSIP)
+	dns := projectGenericDNS(plan.DNS)
+	clashDNS := projectClashScriptDNS(plan.DNS)
+
+	dnsIPJSON, err := json.Marshal(dns.BootstrapResolvers)
 	if err != nil {
 		return "", err
 	}
-	dnsDoHJSON, err := json.Marshal(r.base.DNSDoH)
-	if err != nil {
-		return "", err
-	}
-	fakeIPJSON, err := json.Marshal(r.base.FakeIPFilter)
+	dnsTemplateJSON, err := json.Marshal(clashDNS)
 	if err != nil {
 		return "", err
 	}
@@ -100,9 +99,8 @@ func (r *MihomoScriptRenderer) render(plan domain.PolicyPlan, parameterBlock str
 
 	replacer := strings.NewReplacer(
 		"__PARAMETER_BLOCK__", parameterBlock,
-		"__DNS_IP_LIST__", string(dnsIPJSON),
-		"__DNS_DOH_LIST__", string(dnsDoHJSON),
-		"__FAKE_IP_FILTER__", string(fakeIPJSON),
+		"__DNS_BOOTSTRAP_LIST__", string(dnsIPJSON),
+		"__DNS_TEMPLATE__", string(dnsTemplateJSON),
 		"__MIXED_PORT__", fmt.Sprintf("%d", plan.Ports.Mixed),
 		"__FULL_DEFAULTS__", fullDefaultsJSON,
 		"__RULE_PROVIDERS__", ruleProvidersJSON,

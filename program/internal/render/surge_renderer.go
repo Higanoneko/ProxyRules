@@ -56,6 +56,7 @@ func (r *SurgeRenderer) generalOverrides(plan domain.PolicyPlan) map[string]stri
 		ipv6VIF = "disabled"
 	}
 
+	dns := projectGenericDNS(plan.DNS)
 	overrides := map[string]string{
 		"wifi-access-http-port":   fmt.Sprintf("%d", plan.Ports.HTTP),
 		"wifi-access-socks5-port": fmt.Sprintf("%d", plan.Ports.Socks5),
@@ -63,12 +64,12 @@ func (r *SurgeRenderer) generalOverrides(plan domain.PolicyPlan) map[string]stri
 		"ipv6-vif":                ipv6VIF,
 		"internet-test-url":       plan.TestURLs.Internet,
 		"proxy-test-url":          plan.TestURLs.Proxy,
-		"dns-server":              strings.Join(plan.DNS.DefaultNameserver, ", ") + ", system",
+		"dns-server":              strings.Join(dns.BootstrapResolvers, ", ") + ", system",
 		"always-real-ip":          strings.Join(r.base.SurgeAlwaysRealIP, ", "),
 	}
 
-	if len(plan.DNS.Nameserver) > 0 {
-		overrides["encrypted-dns-server"] = strings.Join(plan.DNS.Nameserver, ", ")
+	if len(dns.Nameserver) > 0 {
+		overrides["encrypted-dns-server"] = strings.Join(dns.Nameserver, ", ")
 	}
 
 	return overrides
