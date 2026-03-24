@@ -196,6 +196,10 @@ GitHub Actions 现在只保留 `auto_generate.yml`，专门负责生成并提交
 
 - **[MetaCubeX/meta-rules-dat](https://github.com/MetaCubeX/meta-rules-dat)** - 提供 GeoIP 和 IPASN 数据库
 
+### 社区
+
+- **[Linux.DO](https://linux.do/)**
+
 ---
 
 **注意**：使用本仓库的配置文件前，请确保你已经配置好代理节点。配置文件中的策略组需要你手动指定对应的代理节点。
