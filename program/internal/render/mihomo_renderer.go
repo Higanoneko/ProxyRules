@@ -6,7 +6,9 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-const proxyRulesPackPlaceholder = "<ProxyRules_Pack>"
+var proxyRulesPackPlaceholders = map[string]struct{}{
+	"$ProxyRules_Pack": {},
+}
 
 var mihomoFullOnlyKeys = []string{
 	"mixed-port",
@@ -28,7 +30,7 @@ var mihomoFullOnlyKeys = []string{
 	"geo-update-interval",
 }
 
-var mihomoReplacePaths = []string{"dns", "proxy-groups", "rule-providers", "rules"}
+var mihomoReplacePaths = []string{"proxy-groups", "rule-providers", "rules"}
 
 type MihomoRenderer struct {
 	base         repository.BaseData
@@ -187,7 +189,7 @@ func resolveMihomoRules(head string, placeholders map[string]any, generatedRules
 	resolved := make([]string, 0, len(rulesNode.Content)+len(generatedRules))
 	placeholderFound := false
 	for _, entry := range rulesNode.Content {
-		if entry.Value == proxyRulesPackPlaceholder {
+		if _, ok := proxyRulesPackPlaceholders[entry.Value]; ok {
 			resolved = append(resolved, generatedRules...)
 			placeholderFound = true
 			continue

@@ -6,7 +6,7 @@ func TestResolveMihomoRulesReplacesPackInPlace(t *testing.T) {
 	head := `
 rules:
   - DST-PORT,53,DNS_Hijack
-  - <ProxyRules_Pack>
+  - "$ProxyRules_Pack"
 `
 	generated := []string{"RULE-SET,AI,AI", "RULE-SET,Telegram,Telegram"}
 
@@ -29,7 +29,7 @@ rules:
 func TestResolveMihomoRulesSupportsPackBeforeCustomRules(t *testing.T) {
 	head := `
 rules:
-  - <ProxyRules_Pack>
+  - "$ProxyRules_Pack"
   - DST-PORT,53,DNS_Hijack
 `
 	generated := []string{"RULE-SET,AI,AI", "RULE-SET,Telegram,Telegram"}

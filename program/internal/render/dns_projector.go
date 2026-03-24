@@ -5,6 +5,9 @@ import "github.com/PianCat/ProxyRules/internal/domain"
 type genericDNSView struct {
 	BootstrapResolvers []string
 	Nameserver         []string
+	DefaultDoH         []string
+	DirectDoH          []string
+	FallbackDoH        []string
 	FakeIPFilter       []string
 }
 
@@ -33,15 +36,19 @@ func projectGenericDNS(policy domain.DNSPolicy) genericDNSView {
 	defaultUpstreams := cloneStringsOrFallback(
 		policy.Upstreams.Default,
 		mergeUniqueStringSlices(
-			policy.Upstreams.ProxyBootstrap,
 			policy.Upstreams.Direct,
-			policy.Upstreams.Proxy,
+			policy.Upstreams.Fallback,
 		),
 	)
+	directUpstreams := cloneStringsOrFallback(policy.Upstreams.Direct, defaultUpstreams)
+	fallbackUpstreams := cloneStringsOrFallback(policy.Upstreams.Fallback, defaultUpstreams)
 
 	return genericDNSView{
 		BootstrapResolvers: append([]string(nil), policy.BootstrapResolvers...),
 		Nameserver:         defaultUpstreams,
+		DefaultDoH:         defaultUpstreams,
+		DirectDoH:          directUpstreams,
+		FallbackDoH:        fallbackUpstreams,
 		FakeIPFilter:       append([]string(nil), policy.FakeIPFilter...),
 	}
 }
@@ -53,7 +60,7 @@ func projectClashDNS(policy domain.DNSPolicy) clashDNSView {
 		IPv6:               policy.IPv6,
 		EnhancedMode:       policy.EnhancedMode,
 		DefaultNameserver:  generic.BootstrapResolvers,
-		Nameserver:         generic.Nameserver,
+		Nameserver:         generic.DefaultDoH,
 		FakeIPFilter:       generic.FakeIPFilter,
 		HasScopedResolvers: hasScopedUpstreams(policy.Upstreams),
 	}
@@ -62,9 +69,9 @@ func projectClashDNS(policy domain.DNSPolicy) clashDNSView {
 		return view
 	}
 
-	view.ProxyServerNameserver = cloneStringsOrFallback(policy.Upstreams.ProxyBootstrap, generic.Nameserver)
-	view.DirectNameserver = cloneStringsOrFallback(policy.Upstreams.Direct, generic.Nameserver)
-	view.Nameserver = cloneStringsOrFallback(policy.Upstreams.Proxy, generic.Nameserver)
+	view.ProxyServerNameserver = generic.DirectDoH
+	view.DirectNameserver = generic.DirectDoH
+	view.Nameserver = generic.DefaultDoH
 	return view
 }
 
@@ -81,7 +88,7 @@ func projectClashScriptDNS(policy domain.DNSPolicy) clashScriptDNSView {
 }
 
 func hasScopedUpstreams(policy domain.DNSUpstreamPolicy) bool {
-	return len(policy.ProxyBootstrap) > 0 || len(policy.Direct) > 0 || len(policy.Proxy) > 0
+	return len(policy.Direct) > 0 || len(policy.Fallback) > 0
 }
 
 func cloneStringsOrFallback(values []string, fallback []string) []string {

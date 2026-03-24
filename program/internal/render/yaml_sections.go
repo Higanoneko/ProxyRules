@@ -11,9 +11,11 @@ import (
 func yamlHeadPlaceholders(plan domain.PolicyPlan) map[string]any {
 	dns := projectGenericDNS(plan.DNS)
 	return map[string]any{
-		"DNS_IP_List":         append([]string(nil), dns.BootstrapResolvers...),
-		"DNS_DoH_List":        append([]string(nil), dns.Nameserver...),
-		"Fake_IP_Filter_List": append([]string(nil), dns.FakeIPFilter...),
+		"DNS_IP_List":          append([]string(nil), dns.BootstrapResolvers...),
+		"DNS_DoH_List":         append([]string(nil), dns.Nameserver...),
+		"DNS_Default_DoH_List": append([]string(nil), dns.DefaultDoH...),
+		"DNS_Direct_DoH_List":  append([]string(nil), dns.DirectDoH...),
+		"Fake_IP_Filter_List":  append([]string(nil), dns.FakeIPFilter...),
 	}
 }
 

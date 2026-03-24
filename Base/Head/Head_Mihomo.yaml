@@ -24,9 +24,11 @@ dns:
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-range6: fdfe:dcba:9876::1/64
-  default-nameserver: {DNS_IP_List}
-  nameserver: {DNS_DoH_List}
-  fake-ip-filter: {Fake_IP_Filter_List}
+  default-nameserver: "$DNS_IP_List"
+  direct-nameserver: "$DNS_Direct_DoH_List"
+  proxy-server-nameserver: "$DNS_Direct_DoH_List"
+  nameserver: "$DNS_Default_DoH_List"
+  fake-ip-filter: "$Fake_IP_Filter_List"
 
 sniffer:
   sniff:

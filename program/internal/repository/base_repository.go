@@ -40,17 +40,14 @@ type BaseData struct {
 
 type dnsConfig struct {
 	DNS struct {
-		IP             []string `yaml:"IP"`
-		DefaultDoH     []string `yaml:"Default_DoH"`
-		ProxyServerDoH []string `yaml:"Proxy_Server_DoH"`
-		DirectDoH      []string `yaml:"Direct_DoH"`
-		ProxyDoH       []string `yaml:"Proxy_DoH"`
+		IP          []string `yaml:"IP"`
+		DefaultDoH  []string `yaml:"Default_DoH"`
+		DirectDoH   []string `yaml:"Direct_DoH"`
+		FallbackDoH []string `yaml:"Fallback_DoH"`
 	} `yaml:"DNS"`
-	LegacyDNSIP             []string `yaml:"DNS_IP"`
-	LegacyDNSDoH            []string `yaml:"DNS_DoH"`
-	LegacyDNSDoHProxyServer []string `yaml:"DNS_DoH_Proxy_Server"`
-	LegacyDNSDoHDirect      []string `yaml:"DNS_DoH_Direct"`
-	LegacyDNSDoHProxy       []string `yaml:"DNS_DoH_Proxy"`
+	LegacyDNSIP        []string `yaml:"DNS_IP"`
+	LegacyDNSDoH       []string `yaml:"DNS_DoH"`
+	LegacyDNSDoHDirect []string `yaml:"DNS_DoH_Direct"`
 }
 
 type portsConfig struct {
@@ -226,10 +223,9 @@ func (c dnsConfig) source() domain.DNSSource {
 	return domain.DNSSource{
 		BootstrapResolvers: cloneStrings(firstConfiguredGroup(c.DNS.IP, c.LegacyDNSIP)),
 		Upstreams: domain.DNSUpstreamPolicy{
-			Default:        cloneStrings(firstConfiguredGroup(c.DNS.DefaultDoH, c.LegacyDNSDoH)),
-			ProxyBootstrap: cloneStrings(firstConfiguredGroup(c.DNS.ProxyServerDoH, c.LegacyDNSDoHProxyServer)),
-			Direct:         cloneStrings(firstConfiguredGroup(c.DNS.DirectDoH, c.LegacyDNSDoHDirect)),
-			Proxy:          cloneStrings(firstConfiguredGroup(c.DNS.ProxyDoH, c.LegacyDNSDoHProxy)),
+			Default:  cloneStrings(firstConfiguredGroup(c.DNS.DefaultDoH, c.LegacyDNSDoH)),
+			Direct:   cloneStrings(firstConfiguredGroup(c.DNS.DirectDoH, c.LegacyDNSDoHDirect)),
+			Fallback: cloneStrings(firstConfiguredGroup(c.DNS.FallbackDoH)),
 		},
 	}
 }

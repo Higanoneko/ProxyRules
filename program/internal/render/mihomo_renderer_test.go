@@ -41,6 +41,11 @@ func TestRenderBox4RootConfigPreservesTemplateAndCoreSections(t *testing.T) {
 			t.Fatalf("expected %s in tun config", marker)
 		}
 	}
+	for _, marker := range []string{"listen: 0.0.0.0:1053", "fake-ip-range: 198.18.0.1/16", "fake-ip-range6: fdfe:dcba:9876::1/64"} {
+		if !strings.Contains(content, marker) {
+			t.Fatalf("expected %s in box4root dns config", marker)
+		}
+	}
 	if strings.Contains(content, "{DNS_IP_List}") {
 		t.Fatal("expected placeholders resolved")
 	}
@@ -52,6 +57,29 @@ func TestRenderBox4RootConfigPreservesTemplateAndCoreSections(t *testing.T) {
 	}
 	if strings.Index(content, "\n  - DST-PORT,53,DNS_Hijack\n") > strings.Index(content, "\n  - RULE-SET,") {
 		t.Fatal("expected DNS_Hijack rule to stay before generated rules")
+	}
+}
+
+func TestRenderStandardConfigPreservesHeadDNSFields(t *testing.T) {
+	base, err := repository.NewBaseRepository(mihomoProjectRoot()).Load()
+	if err != nil {
+		t.Fatalf("load base: %v", err)
+	}
+
+	plan, err := service.NewPolicyPlanBuilder(base).Build(true, nil)
+	if err != nil {
+		t.Fatalf("build plan: %v", err)
+	}
+
+	content, err := render.NewMihomoRenderer(base).RenderStandard(plan, false)
+	if err != nil {
+		t.Fatalf("render standard: %v", err)
+	}
+
+	for _, marker := range []string{"listen: 0.0.0.0:1053", "fake-ip-range: 198.18.0.1/16", "fake-ip-range6: fdfe:dcba:9876::1/64"} {
+		if !strings.Contains(content, marker) {
+			t.Fatalf("expected %s in standard dns config", marker)
+		}
 	}
 }
 

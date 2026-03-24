@@ -201,9 +201,8 @@ func containsColon(value string) bool {
 
 func cloneDNSUpstreamPolicy(policy domain.DNSUpstreamPolicy) domain.DNSUpstreamPolicy {
 	return domain.DNSUpstreamPolicy{
-		Default:        append([]string(nil), policy.Default...),
-		ProxyBootstrap: append([]string(nil), policy.ProxyBootstrap...),
-		Direct:         append([]string(nil), policy.Direct...),
-		Proxy:          append([]string(nil), policy.Proxy...),
+		Default:  append([]string(nil), policy.Default...),
+		Direct:   append([]string(nil), policy.Direct...),
+		Fallback: append([]string(nil), policy.Fallback...),
 	}
 }

@@ -10,11 +10,8 @@ DNS:
     - https://doh.pub/dns-query
     - https://cloudflare-dns.com/dns-query
     - https://dns.google/dns-query
-  Proxy_Server_DoH:
-    - https://doh.pub/dns-query
   Direct_DoH:
     - https://doh.pub/dns-query
-  Proxy_DoH:
+  Fallback_DoH:
     - https://cloudflare-dns.com/dns-query
     - https://dns.google/dns-query
-

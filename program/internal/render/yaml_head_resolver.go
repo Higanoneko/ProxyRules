@@ -45,12 +45,19 @@ func ComposeYAML(
 func applyYAMLPlaceholders(templateContent string, placeholders map[string]any) (string, error) {
 	preparedContent := templateContent
 	for key, value := range placeholders {
-		token := "{" + key + "}"
 		serialized, err := json.Marshal(value)
 		if err != nil {
 			return "", err
 		}
-		preparedContent = strings.ReplaceAll(preparedContent, token, string(serialized))
+		replacement := string(serialized)
+		for _, token := range []string{
+			`"$` + key + `"`,
+			`'$` + key + `'`,
+			"{" + key + "}",
+			"$" + key,
+		} {
+			preparedContent = strings.ReplaceAll(preparedContent, token, replacement)
+		}
 	}
 	return preparedContent, nil
 }
