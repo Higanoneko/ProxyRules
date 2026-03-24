@@ -72,10 +72,11 @@ proxies:
 # Normal Start From Here
 dns:
   enable: true
-  ipv6: false
-  enhanced-mode: fake-ip
+  ipv6: true
   listen: 0.0.0.0:1053
+  enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
+  fake-ip-range6: fdfe:dcba:9876::1/64
   default-nameserver: {DNS_IP_List}
   nameserver: {DNS_IP_List}
   fake-ip-filter: {Fake_IP_Filter_List}
