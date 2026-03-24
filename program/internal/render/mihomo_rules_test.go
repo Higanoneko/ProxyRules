@@ -49,3 +49,23 @@ rules:
 		t.Fatalf("unexpected trailing custom rule: %s", resolved[2])
 	}
 }
+
+func TestResolveMihomoRulesFallsBackToGeneratedRulesWhenPackAbsent(t *testing.T) {
+	head := `
+rules:
+  - DST-PORT,53,DNS_Hijack
+`
+	generated := []string{"RULE-SET,AI,AI", "RULE-SET,Telegram,Telegram"}
+
+	resolved, err := resolveMihomoRules(head, nil, generated)
+	if err != nil {
+		t.Fatalf("resolve mihomo rules: %v", err)
+	}
+
+	if len(resolved) != 2 {
+		t.Fatalf("expected 2 rules, got %d", len(resolved))
+	}
+	if resolved[0] != "RULE-SET,AI,AI" || resolved[1] != "RULE-SET,Telegram,Telegram" {
+		t.Fatalf("expected normal generated rules, got %#v", resolved)
+	}
+}

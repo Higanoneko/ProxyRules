@@ -73,7 +73,14 @@ func ComposeSectioned(
 func applyTextPlaceholders(templateContent string, placeholders map[string]string) string {
 	preparedContent := templateContent
 	for key, value := range placeholders {
-		preparedContent = strings.ReplaceAll(preparedContent, "{"+key+"}", value)
+		for _, token := range []string{
+			`"$` + key + `"`,
+			`'$` + key + `'`,
+			"{" + key + "}",
+			"$" + key,
+		} {
+			preparedContent = strings.ReplaceAll(preparedContent, token, value)
+		}
 	}
 	return preparedContent
 }

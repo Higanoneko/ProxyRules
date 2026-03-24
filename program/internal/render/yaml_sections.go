@@ -11,11 +11,12 @@ import (
 func yamlHeadPlaceholders(plan domain.PolicyPlan) map[string]any {
 	dns := projectGenericDNS(plan.DNS)
 	return map[string]any{
-		"DNS_IP_List":          append([]string(nil), dns.BootstrapResolvers...),
-		"DNS_DoH_List":         append([]string(nil), dns.Nameserver...),
-		"DNS_Default_DoH_List": append([]string(nil), dns.DefaultDoH...),
-		"DNS_Direct_DoH_List":  append([]string(nil), dns.DirectDoH...),
-		"Fake_IP_Filter_List":  append([]string(nil), dns.FakeIPFilter...),
+		"DNS_IP_List":               append([]string(nil), dns.BootstrapResolvers...),
+		"DNS_DoH_List":              append([]string(nil), dns.Nameserver...),
+		"DNS_Default_DoH_List":      append([]string(nil), dns.DefaultDoH...),
+		"DNS_Proxy_Server_DoH_List": append([]string(nil), dns.ProxyServerDoH...),
+		"DNS_Direct_DoH_List":       append([]string(nil), dns.DirectDoH...),
+		"Fake_IP_Filter_List":       append([]string(nil), dns.FakeIPFilter...),
 	}
 }
 
@@ -23,8 +24,13 @@ func textHeadPlaceholders(plan domain.PolicyPlan, base repository.BaseData) map[
 	dns := projectGenericDNS(plan.DNS)
 	return map[string]string{
 		"DNS_IP_list":               strings.Join(dns.BootstrapResolvers, ", "),
+		"DNS_IP_List":               strings.Join(dns.BootstrapResolvers, ", "),
 		"DNS_DoH_list":              strings.Join(dns.Nameserver, ", "),
+		"DNS_Default_DoH_List":      strings.Join(dns.DefaultDoH, ", "),
+		"DNS_Proxy_Server_DoH_List": strings.Join(dns.ProxyServerDoH, ", "),
+		"DNS_Direct_DoH_List":       strings.Join(dns.DirectDoH, ", "),
 		"Fake_IP_Filter_list":       strings.Join(dns.FakeIPFilter, ", "),
+		"Fake_IP_Filter_List":       strings.Join(dns.FakeIPFilter, ", "),
 		"Surge_Always_Real_IP_List": strings.Join(base.SurgeAlwaysRealIP, ", "),
 	}
 }

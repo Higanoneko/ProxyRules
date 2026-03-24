@@ -12,6 +12,8 @@ DNS:
     - https://dns.google/dns-query
   Direct_DoH:
     - https://doh.pub/dns-query
+  Proxy_Server_DoH:
+    - https://doh.pub/dns-query
   Fallback_DoH:
     - https://cloudflare-dns.com/dns-query
     - https://dns.google/dns-query

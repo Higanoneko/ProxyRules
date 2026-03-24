@@ -133,6 +133,11 @@ func TestRenderArgsScriptContainsSharedPayload(t *testing.T) {
 			t.Fatalf("expected %s in args script", marker)
 		}
 	}
+	for _, marker := range []string{`"listen":"0.0.0.0:1053"`, `"fake-ip-range":"198.18.0.1/16"`, `"fake-ip-range6":"fdfe:dcba:9876::1/64"`} {
+		if !strings.Contains(content, marker) {
+			t.Fatalf("expected %s in args script dns template", marker)
+		}
+	}
 }
 
 func mihomoProjectRoot() string {

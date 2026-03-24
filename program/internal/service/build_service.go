@@ -126,14 +126,14 @@ func (s *BuildService) generateMihomo(outputRoot string, planIPv6True domain.Pol
 	mihomoOutputDir := filepath.Join(outputRoot, "Mihomo")
 	box4RootOutputDir := filepath.Join(outputRoot, "Box4Root")
 	if err := removeFiles(
-		filepath.Join(mihomoOutputDir, "box4root_config.yaml"),
-		filepath.Join(mihomoOutputDir, "box4root_config_no_ipv6.yaml"),
-		filepath.Join(mihomoOutputDir, "box4root_config_tun.yaml"),
-		filepath.Join(mihomoOutputDir, "box4root_config_tun_no_ipv6.yaml"),
-		filepath.Join(box4RootOutputDir, "box4root_config.yaml"),
-		filepath.Join(box4RootOutputDir, "box4root_config_no_ipv6.yaml"),
-		filepath.Join(box4RootOutputDir, "box4root_config_tun.yaml"),
-		filepath.Join(box4RootOutputDir, "box4root_config_tun_no_ipv6.yaml"),
+		filepath.Join(mihomoOutputDir, "Box4Root_mihomo_config.yaml"),
+		filepath.Join(mihomoOutputDir, "Box4Root_mihomo_config_no_ipv6.yaml"),
+		filepath.Join(mihomoOutputDir, "Box4Root_mihomo_config_tun.yaml"),
+		filepath.Join(mihomoOutputDir, "Box4Root_mihomo_config_tun_no_ipv6.yaml"),
+		filepath.Join(box4RootOutputDir, "Box4Root_mihomo_config.yaml"),
+		filepath.Join(box4RootOutputDir, "Box4Root_mihomo_config_no_ipv6.yaml"),
+		filepath.Join(box4RootOutputDir, "Box4Root_mihomo_config_tun.yaml"),
+		filepath.Join(box4RootOutputDir, "Box4Root_mihomo_config_tun_no_ipv6.yaml"),
 	); err != nil {
 		return err
 	}
@@ -157,22 +157,22 @@ func (s *BuildService) generateMihomo(outputRoot string, planIPv6True domain.Pol
 	}); err != nil {
 		return err
 	}
-	if err := writeRenderResult(filepath.Join(box4RootOutputDir, "Box4Root_config_tun.yaml"), generatedAt, func() (string, error) {
+	if err := writeRenderResult(filepath.Join(box4RootOutputDir, "Box4Root_mihomo_config_tun.yaml"), generatedAt, func() (string, error) {
 		return s.mihomo.RenderBox4Root(planIPv6True, true)
 	}); err != nil {
 		return err
 	}
-	if err := writeRenderResult(filepath.Join(box4RootOutputDir, "Box4Root_config_tun_no_ipv6.yaml"), generatedAt, func() (string, error) {
+	if err := writeRenderResult(filepath.Join(box4RootOutputDir, "Box4Root_mihomo_config_tun_no_ipv6.yaml"), generatedAt, func() (string, error) {
 		return s.mihomo.RenderBox4Root(planIPv6False, true)
 	}); err != nil {
 		return err
 	}
-	if err := writeRenderResult(filepath.Join(box4RootOutputDir, "Box4Root_config.yaml"), generatedAt, func() (string, error) {
+	if err := writeRenderResult(filepath.Join(box4RootOutputDir, "Box4Root_mihomo_config.yaml"), generatedAt, func() (string, error) {
 		return s.mihomo.RenderBox4Root(planIPv6True, false)
 	}); err != nil {
 		return err
 	}
-	if err := writeRenderResult(filepath.Join(box4RootOutputDir, "Box4Root_config_no_ipv6.yaml"), generatedAt, func() (string, error) {
+	if err := writeRenderResult(filepath.Join(box4RootOutputDir, "Box4Root_mihomo_config_no_ipv6.yaml"), generatedAt, func() (string, error) {
 		return s.mihomo.RenderBox4Root(planIPv6False, false)
 	}); err != nil {
 		return err

@@ -5,6 +5,7 @@
 *  集成 [SukkaW/Surge](https://github.com/SukkaW/Surge) 、 [Cats-Team/AdRules](https://github.com/Cats-Team/AdRules) 、 [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script) 和 [dler-io/Rules](https://github.com/dler-io/Rules) 规则
 *  包含多种分流策略
 *  支持 Mihomo、Stash、Loon 等代理工具的覆写文件或配置文件自动生成
+*  查看 [生成器使用文档](README_Dev.md) 了解如何使用生成器生成属于自己的配置文件
 *  Go 生成程序现已集中放在 `program/` 目录
 
 
@@ -38,10 +39,10 @@
 **Box4Root 配置 (.yaml)**
 
 用于 [Box4Root](https://github.com/boxproxy/box) 等运行在 Shell 环境中的工具。
-  - [Box4Root_config.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Box4Root/Box4Root_config.yaml) - 启用 IPv6，禁用 TUN。 ⭐ 推荐（需要更改 Box4Root 的运行模式为 Enhanced 等非 TUN 模式）
-  - [Box4Root_config_no_ipv6.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Box4Root/Box4Root_config_no_ipv6.yaml) - 禁用 IPv6，禁用 TUN。（需要更改 Box4Root 的运行模式为 Enhanced 等非 TUN 模式）
-  - [Box4Root_config_tun.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Box4Root/Box4Root_config_tun.yaml) - 启用 IPv6，启用 TUN。
-  - [Box4Root_config_tun_no_ipv6.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Box4Root/Box4Root_config_tun_no_ipv6.yaml) - 禁用 IPv6，启用 TUN。
+  - [Box4Root_mihomo_config.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Box4Root/Box4Root_mihomo_config.yaml) - 启用 IPv6，禁用 TUN。 ⭐ 推荐（需要更改 Box4Root 的运行模式为 Enhanced 等非 TUN 模式）
+  - [Box4Root_mihomo_config_no_ipv6.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Box4Root/Box4Root_mihomo_config_no_ipv6.yaml) - 禁用 IPv6，禁用 TUN。（需要更改 Box4Root 的运行模式为 Enhanced 等非 TUN 模式）
+  - [Box4Root_mihomo_config_tun.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Box4Root/Box4Root_mihomo_config_tun.yaml) - 启用 IPv6，启用 TUN。
+  - [Box4Root_mihomo_config_tun_no_ipv6.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Box4Root/Box4Root_mihomo_config_tun_no_ipv6.yaml) - 禁用 IPv6，启用 TUN。
 
 
 **Sparkle/Clash Party 使用方法**

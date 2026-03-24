@@ -2,6 +2,7 @@ package domain
 
 type DNSUpstreamPolicy struct {
 	Default        []string
+	ProxyServer    []string
 	Direct         []string
 	Fallback       []string
 }

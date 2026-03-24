@@ -1,6 +1,7 @@
-# Generated at (UTC): 2026-03-24T11:51:13Z
+# Generated at (UTC): 2026-03-24T13:48:55Z
 
 # PianCat's ProxyRules - Box4Root 复杂配置
+
 # 如不会配置，也可自行寻找懒人配置，例如(Surfing 模块配置)：https://raw.githubusercontent.com/GitMetaio/Surfing/refs/heads/main/box_bll/clash/config.yaml
 
 proxy-providers:
@@ -16,17 +17,28 @@ proxy-providers:
       timeout: 1000
       tolerance: 100
   # 多订阅按照下面照葫芦画瓢即可
-  # proxy2:
-  #   type: http
-  #   url: "填写订阅链接"
-  #   path: ./proxy_provider/proxy2.yaml
-  #   interval: 3600
-  #   health-check:
-  #     enable: true
-  #     url: https://cp.cloudflare.com
-  #     interval: 300
-  #     timeout: 1000
-  #     tolerance: 100
+# proxy2:
+
+#   type: http
+
+#   url: "填写订阅链接"
+
+#   path: ./proxy_provider/proxy2.yaml
+
+#   interval: 3600
+
+#   health-check:
+
+#     enable: true
+
+#     url: https://cp.cloudflare.com
+
+#     interval: 300
+
+#     timeout: 1000
+
+#     tolerance: 100
+
 mixed-port: 56365
 redir-port: 9797
 tproxy-port: 9898
@@ -39,6 +51,7 @@ tcp-concurrent: true
 log-level: error
 find-process-mode: always
 # global-client-fingerprint: random
+
 external-controller: 0.0.0.0:9090
 external-ui: ./dashboard
 external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"

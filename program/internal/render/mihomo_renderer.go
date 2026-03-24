@@ -186,8 +186,8 @@ func resolveMihomoRules(head string, placeholders map[string]any, generatedRules
 		return append([]string(nil), generatedRules...), nil
 	}
 
-	resolved := make([]string, 0, len(rulesNode.Content)+len(generatedRules))
 	placeholderFound := false
+	resolved := make([]string, 0, len(rulesNode.Content)+len(generatedRules))
 	for _, entry := range rulesNode.Content {
 		if _, ok := proxyRulesPackPlaceholders[entry.Value]; ok {
 			resolved = append(resolved, generatedRules...)
@@ -198,7 +198,7 @@ func resolveMihomoRules(head string, placeholders map[string]any, generatedRules
 	}
 
 	if !placeholderFound {
-		resolved = append(resolved, generatedRules...)
+		return append([]string(nil), generatedRules...), nil
 	}
 	return resolved, nil
 }

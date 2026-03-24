@@ -9,6 +9,7 @@ import (
 	"github.com/PianCat/ProxyRules/internal/catalog"
 	"github.com/PianCat/ProxyRules/internal/domain"
 	"github.com/PianCat/ProxyRules/internal/repository"
+	"gopkg.in/yaml.v3"
 )
 
 //go:embed templates/mihomo_runtime.js.tpl
@@ -70,13 +71,16 @@ func (r *MihomoScriptRenderer) render(plan domain.PolicyPlan, parameterBlock str
 	}
 
 	dns := projectGenericDNS(plan.DNS)
-	clashDNS := projectClashScriptDNS(plan.DNS)
 
 	dnsIPJSON, err := json.Marshal(dns.BootstrapResolvers)
 	if err != nil {
 		return "", err
 	}
-	dnsTemplateJSON, err := json.Marshal(clashDNS)
+	dnsTemplateNode, err := r.dnsTemplateNode(plan)
+	if err != nil {
+		return "", err
+	}
+	dnsTemplateJSON, err := jsonFromNode(dnsTemplateNode)
 	if err != nil {
 		return "", err
 	}
@@ -100,7 +104,7 @@ func (r *MihomoScriptRenderer) render(plan domain.PolicyPlan, parameterBlock str
 	replacer := strings.NewReplacer(
 		"__PARAMETER_BLOCK__", parameterBlock,
 		"__DNS_BOOTSTRAP_LIST__", string(dnsIPJSON),
-		"__DNS_TEMPLATE__", string(dnsTemplateJSON),
+		"__DNS_TEMPLATE__", dnsTemplateJSON,
 		"__MIXED_PORT__", fmt.Sprintf("%d", plan.Ports.Mixed),
 		"__FULL_DEFAULTS__", fullDefaultsJSON,
 		"__RULE_PROVIDERS__", ruleProvidersJSON,
@@ -112,6 +116,27 @@ func (r *MihomoScriptRenderer) render(plan domain.PolicyPlan, parameterBlock str
 		"__ISP_EXCLUDE_PATTERN__", string(ispExcludeJSON),
 	)
 	return replacer.Replace(mihomoRuntimeTemplate), nil
+}
+
+func (r *MihomoScriptRenderer) dnsTemplateNode(plan domain.PolicyPlan) (*yaml.Node, error) {
+	head, err := r.base.Head("mihomo")
+	if err != nil {
+		return nil, err
+	}
+
+	explicitRoot := newMappingNode()
+	appendMappingValue(explicitRoot, "dns", mihomoDNSNode(plan, true))
+
+	document, err := ComposeYAML(head, explicitRoot, yamlHeadPlaceholders(plan), nil, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	dnsNode := mappingValue(document.Content[0], "dns")
+	if dnsNode == nil {
+		return newMappingNode(), nil
+	}
+	return dnsNode, nil
 }
 
 func argsParameterBlock() string {
