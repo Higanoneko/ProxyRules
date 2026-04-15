@@ -108,7 +108,7 @@ func (r *LoonRenderer) remoteFilterLines() []string {
 	lines = append(lines, "# 其他节点筛选（排除以上所有地区）")
 	lines = append(lines, "# 使用负向预查来排除特定关键词：不含香港、台湾、新加坡、日本、美国")
 	lines = append(lines,
-		`Other_Filter = NameRegex, FilterKey = "^(?!.*(香港|港|HK|Hong Kong|HongKong|🇭🇰|台|新北|彰化|TW|Taiwan|🇹🇼|美国|美|US|United States|🇺🇸|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|🇯🇵|新加坡|坡|狮城|SG|Singapore|🇸🇬))"`,
+		`Other_Filter = NameRegex, FilterKey = "^(?!.*(香港|港|HK|hk|Hong Kong|HongKong|Hongkong|Hong kong|hongkong|hong kong|🇭🇰|台|新北|彰化|TW|Taiwan|TaiWan|Tai wan|Tai Wan|taiwan|tai wan|🇹🇼|美国|美|US|United States|🇺🇸|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|🇯🇵|新加坡|坡|狮城|SG|Singapore|🇸🇬))"`,
 	)
 	return lines
 }

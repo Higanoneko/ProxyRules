@@ -340,7 +340,7 @@ proxy-groups:
   - name: 香港节点
     icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png
     include-all: true
-    filter: "(?i)香港|港|HK|hk|Hong Kong|HongKong|hongkong|\U0001F1ED\U0001F1F0"
+    filter: "(?i)香港|港|HK|hk|Hong Kong|HongKong|Hongkong|Hong kong|hongkong|hong kong|\U0001F1ED\U0001F1F0"
     type: url-test
     url: https://cp.cloudflare.com/generate_204
     interval: 60
@@ -349,7 +349,7 @@ proxy-groups:
   - name: 台湾节点
     icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png
     include-all: true
-    filter: "(?i)台|新北|彰化|TW|Taiwan|\U0001F1F9\U0001F1FC"
+    filter: "(?i)台|新北|彰化|TW|Taiwan|TaiWan|Tai wan|Tai Wan|taiwan|tai wan|\U0001F1F9\U0001F1FC"
     type: url-test
     url: https://cp.cloudflare.com/generate_204
     interval: 60
@@ -385,7 +385,7 @@ proxy-groups:
   - name: 其他节点
     icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png
     include-all: true
-    exclude-filter: "(?i)香港|港|HK|hk|Hong Kong|HongKong|hongkong|\U0001F1ED\U0001F1F0|台|新北|彰化|TW|Taiwan|\U0001F1F9\U0001F1FC|新加坡|坡|狮城|SG|Singapore|\U0001F1F8\U0001F1EC|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|\U0001F1EF\U0001F1F5|美国|美|US|United States|\U0001F1FA\U0001F1F8"
+    exclude-filter: "(?i)香港|港|HK|hk|Hong Kong|HongKong|Hongkong|Hong kong|hongkong|hong kong|\U0001F1ED\U0001F1F0|台|新北|彰化|TW|Taiwan|\U0001F1F9\U0001F1FC|新加坡|坡|狮城|SG|Singapore|\U0001F1F8\U0001F1EC|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|\U0001F1EF\U0001F1F5|美国|美|US|United States|\U0001F1FA\U0001F1F8"
     type: select
   - name: GLOBAL
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png

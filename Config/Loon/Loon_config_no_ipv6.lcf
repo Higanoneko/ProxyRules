@@ -40,10 +40,10 @@ https://raw.githubusercontent.com/Peng-YM/Loon-Gallery/master/loon-gallery.plugi
 ALL_Filter = NameRegex, FilterKey = ".*"
 
 # 香港节点筛选
-HK_Filter = NameRegex, FilterKey = "(?i)香港|港|HK|hk|Hong Kong|HongKong|hongkong|🇭🇰"
+HK_Filter = NameRegex, FilterKey = "(?i)香港|港|HK|hk|Hong Kong|HongKong|Hongkong|Hong kong|hongkong|hong kong|🇭🇰"
 
 # 台湾节点筛选
-TW_Filter = NameRegex, FilterKey = "(?i)台|新北|彰化|TW|Taiwan|🇹🇼"
+TW_Filter = NameRegex, FilterKey = "(?i)台|新北|彰化|TW|Taiwan|TaiWan|Tai wan|Tai Wan|taiwan|tai wan|🇹🇼"
 
 # 新加坡节点筛选
 SG_Filter = NameRegex, FilterKey = "(?i)新加坡|坡|狮城|SG|Singapore|🇸🇬"
@@ -56,7 +56,7 @@ US_Filter = NameRegex, FilterKey = "(?i)美国|美|US|United States|🇺🇸"
 
 # 其他节点筛选（排除以上所有地区）
 # 使用负向预查来排除特定关键词：不含香港、台湾、新加坡、日本、美国
-Other_Filter = NameRegex, FilterKey = "^(?!.*(香港|港|HK|Hong Kong|HongKong|🇭🇰|台|新北|彰化|TW|Taiwan|🇹🇼|美国|美|US|United States|🇺🇸|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|🇯🇵|新加坡|坡|狮城|SG|Singapore|🇸🇬))"
+Other_Filter = NameRegex, FilterKey = "^(?!.*(香港|港|HK|hk|Hong Kong|HongKong|Hongkong|Hong kong|hongkong|hong kong|🇭🇰|台|新北|彰化|TW|Taiwan|TaiWan|Tai wan|Tai Wan|taiwan|tai wan|🇹🇼|美国|美|US|United States|🇺🇸|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|🇯🇵|新加坡|坡|狮城|SG|Singapore|🇸🇬))"
 
 [Proxy Group]
 选择代理 = select, 香港节点, 台湾节点, 新加坡节点, 日本节点, 美国节点, 其他节点, 手动选择, DIRECT, img-url = https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Proxy.png

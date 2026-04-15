@@ -7,12 +7,12 @@ const ISPExcludePattern = `(?i)家宽|家庭|家庭宽带|商宽|商业宽带|�
 var defaultCountries = []domain.CountryMeta{
 	{
 		Name:    "香港",
-		Pattern: `(?i)香港|港|HK|hk|Hong Kong|HongKong|hongkong|🇭🇰`,
+		Pattern: `(?i)香港|港|HK|hk|Hong Kong|HongKong|Hongkong|Hong kong|hongkong|hong kong|🇭🇰`,
 		IconURL: "https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png",
 	},
 	{
 		Name:    "台湾",
-		Pattern: `(?i)台|新北|彰化|TW|Taiwan|🇹🇼`,
+		Pattern: `(?i)台|新北|彰化|TW|Taiwan|TaiWan|Tai wan|Tai Wan|taiwan|tai wan|🇹🇼`,
 		IconURL: "https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png",
 	},
 	{
