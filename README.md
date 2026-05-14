@@ -131,43 +131,84 @@ wget -P /path/to/config/mihomo_config.yaml https://raw.githubusercontent.com/Pia
 
 本仓库包含以下分流策略组：
 
-```yaml
-分流策略组:
-  - AI                    # AI 服务
-  - Telegram              # Telegram 即时通讯
-  - YouTube               # YouTube 视频平台
-  - Netflix               # Netflix 流媒体
-  - TikTok                # TikTok 短视频
-  - Spotify               # Spotify 音乐
-  - Steam                 # Steam 游戏平台
-  - Game                  # 游戏服务
-  - E-Hentai              # E-Hentai 画廊
-  - PornSite              # 成人网站
-  - Stream_US             # 美国流媒体
-  - Stream_TW             # 台湾流媒体
-  - Stream_JP             # 日本流媒体
-  - Stream_Global         # 全球流媒体
-  - Apple                 # Apple 服务
-  - Microsoft             # Microsoft 服务
-  - Google                # Google 服务
-  - GoogleFCM             # Google FCM 推送
-  - SogouPrivacy          # 搜狗输入法隐私保护
-  - ADBlock               # 广告拦截
+### 规则列表
 
-节点组:
-  - HongKong              # 香港节点
-  - Taiwan                # 台湾节点
-  - Singapore             # 新加坡节点
-  - Unite State           # 美国节点
-  - Japan                 # 日本节点
-  - Others                # 其他地区节点
-```
+| 策略组 | 包含的规则 |
+|--------|-----------|
+| AI | AI |
+| Telegram | Telegram |
+| YouTube | YouTube, YouTubeMusic |
+| Netflix | Netflix |
+| TikTok | TikTok |
+| Spotify | Spotify |
+| Steam | Steam |
+| Game | Game, Playhorny, Nikke |
+| E-Hentai | E-Hentai |
+| PornSite | PornSite, Furrybar |
+| US Media | Stream\_US |
+| Taiwan Media | Stream\_TW |
+| Japan Media | Stream\_JP |
+| Global Media | Stream\_Global |
+| Apple | Apple |
+| Microsoft | Microsoft |
+| Google | Google |
+| Google FCM | GoogleFCM |
+| Sogou Privacy | SogouPrivacy |
+| ADBlock | ADBlock |
+| 直接连接 | LocalNetwork, LocalNetworkIP |
+
+### 节点组
+
+| 名称 | 说明 |
+|------|------|
+| 香港节点 | HongKong |
+| 台湾节点 | Taiwan |
+| 新加坡节点 | Singapore |
+| 美国节点 | Unite State |
+| 日本节点 | Japan |
+| 其他节点 | 其他地区节点 |
 
 ## Wireguard 配置（Easytier）
 
 本仓库还提供了适用于 Wireguard 的 Easytier 配置文件，仅拥有适用于 JavaScript 的 Mihomo 覆写脚本版本以及 Surge Module 。
 
 相关文件位置处于 `Wireguard_Easytier` 文件夹下，请自行查阅使用。
+
+## 自定义规则
+
+规则定义完全由 `Base/Rules/RemoteRules.yaml` 驱动，**无需修改 Go 代码**。
+
+文件分为两个区域：
+
+- **`BaseRules`**：基础规则集，每条包含完整的 `policyname`（策略组归属）、`tagname`（展示名）
+- **`CustomRules`**：自定义规则，通过 `parenttag` 归入已有策略组（如 Playhorny 的 `parenttag: "Game"` 使其归入 Game）
+
+### 新增一条规则
+
+在 `CustomRules` 下添加：
+
+```yaml
+CustomRules:
+  MyRule:
+    name: "MyRule"
+    category: "PianCat"              # 规则源分类，对应 RemoteRulesLinkBase.yaml
+    behavior: "classical"             # domain / classical / ip
+    remotefile: "./MyRule/MyRule.list" # 远程规则文件路径
+    parenttag: "Game"                # 归入 Game 策略组
+```
+
+| 字段 | 必需 | 说明 |
+|------|------|------|
+| `name` | 是 | 规则显示名称 |
+| `category` | 是 | 规则源分类，对应 `RemoteRulesLinkBase.yaml` 中的 Categories |
+| `behavior` | 是 | `domain` / `classical` / `ip` |
+| `remotefile` | 是 | 远程规则文件路径，拼接基础 URL 形成完整下载链接 |
+| `policyname` | BaseRules 必需 | 归属的策略组名称 |
+| `tagname` | 可选 | 展示标签名，默认使用 `name` |
+| `parenttag` | 可选 | 父规则 RuleID，子规则继承父规则的 `policyname` |
+| `surgeoption` | 可选 | Surge 专用参数（如 `extended-matching`） |
+
+> 规则顺序与 YAML 书写顺序一致，BaseRules 在前、CustomRules 在后。
 
 ## 开发
 
@@ -196,10 +237,6 @@ GitHub Actions 现在只保留 `auto_generate.yml`，专门负责生成并提交
 ### 工具与资源
 
 - **[MetaCubeX/meta-rules-dat](https://github.com/MetaCubeX/meta-rules-dat)** - 提供 GeoIP 和 IPASN 数据库
-
-### 社区
-
-- **[Linux.DO](https://linux.do/)**
 
 ---
 

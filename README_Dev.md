@@ -48,7 +48,7 @@ Wireguard_Easytier/ -> Easytier_Wireguard 相关产物
 - Loon / Surge：生成带策略组和规则的配置骨架，再接入你自己的节点来源
 - Box4Root：生成可直接修改订阅地址的完整模板文件
 
-如果你只是想做一套“自己的规则与模板风格”，一般只需要改 `Base/` 下面的文件，不需要改 Go 代码。
+如果你只是想做一套“自己的规则与模板风格”，只需要改 `Base/` 下面的文件，不需要改 Go 代码。规则定义完全由 `Base/Rules/RemoteRules.yaml` 的 `BaseRules` / `CustomRules` 分区驱动，新增规则零代码改动。
 
 ---
 
@@ -296,14 +296,56 @@ DNS:
 
 ### 6.6 改规则内容：`Base/Rules/RemoteRules.yaml`
 
-这里定义“有哪些规则组”“每个规则组的名字是什么”“对应哪个规则源分类”“行为类型是什么”“远程文件路径是什么”。
+该文件是**规则定义的唯一数据源**，分为两个区域：
+
+- **`BaseRules`**：基础规则集，每条规则包含完整的自描述字段
+- **`CustomRules`**：自定义规则，可通过 `parenttag` 继承已有策略组
+
+**BaseRules 条目示例：**
+
+```yaml
+BaseRules:
+  YouTube:
+    name: "YouTube"
+    policyname: "YouTube"        # 归属的策略组名称
+    tagname: "YouTube"           # 展示标签名
+    category: "blackmatrix"
+    behavior: "classical"
+    remotefile: "./YouTube/YouTube.list"
+```
+
+**CustomRules 条目示例（通过 parenttag 继承策略组）：**
+
+```yaml
+CustomRules:
+  Playhorny:
+    name: "Playhorny"
+    category: "PianCat"
+    behavior: "classical"
+    remotefile: "./Playhorny/Playhorny.list"
+    parenttag: "Game"            # 归入 Game 策略组，无需写 policyname
+```
+
+**字段说明：**
+
+| 字段 | 适用区域 | 必需 | 说明 |
+|------|---------|------|------|
+| `name` | 全部 | 是 | 规则显示名称 |
+| `policyname` | BaseRules | 是 | 归属的策略组名称（需在 `policy_templates.go` 已定义） |
+| `tagname` | 全部 | 否 | 展示标签名，默认使用 `name` |
+| `category` | 全部 | 是 | 规则源分类，对应 `RemoteRulesLinkBase.yaml` |
+| `behavior` | 全部 | 是 | `domain` / `classical` / `ip` |
+| `remotefile` | 全部 | 是 | 远程规则文件路径，拼接基础 URL 形成完整下载链接 |
+| `parenttag` | 全部 | 否 | 父规则 RuleID，子规则从父规则继承 `policyname` |
+| `surgeoption` | 全部 | 否 | Surge 专用参数（如 `extended-matching`） |
 
 适合做的事：
 
-- 新增规则组
+- 新增规则组（在 `BaseRules` 或 `CustomRules` 下添加）
 - 删除不需要的规则组
-- 调整规则名称
+- 调整规则归属策略组（改 `policyname` 或 `parenttag`）
 - 更换某个规则组对应的远程规则文件
+- **新增自定义规则只需编辑此文件，零 Go 代码改动**
 
 ### 6.7 改规则源映射：`Base/Rules/RemoteRulesLinkBase.yaml`
 
@@ -489,11 +531,13 @@ cd program
 go run ./cmd/proxyrules --tool mihomo
 ```
 
-### 场景 C：我只想新增一个规则组
+### 场景 C：我只想新增一个自定义规则
 
 改：
 
-- `Base/Rules/RemoteRules.yaml`
+- `Base/Rules/RemoteRules.yaml`（在 `CustomRules` 下添加新条目）
+
+无需修改任何 Go 代码。规则通过 `parenttag` 自动继承父规则的策略组。
 
 如果新规则来自全新规则源，还要同时改：
 
