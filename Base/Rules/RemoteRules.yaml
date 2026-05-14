@@ -34,155 +34,236 @@
 # 扩展规则：
 # 按照现有格式添加新规则，确保 category 与 RulesLinkBase.yaml 中的分类一致
 
-rules:
+BaseRules:
+# AI
   AI:
     name: "AI"
+    policyname: "AI"
+    tagname: "AI"
     category: "dler"
     behavior: "classical"
     remotefile: "./AI Suite"
-  
+
+# Telegram  
   Telegram:
     name: "Telegram"
+    policyname: "Telegram"
+    tagname: "Telegram"
     category: "Sukka"
     behavior: "classical"
     remotefile: "./non_ip/telegram"
 
+# Youtube
   YouTube:
-    YouTubeVideo:
-      name: "YouTube"
-      category: "blackmatrix"
-      behavior: "classical"
-      remotefile: "./YouTube/YouTube.list"
-    YouTubeMusic:
-      name: "YouTubeMusic"
-      category: "blackmatrix"
-      behavior: "classical"
-      remotefile: "./YouTubeMusic/YouTubeMusic.list"
+    name: "YouTube"
+    policyname: "YouTube"
+    tagname: "YouTube"
+    category: "blackmatrix"
+    behavior: "classical"
+    remotefile: "./YouTube/YouTube.list"
+  YouTubeMusic:
+    name: "YouTubeMusic"
+    tagname: "YouTube Music"
+    category: "blackmatrix"
+    behavior: "classical"
+    remotefile: "./YouTubeMusic/YouTubeMusic.list"
+    parenttag: "YouTube"
 
+# Netflix
   Netflix:
     name: "Netflix"
+    policyname: "Netflix"
+    tagname: "Netflix"
     category: "blackmatrix"
     behavior: "classical"
     remotefile: "./Netflix/Netflix.list"
 
+# TikTok
   TikTok:
     name: "TikTok"
+    policyname: "TikTok"
+    tagname: "TikTok"
     category: "blackmatrix"
     behavior: "classical"
     remotefile: "./TikTok/TikTok.list"
 
+# Spotify
   Spotify:
     name: "Spotify"
+    policyname: "Spotify"
+    tagname: "Spotify"
     category: "blackmatrix"
     behavior: "classical"
     remotefile: "./Spotify/Spotify.list"
 
+# Steam
   Steam:
     name: "Steam"
+    policyname: "Steam"
+    tagname: "Steam"
     category: "blackmatrix"
     behavior: "classical"
     remotefile: "./Steam/Steam.list"
 
+# Game
   Game:
     name: "Game"
+    policyname: "Game"
+    tagname: "Game"
     category: "blackmatrix"
     behavior: "classical"
     remotefile: "./Game/Game.list"
 
+# E-Hentai
   E-Hentai:
     name: "E-Hentai"
+    policyname: "E-Hentai"
+    tagname: "E-Hentai"
     category: "blackmatrix"
     behavior: "classical"
     remotefile: "./EHGallery/EHGallery.list"
 
+# PornSite
   PornSite:
-    PornSite:
-      name: "PornSite"
-      category: "PianCat"
-      behavior: "classical"
-      remotefile: "./PornSite/PornSite.list"
-    Furrybar:
-      name: "Furrybar"
-      category: "PianCat"
-      behavior: "classical"
-      remotefile: "./Furrybar/Furrybar.list"
+    name: "PornSite"
+    policyname: "PornSite"
+    tagname: "PornSite"
+    category: "PianCat"
+    behavior: "classical"
+    remotefile: "./PornSite/PornSite.list"
 
+# Streaming Services with Localized Rules
+# Stream United States
   Stream_US:
     name: "Stream_US"
+    policyname: "US Media"
+    tagname: "US Media"
     category: "Sukka"
     behavior: "classical"
     remotefile: "./non_ip/stream_us"
 
+# Stream Taiwan
   Stream_TW:
     name: "Stream_TW"
+    policyname: "Taiwan Media"
+    tagname: "Taiwan Media"
     category: "Sukka"
     behavior: "classical"
     remotefile: "./non_ip/stream_tw"
 
+# Stream Japan
   Stream_JP:
     name: "Stream_JP"
+    policyname: "Japan Media"
+    tagname: "Japan Media"
     category: "Sukka"
     behavior: "classical"
     remotefile: "./non_ip/stream_jp"
 
+# Stream Global (for services without region-specific rules)
   Stream_Global:
     name: "Stream_Global"
+    policyname: "Global Media"
+    tagname: "Global Media"
     category: "Sukka"
     behavior: "classical"
     remotefile: "./non_ip/stream"
+# End of Streaming Services
 
+# Apple
   Apple:
     name: "Apple"
+    policyname: "Apple"
+    tagname: "Apple"
     category: "blackmatrix"
     behavior: "classical"
     remotefile: "./Apple/Apple.list"
 
+# Microsoft
   Microsoft:
     name: "Microsoft"
+    policyname: "Microsoft"
+    tagname: "Microsoft"
     category: "blackmatrix"
     behavior: "classical"
     remotefile: "./Microsoft/Microsoft.list"
 
+# Google
   Google:
     name: "Google"
+    policyname: "Google"
+    tagname: "Google"
     category: "blackmatrix"
     behavior: "classical"
     remotefile: "./Google/Google.list"
 
+# Google FCM (Firebase Cloud Messaging)
   GoogleFCM:
-    name: "GoogleFCM"
+    name: "Google FCM"
+    policyname: "Google FCM"
+    tagname: "Google FCM"
     category: "blackmatrix"
     behavior: "classical"
     remotefile: "./GoogleFCM/GoogleFCM.list"
 
+# Sogou Input Method Privacy Protection
   SogouPrivacy:
     name: "SogouInput"
+    policyname: "Sogou Privacy"
+    tagname: "SogouPrivacy"
     category: "Sukka"
     behavior: "classical"
     remotefile: "./non_ip/sogouinput"
 
-# ADBlock must be defined as two separate entries for different tools
+# ADBlock
   ADBlock:
     name: "ADBlock"
+    policyname: "ADBlock"
+    tagname: "ADBlock"
     category: "ADBlock"
     behavior: "domain"
     remotefile: "./adrules"
+    surgeoption: "extended-matching"
 
 # LocalNetwork
   LocalNetwork:
     name: "LocalNetwork"
+    policyname: "DIRECT"
+    tagname: "LocalNetwork"
     category: "Sukka"
     behavior: "classical"
     remotefile: "./non_ip/lan"
   LocalNetworkIP:
     name: "LocalNetworkIP"
+    policyname: "DIRECT"
+    tagname: "LocalNetwork"
     category: "Sukka"
     behavior: "classical"
     remotefile: "./ip/lan"
 
-# SpecialSites
+# Custom Rules Start from here
+
+CustomRules:
+# Furrybar
+  Furrybar:
+    name: "Furrybar"
+    category: "PianCat"
+    behavior: "classical"
+    remotefile: "./Furrybar/Furrybar.list"
+    parenttag: "PornSite"
+
+# Playhorny
   Playhorny:
     name: "Playhorny"
     category: "PianCat"
     behavior: "classical"
     remotefile: "./Playhorny/Playhorny.list"
+    parenttag: "Game"
+
+# Nikke:
+  Nikke:
+    name: "Nikke"
+    category: "PianCat"
+    behavior: "classical"
+    remotefile: "./Nikke/Nikke.list"
+    parenttag: "Game"

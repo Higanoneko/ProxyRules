@@ -1,4 +1,4 @@
-# Generated at (UTC): 2026-03-24T13:48:55Z
+# Generated at (UTC): 2026-05-14T12:58:24Z
 
 #Update Date: 2025.11.05 18:00:00 +0800
 #author: PianCat
@@ -101,20 +101,21 @@ https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Game/Game.list, policy = Game, tag = Game, enabled = true
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/EHGallery/EHGallery.list, policy = E-Hentai, tag = E-Hentai, enabled = true
 https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/PornSite/PornSite.list, policy = PornSite, tag = PornSite, enabled = true
-https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/Furrybar/Furrybar.list, policy = PornSite, tag = Furrybar, enabled = true
 https://ruleset.skk.moe/List/non_ip/stream_us.conf, policy = US Media, tag = US Media, enabled = true
 https://ruleset.skk.moe/List/non_ip/stream_tw.conf, policy = Taiwan Media, tag = Taiwan Media, enabled = true
-https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/Playhorny/Playhorny.list, policy = Taiwan Media, tag = Playhorny, enabled = true
 https://ruleset.skk.moe/List/non_ip/stream_jp.conf, policy = Japan Media, tag = Japan Media, enabled = true
 https://ruleset.skk.moe/List/non_ip/stream.conf, policy = Global Media, tag = Global Media, enabled = true
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Apple/Apple.list, policy = Apple, tag = Apple, enabled = true
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Microsoft/Microsoft.list, policy = Microsoft, tag = Microsoft, enabled = true
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Google/Google.list, policy = Google, tag = Google, enabled = true
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/GoogleFCM/GoogleFCM.list, policy = Google FCM, tag = Google FCM, enabled = true
-https://ruleset.skk.moe/List/non_ip/sogouinput.conf, policy = Sogou Privacy, tag = Sogou Privacy, enabled = true
+https://ruleset.skk.moe/List/non_ip/sogouinput.conf, policy = Sogou Privacy, tag = SogouPrivacy, enabled = true
 https://adrules.top/adrules-surge.conf, policy = ADBlock, tag = ADBlock, enabled = true
 https://ruleset.skk.moe/List/non_ip/lan.conf, policy = DIRECT, tag = LocalNetwork, enabled = true
-https://ruleset.skk.moe/List/ip/lan.conf, policy = DIRECT, tag = LocalNetworkIP, enabled = true
+https://ruleset.skk.moe/List/ip/lan.conf, policy = DIRECT, tag = LocalNetwork, enabled = true
+https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/Furrybar/Furrybar.list, policy = PornSite, tag = Furrybar, enabled = true
+https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/Playhorny/Playhorny.list, policy = Game, tag = Playhorny, enabled = true
+https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/Nikke/Nikke.list, policy = Game, tag = Nikke, enabled = true
 
 [Rule]
 GEOIP, CN, 直接连接

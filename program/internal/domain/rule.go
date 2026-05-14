@@ -1,5 +1,15 @@
 package domain
 
+type OrderedSection struct {
+	Keys    []string
+	Entries map[string]map[string]any
+}
+
+type RuleSections struct {
+	BaseRules   OrderedSection
+	CustomRules OrderedSection
+}
+
 type TestURLs struct {
 	Internet string
 	Proxy    string
@@ -12,11 +22,10 @@ type Ports struct {
 }
 
 type RemoteRuleSpec struct {
-	RuleID           string
-	PolicyName       string
-	TagName          string
-	MihomoPolicyName string
-	SurgeOption      string
+	RuleID      string
+	PolicyName  string
+	TagName     string
+	SurgeOption string
 }
 
 type RuleSourceRef struct {
@@ -26,13 +35,12 @@ type RuleSourceRef struct {
 }
 
 type RuleBinding struct {
-	RuleID           string
-	ProviderName     string
-	PolicyName       string
-	TagName          string
-	MihomoPolicyName string
-	SurgeOption      string
-	Source           RuleSourceRef
+	RuleID       string
+	ProviderName string
+	PolicyName   string
+	TagName      string
+	SurgeOption  string
+	Source       RuleSourceRef
 }
 
 type PolicyPlan struct {

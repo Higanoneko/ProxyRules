@@ -41,11 +41,7 @@ func (r *RuleResolver) MihomoRuleProviders(bindings []domain.RuleBinding) (*yaml
 func (r *RuleResolver) MihomoRules(bindings []domain.RuleBinding) []string {
 	rules := make([]string, 0, len(bindings)+2)
 	for _, binding := range bindings {
-		policyName := binding.PolicyName
-		if binding.MihomoPolicyName != "" {
-			policyName = binding.MihomoPolicyName
-		}
-		rules = append(rules, "RULE-SET,"+binding.RuleID+","+policyName)
+		rules = append(rules, "RULE-SET,"+binding.RuleID+","+binding.PolicyName)
 	}
 	rules = append(rules, "GEOIP,CN,直接连接", "MATCH,选择代理")
 	return rules

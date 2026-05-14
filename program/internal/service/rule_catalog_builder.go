@@ -3,108 +3,88 @@ package service
 import (
 	"fmt"
 
-	"github.com/PianCat/ProxyRules/internal/catalog"
 	"github.com/PianCat/ProxyRules/internal/domain"
 )
 
-type RuleCatalogBuilder struct {
-	specIndex map[string]domain.RemoteRuleSpec
-}
+type RuleCatalogBuilder struct{}
 
 func NewRuleCatalogBuilder() *RuleCatalogBuilder {
-	return &RuleCatalogBuilder{specIndex: catalog.RuleSpecIndex()}
+	return &RuleCatalogBuilder{}
 }
 
-func (b *RuleCatalogBuilder) Build(rawRules map[string]any) ([]domain.RuleBinding, error) {
-	normalized := flattenRules(rawRules, b.specIndex)
-	bindings := make([]domain.RuleBinding, 0, len(catalog.CanonicalRuleOrder()))
+func (b *RuleCatalogBuilder) Build(sections domain.RuleSections) ([]domain.RuleBinding, error) {
+	allEntries := mergeEntries(sections.BaseRules.Entries, sections.CustomRules.Entries)
+	bindings := make([]domain.RuleBinding, 0, len(sections.BaseRules.Keys)+len(sections.CustomRules.Keys))
 
-	for _, ruleID := range catalog.CanonicalRuleOrder() {
-		spec, ok := b.specIndex[ruleID]
-		if !ok {
-			return nil, fmt.Errorf("missing rule spec: %s", ruleID)
+	sectionsList := []domain.OrderedSection{sections.BaseRules, sections.CustomRules}
+	for _, section := range sectionsList {
+		for _, ruleID := range section.Keys {
+			config := section.Entries[ruleID]
+			binding, err := b.buildBinding(ruleID, config, allEntries)
+			if err != nil {
+				return nil, fmt.Errorf("rule %s: %w", ruleID, err)
+			}
+			bindings = append(bindings, binding)
 		}
-
-		config, ok := normalized[ruleID]
-		if !ok {
-			return nil, fmt.Errorf("missing rule config: %s", ruleID)
-		}
-
-		binding := domain.RuleBinding{
-			RuleID:           ruleID,
-			ProviderName:     stringValue(config["name"], ruleID),
-			PolicyName:       spec.PolicyName,
-			TagName:          spec.TagName,
-			MihomoPolicyName: spec.MihomoPolicyName,
-			SurgeOption:      spec.SurgeOption,
-			Source: domain.RuleSourceRef{
-				Category:   stringValue(config["category"], ""),
-				Behavior:   stringValue(config["behavior"], "classical"),
-				RemoteFile: stringValue(config["remotefile"], ""),
-			},
-		}
-
-		if binding.Source.Category == "" || binding.Source.RemoteFile == "" {
-			return nil, fmt.Errorf("incomplete rule source for %s", ruleID)
-		}
-
-		bindings = append(bindings, binding)
 	}
 
 	return bindings, nil
 }
 
-func flattenRules(raw map[string]any, specIndex map[string]domain.RemoteRuleSpec) map[string]map[string]any {
-	flattened := map[string]map[string]any{}
-	for key, value := range raw {
-		valueMap, ok := toStringAnyMap(value)
-		if !ok {
-			continue
-		}
-
-		if _, hasName := valueMap["name"]; hasName {
-			if _, hasCategory := valueMap["category"]; hasCategory {
-				flattened[resolveRuleID(key, valueMap, specIndex)] = valueMap
-				continue
+func (b *RuleCatalogBuilder) buildBinding(ruleID string, config map[string]any, allEntries map[string]map[string]any) (domain.RuleBinding, error) {
+	policyName := stringValue(config["policyname"], "")
+	if policyName == "" {
+		if parentTag, ok := config["parenttag"].(string); ok && parentTag != "" {
+			var err error
+			policyName, err = resolveParentPolicyName(parentTag, allEntries)
+			if err != nil {
+				return domain.RuleBinding{}, err
 			}
 		}
-
-		nested := flattenRules(valueMap, specIndex)
-		for nestedKey, nestedValue := range nested {
-			flattened[nestedKey] = nestedValue
-		}
 	}
-	return flattened
+	if policyName == "" {
+		return domain.RuleBinding{}, fmt.Errorf("no policyname configured and no valid parenttag")
+	}
+
+	tagName := stringValue(config["tagname"], "")
+	if tagName == "" {
+		tagName = stringValue(config["name"], ruleID)
+	}
+
+	return domain.RuleBinding{
+		RuleID:       ruleID,
+		ProviderName: stringValue(config["name"], ruleID),
+		PolicyName:   policyName,
+		TagName:      tagName,
+		SurgeOption:  stringValue(config["surgeoption"], ""),
+		Source: domain.RuleSourceRef{
+			Category:   stringValue(config["category"], ""),
+			Behavior:   stringValue(config["behavior"], "classical"),
+			RemoteFile: stringValue(config["remotefile"], ""),
+		},
+	}, nil
 }
 
-func resolveRuleID(rawKey string, config map[string]any, specIndex map[string]domain.RemoteRuleSpec) string {
-	if _, ok := specIndex[rawKey]; ok {
-		return rawKey
+func resolveParentPolicyName(parentTag string, allEntries map[string]map[string]any) (string, error) {
+	parentConfig, ok := allEntries[parentTag]
+	if !ok {
+		return "", fmt.Errorf("unknown parenttag %q", parentTag)
 	}
-	if name, ok := config["name"].(string); ok {
-		if _, found := specIndex[name]; found {
-			return name
-		}
+	if policyName := stringValue(parentConfig["policyname"], ""); policyName != "" {
+		return policyName, nil
 	}
-	return rawKey
+	return "", fmt.Errorf("parent rule %q has no policyname configured", parentTag)
 }
 
-func toStringAnyMap(value any) (map[string]any, bool) {
-	if converted, ok := value.(map[string]any); ok {
-		return converted, true
+func mergeEntries(a, b map[string]map[string]any) map[string]map[string]any {
+	merged := make(map[string]map[string]any, len(a)+len(b))
+	for k, v := range a {
+		merged[k] = v
 	}
-	if rawMap, ok := value.(map[any]any); ok {
-		converted := make(map[string]any, len(rawMap))
-		for rawKey, rawValue := range rawMap {
-			stringKey, ok := rawKey.(string)
-			if !ok {
-				return nil, false
-			}
-			converted[stringKey] = rawValue
-		}
-		return converted, true
+	for k, v := range b {
+		merged[k] = v
 	}
-	return nil, false
+	return merged
 }
 
 func stringValue(value any, fallback string) string {

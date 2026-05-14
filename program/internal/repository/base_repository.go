@@ -32,7 +32,7 @@ type BaseData struct {
 	Ports             domain.Ports
 	TestURLs          domain.TestURLs
 	Heads             map[string]string
-	RawRules          map[string]any
+	RawRules          domain.RuleSections
 	Categories        map[string]CategoryConfig
 	ToolMappings      map[string]map[string]string
 	FileTypeMappings  map[string]map[string]string
@@ -66,10 +66,6 @@ type fakeIPConfig struct {
 	SurgeAlwaysRealIP []string `yaml:"Surge_Always_Real_IP"`
 }
 
-type rulesConfig struct {
-	Rules map[string]any `yaml:"rules"`
-}
-
 type linkBaseConfig struct {
 	Categories            map[string]CategoryConfig    `yaml:"Categories"`
 	CategoriesToolsList   map[string]map[string]string `yaml:"Categories_Tools_List"`
@@ -98,10 +94,7 @@ func (r *BaseRepository) Load() (BaseData, error) {
 		return BaseData{}, err
 	}
 
-	var rules rulesConfig
-	if err := readYAML(filepath.Join(baseDir, "Rules", "RemoteRules.yaml"), &rules); err != nil {
-		return BaseData{}, err
-	}
+	rules, err := readRuleSections(filepath.Join(baseDir, "Rules", "RemoteRules.yaml"))
 
 	var linkBase linkBaseConfig
 	if err := readYAML(filepath.Join(baseDir, "Rules", "RemoteRulesLinkBase.yaml"), &linkBase); err != nil {
@@ -140,7 +133,7 @@ func (r *BaseRepository) Load() (BaseData, error) {
 		},
 		TestURLs:         testURLs,
 		Heads:            heads,
-		RawRules:         rules.Rules,
+		RawRules:         rules,
 		Categories:       linkBase.Categories,
 		ToolMappings:     linkBase.CategoriesToolsList,
 		FileTypeMappings: linkBase.CategoriesFiletypeMap,
@@ -162,6 +155,86 @@ func DefaultGeoXURLs() map[string]string {
 		"mmdb":    "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb",
 		"asn":     "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb",
 	}
+}
+
+func readRuleSections(path string) (domain.RuleSections, error) {
+	content, err := os.ReadFile(path)
+	if err != nil {
+		return domain.RuleSections{}, fmt.Errorf("read %s: %w", path, err)
+	}
+
+	var root yaml.Node
+	if err := yaml.Unmarshal(content, &root); err != nil {
+		return domain.RuleSections{}, fmt.Errorf("unmarshal %s: %w", path, err)
+	}
+
+	if root.Kind != yaml.DocumentNode || len(root.Content) == 0 {
+		return domain.RuleSections{}, fmt.Errorf("empty document: %s", path)
+	}
+
+	topLevel := root.Content[0]
+	if topLevel.Kind != yaml.MappingNode {
+		return domain.RuleSections{}, fmt.Errorf("expected mapping at top level: %s", path)
+	}
+
+	baseRules, err := extractOrderedSection(topLevel, "BaseRules")
+	if err != nil {
+		return domain.RuleSections{}, fmt.Errorf("BaseRules: %w", err)
+	}
+	customRules, err := extractOrderedSection(topLevel, "CustomRules")
+	if err != nil {
+		return domain.RuleSections{}, fmt.Errorf("CustomRules: %w", err)
+	}
+
+	return domain.RuleSections{
+		BaseRules:   baseRules,
+		CustomRules: customRules,
+	}, nil
+}
+
+func extractOrderedSection(parent *yaml.Node, key string) (domain.OrderedSection, error) {
+	sectionNode := findMappingValue(parent, key)
+	if sectionNode == nil {
+		return domain.OrderedSection{}, fmt.Errorf("missing section: %s", key)
+	}
+	if sectionNode.Kind != yaml.MappingNode {
+		return domain.OrderedSection{}, fmt.Errorf("expected mapping for %s", key)
+	}
+
+	keys := make([]string, 0, len(sectionNode.Content)/2)
+	entries := make(map[string]map[string]any, len(sectionNode.Content)/2)
+
+	for i := 0; i < len(sectionNode.Content); i += 2 {
+		entryKey := sectionNode.Content[i].Value
+		entryValue := sectionNode.Content[i+1]
+
+		if entryValue.Kind != yaml.MappingNode {
+			continue
+		}
+
+		entryMap := make(map[string]any)
+		if err := entryValue.Decode(&entryMap); err != nil {
+			continue
+		}
+
+		if _, ok := entryMap["category"]; !ok {
+			continue
+		}
+
+		keys = append(keys, entryKey)
+		entries[entryKey] = entryMap
+	}
+
+	return domain.OrderedSection{Keys: keys, Entries: entries}, nil
+}
+
+func findMappingValue(parent *yaml.Node, key string) *yaml.Node {
+	for i := 0; i < len(parent.Content); i += 2 {
+		if parent.Content[i].Value == key {
+			return parent.Content[i+1]
+		}
+	}
+	return nil
 }
 
 func readYAML(path string, target any) error {

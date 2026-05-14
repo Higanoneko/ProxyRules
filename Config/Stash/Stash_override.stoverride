@@ -1,4 +1,4 @@
-# Generated at (UTC): 2026-03-24T13:48:55Z
+# Generated at (UTC): 2026-05-14T12:58:24Z
 
 name: PianCat Stash Override
 desc: PianCat's Config Override
@@ -374,7 +374,7 @@ proxy-groups: #!replace
   - name: 其他节点
     icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png
     include-all: true
-    exclude-filter: "(?i)香港|港|HK|hk|Hong Kong|HongKong|Hongkong|Hong kong|hongkong|hong kong|\U0001F1ED\U0001F1F0|台|新北|彰化|TW|Taiwan|\U0001F1F9\U0001F1FC|新加坡|坡|狮城|SG|Singapore|\U0001F1F8\U0001F1EC|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|\U0001F1EF\U0001F1F5|美国|美|US|United States|\U0001F1FA\U0001F1F8"
+    exclude-filter: "(?i)香港|港|HK|hk|Hong Kong|HongKong|Hongkong|Hong kong|hongkong|hong kong|\U0001F1ED\U0001F1F0|台|新北|彰化|TW|Taiwan|TaiWan|Tai wan|Tai Wan|taiwan|tai wan|\U0001F1F9\U0001F1FC|新加坡|坡|狮城|SG|Singapore|\U0001F1F8\U0001F1EC|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|\U0001F1EF\U0001F1F5|美国|美|US|United States|\U0001F1FA\U0001F1F8"
     type: select
 
 rule-providers: #!replace
@@ -455,13 +455,6 @@ rule-providers: #!replace
     interval: 86400
     url: https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/PornSite/PornSite.list
     path: ./ruleset/PornSite.list
-  Furrybar:
-    type: http
-    behavior: classical
-    format: text
-    interval: 86400
-    url: https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/Furrybar/Furrybar.list
-    path: ./ruleset/Furrybar.list
   Stream_US:
     type: http
     behavior: classical
@@ -476,13 +469,6 @@ rule-providers: #!replace
     interval: 86400
     url: https://ruleset.skk.moe/Clash/non_ip/stream_tw.txt
     path: ./ruleset/Stream_TW.list
-  Playhorny:
-    type: http
-    behavior: classical
-    format: text
-    interval: 86400
-    url: https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/Playhorny/Playhorny.list
-    path: ./ruleset/Playhorny.list
   Stream_JP:
     type: http
     behavior: classical
@@ -524,7 +510,7 @@ rule-providers: #!replace
     format: text
     interval: 86400
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GoogleFCM/GoogleFCM.list
-    path: ./ruleset/GoogleFCM.list
+    path: ./ruleset/Google FCM.list
   SogouPrivacy:
     type: http
     behavior: classical
@@ -553,6 +539,27 @@ rule-providers: #!replace
     interval: 86400
     url: https://ruleset.skk.moe/Clash/ip/lan.txt
     path: ./ruleset/LocalNetworkIP.list
+  Furrybar:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/Furrybar/Furrybar.list
+    path: ./ruleset/Furrybar.list
+  Playhorny:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/Playhorny/Playhorny.list
+    path: ./ruleset/Playhorny.list
+  Nikke:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/Nikke/Nikke.list
+    path: ./ruleset/Nikke.list
 
 rules: #!replace
   - RULE-SET,AI,AI
@@ -566,10 +573,8 @@ rules: #!replace
   - RULE-SET,Game,Game
   - RULE-SET,E-Hentai,E-Hentai
   - RULE-SET,PornSite,PornSite
-  - RULE-SET,Furrybar,PornSite
   - RULE-SET,Stream_US,US Media
   - RULE-SET,Stream_TW,Taiwan Media
-  - RULE-SET,Playhorny,Taiwan Media
   - RULE-SET,Stream_JP,Japan Media
   - RULE-SET,Stream_Global,Global Media
   - RULE-SET,Apple,Apple
@@ -580,5 +585,8 @@ rules: #!replace
   - RULE-SET,ADBlock,ADBlock
   - RULE-SET,LocalNetwork,DIRECT
   - RULE-SET,LocalNetworkIP,DIRECT
+  - RULE-SET,Furrybar,PornSite
+  - RULE-SET,Playhorny,Game
+  - RULE-SET,Nikke,Game
   - GEOIP,CN,直接连接
   - MATCH,选择代理
