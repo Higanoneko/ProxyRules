@@ -3,8 +3,8 @@ package render
 import (
 	"strings"
 
-	"github.com/PianCat/ProxyRules/internal/domain"
-	"github.com/PianCat/ProxyRules/internal/repository"
+	"github.com/Higanoneko/ProxyRules/internal/domain"
+	"github.com/Higanoneko/ProxyRules/internal/repository"
 	"gopkg.in/yaml.v3"
 )
 

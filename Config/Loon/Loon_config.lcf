@@ -1,7 +1,7 @@
 # Generated at (UTC): 2026-05-14T13:21:40Z
 
 #Update Date: 2025.11.05 18:00:00 +0800
-#author: PianCat
+#author: Higanoneko
 
 [General]
 ip-mode = dual
@@ -69,7 +69,7 @@ Spotify = select, 选择代理, 香港节点, 台湾节点, 新加坡节点, 日
 TikTok = select, 选择代理, 香港节点, 台湾节点, 新加坡节点, 日本节点, 美国节点, 其他节点, 手动选择, 直接连接, img-url = https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/TikTok.png
 Steam = select, 选择代理, 香港节点, 台湾节点, 新加坡节点, 日本节点, 美国节点, 其他节点, 手动选择, 直接连接, img-url = https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Steam.png
 Game = select, 选择代理, 香港节点, 台湾节点, 新加坡节点, 日本节点, 美国节点, 其他节点, 手动选择, 直接连接, img-url = https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Game.png
-E-Hentai = select, 选择代理, 香港节点, 台湾节点, 新加坡节点, 日本节点, 美国节点, 其他节点, 手动选择, 直接连接, img-url = https://cdn.jsdelivr.net/gh/PianCat/CustomProxyRuleset@main/Icons/Ehentai.png
+E-Hentai = select, 选择代理, 香港节点, 台湾节点, 新加坡节点, 日本节点, 美国节点, 其他节点, 手动选择, 直接连接, img-url = https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Ehentai.png
 PornSite = select, 选择代理, 香港节点, 台湾节点, 新加坡节点, 日本节点, 美国节点, 其他节点, 手动选择, 直接连接, img-url = https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Pornhub.png
 US Media = select, 美国节点, 选择代理, 手动选择, 直接连接, img-url = https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png
 Taiwan Media = select, 台湾节点, 选择代理, 手动选择, 直接连接, img-url = https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png
@@ -78,8 +78,8 @@ Global Media = select, 选择代理, 香港节点, 台湾节点, 新加坡节点
 Apple = select, 直接连接, 选择代理, 香港节点, 台湾节点, 新加坡节点, 日本节点, 美国节点, 其他节点, 手动选择, img-url = https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Apple.png
 Microsoft = select, 直接连接, 选择代理, 香港节点, 台湾节点, 新加坡节点, 日本节点, 美国节点, 其他节点, 手动选择, img-url = https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Microsoft.png
 Google = select, 选择代理, 香港节点, 台湾节点, 新加坡节点, 日本节点, 美国节点, 其他节点, 手动选择, 直接连接, img-url = https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google_Search.png
-Google FCM = select, Google, 直接连接, img-url = https://cdn.jsdelivr.net/gh/PianCat/CustomProxyRuleset@main/Icons/Firebase.png
-Sogou Privacy = select, 直接连接, REJECT, img-url = https://cdn.jsdelivr.net/gh/PianCat/CustomProxyRuleset@main/Icons/Sougou.png
+Google FCM = select, Google, 直接连接, img-url = https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Firebase.png
+Sogou Privacy = select, 直接连接, REJECT, img-url = https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Sougou.png
 ADBlock = select, REJECT-DROP, REJECT, 直接连接, img-url = https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/AdBlack.png
 直接连接 = select, DIRECT, 选择代理, img-url = https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Direct.png
 香港节点 = url-test, HK_Filter, url = https://cp.cloudflare.com/generate_204, interval = 60, tolerance = 20, img-url = https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png
@@ -100,7 +100,7 @@ https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Steam/Steam.list, policy = Steam, tag = Steam, enabled = true
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Game/Game.list, policy = Game, tag = Game, enabled = true
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/EHGallery/EHGallery.list, policy = E-Hentai, tag = E-Hentai, enabled = true
-https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/PornSite/PornSite.list, policy = PornSite, tag = PornSite, enabled = true
+https://raw.githubusercontent.com/Higanoneko/CustomProxyRuleset/main/PornSite/PornSite.list, policy = PornSite, tag = PornSite, enabled = true
 https://ruleset.skk.moe/List/non_ip/stream_us.conf, policy = US Media, tag = US Media, enabled = true
 https://ruleset.skk.moe/List/non_ip/stream_tw.conf, policy = Taiwan Media, tag = Taiwan Media, enabled = true
 https://ruleset.skk.moe/List/non_ip/stream_jp.conf, policy = Japan Media, tag = Japan Media, enabled = true
@@ -113,9 +113,9 @@ https://ruleset.skk.moe/List/non_ip/sogouinput.conf, policy = Sogou Privacy, tag
 https://adrules.top/adrules-surge.conf, policy = ADBlock, tag = ADBlock, enabled = true
 https://ruleset.skk.moe/List/non_ip/lan.conf, policy = DIRECT, tag = LocalNetwork, enabled = true
 https://ruleset.skk.moe/List/ip/lan.conf, policy = DIRECT, tag = LocalNetwork, enabled = true
-https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/Furrybar/Furrybar.list, policy = PornSite, tag = Furrybar, enabled = true
-https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/Playhorny/Playhorny.list, policy = Game, tag = Playhorny, enabled = true
-https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/Nikke/Nikke.list, policy = Game, tag = Nikke, enabled = true
+https://raw.githubusercontent.com/Higanoneko/CustomProxyRuleset/main/Furrybar/Furrybar.list, policy = PornSite, tag = Furrybar, enabled = true
+https://raw.githubusercontent.com/Higanoneko/CustomProxyRuleset/main/Playhorny/Playhorny.list, policy = Game, tag = Playhorny, enabled = true
+https://raw.githubusercontent.com/Higanoneko/CustomProxyRuleset/main/Nikke/Nikke.list, policy = Game, tag = Nikke, enabled = true
 
 [Rule]
 GEOIP, CN, 直接连接

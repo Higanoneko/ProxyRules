@@ -1,4 +1,4 @@
-module github.com/PianCat/ProxyRules
+module github.com/Higanoneko/ProxyRules
 
 go 1.23.0
 

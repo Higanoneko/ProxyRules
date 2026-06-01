@@ -320,7 +320,7 @@ BaseRules:
 CustomRules:
   Playhorny:
     name: "Playhorny"
-    category: "PianCat"
+    category: "Higanoneko"
     behavior: "classical"
     remotefile: "./Playhorny/Playhorny.list"
     parenttag: "Game"            # 归入 Game 策略组，无需写 policyname

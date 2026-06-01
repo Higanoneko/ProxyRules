@@ -3,7 +3,7 @@ package render
 import (
 	"gopkg.in/yaml.v3"
 
-	"github.com/PianCat/ProxyRules/internal/domain"
+	"github.com/Higanoneko/ProxyRules/internal/domain"
 )
 
 func proxyGroupsNode(groups []domain.ProxyGroup) *yaml.Node {

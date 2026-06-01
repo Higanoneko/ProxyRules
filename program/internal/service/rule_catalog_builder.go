@@ -3,7 +3,7 @@ package service
 import (
 	"fmt"
 
-	"github.com/PianCat/ProxyRules/internal/domain"
+	"github.com/Higanoneko/ProxyRules/internal/domain"
 )
 
 type RuleCatalogBuilder struct{}

@@ -3,8 +3,8 @@ package render
 import (
 	"strings"
 
-	"github.com/PianCat/ProxyRules/internal/domain"
-	"github.com/PianCat/ProxyRules/internal/repository"
+	"github.com/Higanoneko/ProxyRules/internal/domain"
+	"github.com/Higanoneko/ProxyRules/internal/repository"
 	"gopkg.in/yaml.v3"
 )
 
@@ -47,9 +47,9 @@ func (r *StashRenderer) RenderOverride(plan domain.PolicyPlan) (string, error) {
 	}{
 		{key: "category", value: "Override"},
 		{key: "icon", value: "https://fastly.jsdelivr.net/gh/shindgewongxj/WHATSINStash@master/icon/substore.png"},
-		{key: "author", value: "PianCat"},
-		{key: "desc", value: "PianCat's Config Override"},
-		{key: "name", value: "PianCat Stash Override"},
+		{key: "author", value: "Higanoneko"},
+		{key: "desc", value: "Higanoneko's Config Override"},
+		{key: "name", value: "Higanoneko Stash Override"},
 	}
 	for _, entry := range metadata {
 		prependMappingValue(root, entry.key, newScalarNode(entry.value))

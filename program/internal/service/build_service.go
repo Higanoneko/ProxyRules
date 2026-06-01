@@ -5,9 +5,9 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/PianCat/ProxyRules/internal/domain"
-	"github.com/PianCat/ProxyRules/internal/render"
-	"github.com/PianCat/ProxyRules/internal/repository"
+	"github.com/Higanoneko/ProxyRules/internal/domain"
+	"github.com/Higanoneko/ProxyRules/internal/render"
+	"github.com/Higanoneko/ProxyRules/internal/repository"
 )
 
 type BuildService struct {

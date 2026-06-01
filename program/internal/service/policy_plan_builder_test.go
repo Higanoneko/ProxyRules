@@ -5,8 +5,8 @@ import (
 	"runtime"
 	"testing"
 
-	"github.com/PianCat/ProxyRules/internal/projectroot"
-	"github.com/PianCat/ProxyRules/internal/repository"
+	"github.com/Higanoneko/ProxyRules/internal/projectroot"
+	"github.com/Higanoneko/ProxyRules/internal/repository"
 )
 
 func TestBuildPolicyPlanKeepsCoreSections(t *testing.T) {

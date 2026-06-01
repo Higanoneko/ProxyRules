@@ -58,8 +58,8 @@ Categories:
   dler:
     url: "https://raw.githubusercontent.com/dler-io/Rules/main/{proxytools}/Provider/{remotefile}.{filetype}"
 
-  PianCat:
-    url: "https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/{remotefile}"
+  Higanoneko:
+    url: "https://raw.githubusercontent.com/Higanoneko/CustomProxyRuleset/main/{remotefile}"
 
 # 工具类型映射配置
 # 定义不同规则源中，各工具类型对应的 proxytools 映射值
@@ -93,5 +93,5 @@ Categories_Filetype_List:
     Mihomo: "yaml"
     fallback: "list"
 
-  # ADBlock 和 PianCat 不需要工具类型区分，直接使用 remotefile；blackmatrix 已默认映射，无需重复定义
+  # ADBlock 和 Higanoneko 不需要工具类型区分，直接使用 remotefile；blackmatrix 已默认映射，无需重复定义
   

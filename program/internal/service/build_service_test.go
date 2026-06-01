@@ -6,8 +6,8 @@ import (
 	"runtime"
 	"testing"
 
-	"github.com/PianCat/ProxyRules/internal/domain"
-	"github.com/PianCat/ProxyRules/internal/projectroot"
+	"github.com/Higanoneko/ProxyRules/internal/domain"
+	"github.com/Higanoneko/ProxyRules/internal/projectroot"
 )
 
 func TestBuildServiceGeneratesSectionTargets(t *testing.T) {

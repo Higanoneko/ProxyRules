@@ -3,7 +3,7 @@ package render
 import (
 	"testing"
 
-	"github.com/PianCat/ProxyRules/internal/domain"
+	"github.com/Higanoneko/ProxyRules/internal/domain"
 )
 
 func TestProjectGenericDNSUsesDefaultResolvers(t *testing.T) {

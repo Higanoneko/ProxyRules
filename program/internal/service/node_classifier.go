@@ -5,8 +5,8 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/PianCat/ProxyRules/internal/catalog"
-	"github.com/PianCat/ProxyRules/internal/domain"
+	"github.com/Higanoneko/ProxyRules/internal/catalog"
+	"github.com/Higanoneko/ProxyRules/internal/domain"
 )
 
 type NodeClassifier struct {

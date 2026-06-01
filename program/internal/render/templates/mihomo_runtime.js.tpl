@@ -1,6 +1,6 @@
 /*
-PianCat 的 Substore 订阅转换脚本
-https://github.com/PianCat/ProxyRules
+Higanoneko 的 Substore 订阅转换脚本
+https://github.com/Higanoneko/ProxyRules
 
 支持的传入参数：
 - ipv6: 启用 IPv6 支持（默认 true）

@@ -1,6 +1,6 @@
 package catalog
 
-import "github.com/PianCat/ProxyRules/internal/domain"
+import "github.com/Higanoneko/ProxyRules/internal/domain"
 
 const ISPExcludePattern = `(?i)家宽|家庭|家庭宽带|商宽|商业宽带|星链|Starlink|落地`
 

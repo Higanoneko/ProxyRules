@@ -1,4 +1,4 @@
-# PianCat 的代理规则仓库
+# Higanoneko 的代理规则仓库
 
 此处存放我为多个代理工具编写的覆写规则，本仓库实现如下：
 
@@ -25,24 +25,24 @@
 ### Mihomo (Clash Meta)
 
 **覆写文件 (.yaml) ⭐ 优先使用**
-  - [mihomo_config_ipv6-1_full-0.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_config_ipv6-1_full-0.yaml) - 启用 IPv6，基础配置 ⭐ 推荐
-  - [mihomo_config_ipv6-0_full-0.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_config_ipv6-0_full-0.yaml) - 禁用 IPv6，基础配置
-  - [mihomo_config_ipv6-0_full-1.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_config_ipv6-0_full-1.yaml) - 禁用 IPv6，完整配置
-  - [mihomo_config_ipv6-1_full-1.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_config_ipv6-1_full-1.yaml) - 启用 IPv6，完整配置
+  - [mihomo_config_ipv6-1_full-0.yaml](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Mihomo/mihomo_config_ipv6-1_full-0.yaml) - 启用 IPv6，基础配置 ⭐ 推荐
+  - [mihomo_config_ipv6-0_full-0.yaml](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Mihomo/mihomo_config_ipv6-0_full-0.yaml) - 禁用 IPv6，基础配置
+  - [mihomo_config_ipv6-0_full-1.yaml](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Mihomo/mihomo_config_ipv6-0_full-1.yaml) - 禁用 IPv6，完整配置
+  - [mihomo_config_ipv6-1_full-1.yaml](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Mihomo/mihomo_config_ipv6-1_full-1.yaml) - 启用 IPv6，完整配置
 
 **覆写脚本 (.js)**
-  - [mihomo_convert_ipv6-1_full-0.js](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_convert_ipv6-1_full-0.js) - 启用 IPv6，基础配置 ⭐ 推荐
-  - [mihomo_convert_ipv6-0_full-0.js](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_convert_ipv6-0_full-0.js) - 禁用 IPv6，基础配置
-  - [mihomo_convert_ipv6-0_full-1.js](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_convert_ipv6-0_full-1.js) - 禁用 IPv6，完整配置
-  - [mihomo_convert_ipv6-1_full-1.js](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_convert_ipv6-1_full-1.js) - 启用 IPv6，完整配置
+  - [mihomo_convert_ipv6-1_full-0.js](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Mihomo/mihomo_convert_ipv6-1_full-0.js) - 启用 IPv6，基础配置 ⭐ 推荐
+  - [mihomo_convert_ipv6-0_full-0.js](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Mihomo/mihomo_convert_ipv6-0_full-0.js) - 禁用 IPv6，基础配置
+  - [mihomo_convert_ipv6-0_full-1.js](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Mihomo/mihomo_convert_ipv6-0_full-1.js) - 禁用 IPv6，完整配置
+  - [mihomo_convert_ipv6-1_full-1.js](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Mihomo/mihomo_convert_ipv6-1_full-1.js) - 启用 IPv6，完整配置
 
 **Box4Root 配置 (.yaml)**
 
 用于 [Box4Root](https://github.com/boxproxy/box) 等运行在 Shell 环境中的工具。
-  - [Box4Root_mihomo_config.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Box4Root/Box4Root_mihomo_config.yaml) - 启用 IPv6，禁用 TUN。 ⭐ 推荐（需要更改 Box4Root 的运行模式为 Enhanced 等非 TUN 模式）
-  - [Box4Root_mihomo_config_no_ipv6.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Box4Root/Box4Root_mihomo_config_no_ipv6.yaml) - 禁用 IPv6，禁用 TUN。（需要更改 Box4Root 的运行模式为 Enhanced 等非 TUN 模式）
-  - [Box4Root_mihomo_config_tun.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Box4Root/Box4Root_mihomo_config_tun.yaml) - 启用 IPv6，启用 TUN。
-  - [Box4Root_mihomo_config_tun_no_ipv6.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Box4Root/Box4Root_mihomo_config_tun_no_ipv6.yaml) - 禁用 IPv6，启用 TUN。
+  - [Box4Root_mihomo_config.yaml](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Box4Root/Box4Root_mihomo_config.yaml) - 启用 IPv6，禁用 TUN。 ⭐ 推荐（需要更改 Box4Root 的运行模式为 Enhanced 等非 TUN 模式）
+  - [Box4Root_mihomo_config_no_ipv6.yaml](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Box4Root/Box4Root_mihomo_config_no_ipv6.yaml) - 禁用 IPv6，禁用 TUN。（需要更改 Box4Root 的运行模式为 Enhanced 等非 TUN 模式）
+  - [Box4Root_mihomo_config_tun.yaml](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Box4Root/Box4Root_mihomo_config_tun.yaml) - 启用 IPv6，启用 TUN。
+  - [Box4Root_mihomo_config_tun_no_ipv6.yaml](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Box4Root/Box4Root_mihomo_config_tun_no_ipv6.yaml) - 禁用 IPv6，启用 TUN。
 
 
 **Sparkle/Clash Party 使用方法**
@@ -60,7 +60,7 @@
 
 **SubStore 使用方法**
 
-  -  [mihomo_convert_args.js](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_convert_args.js) - SubStore 可导入参数脚本
+  -  [mihomo_convert_args.js](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Mihomo/mihomo_convert_args.js) - SubStore 可导入参数脚本
 
 可传入参数，传入多个参数时，用`&`分隔：
 * `ipv6`：是否启用 IPv6，取值 `0`（禁用）或 `1`（启用），默认值 `1`
@@ -68,7 +68,7 @@
 
 用例：
 ```
-https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_convert_args.js#ipv6=1&full=0
+https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Mihomo/mihomo_convert_args.js#ipv6=1&full=0
 ```
 
 **ShellCrash 使用方法**
@@ -76,13 +76,13 @@ https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_c
 使用 `curl` 下载配置文件到本地：
 
 ```bash
-curl -o /path/to/config/mihomo_config.yaml https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_config_ipv6-1_full-0.yaml
+curl -o /path/to/config/mihomo_config.yaml https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Mihomo/mihomo_config_ipv6-1_full-0.yaml
 ```
 
 使用 `wget` 下载配置文件到本地：
 
 ```bash
-wget -P /path/to/config/mihomo_config.yaml https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Mihomo/mihomo_config_ipv6-1_full-0.yaml
+wget -P /path/to/config/mihomo_config.yaml https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Mihomo/mihomo_config_ipv6-1_full-0.yaml
 ```
 > 以上 Sample 均使用启用 IPv6 的基础配置文件作为示例，请根据需要替换为其他版本的配置文件链接。
 
@@ -95,30 +95,30 @@ wget -P /path/to/config/mihomo_config.yaml https://raw.githubusercontent.com/Pia
 
 **覆写文件 (.stoverride) ⭐ 优先使用**
 - 点击以下链接直接导入到 Stash（推荐）：
-  - [一键导入 Stash_override.stoverride](https://intradeus.github.io/http-protocol-redirector?r=stash://install-override?url=https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Stash/Stash_override.stoverride) - 启用 IPv6 版本 ⭐ 推荐
-  - [一键导入 Stash_override_no_ipv6.stoverride](https://intradeus.github.io/http-protocol-redirector?r=stash://install-override?url=https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Stash/Stash_override_no_ipv6.stoverride) - 禁用 IPv6 版本
+  - [一键导入 Stash_override.stoverride](https://intradeus.github.io/http-protocol-redirector?r=stash://install-override?url=https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Stash/Stash_override.stoverride) - 启用 IPv6 版本 ⭐ 推荐
+  - [一键导入 Stash_override_no_ipv6.stoverride](https://intradeus.github.io/http-protocol-redirector?r=stash://install-override?url=https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Stash/Stash_override_no_ipv6.stoverride) - 禁用 IPv6 版本
 
 **配置文件 (.yaml)**
-  - [Stash_config_full.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Stash/Stash_config_full.yaml) - 启用 IPv6 版本 ⭐ 推荐
-  - [Stash_config_full_no_ipv6.yaml](https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Stash/Stash_config_full_no_ipv6.yaml) - 禁用 IPv6 版本
+  - [Stash_config_full.yaml](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Stash/Stash_config_full.yaml) - 启用 IPv6 版本 ⭐ 推荐
+  - [Stash_config_full_no_ipv6.yaml](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Stash/Stash_config_full_no_ipv6.yaml) - 禁用 IPv6 版本
 
 
 ### Surge
 
 **Surge 模块 (.sgmodule) ⭐ 优先使用**
-  - [一键导入 Surge_override.sgmodule](https://intradeus.github.io/http-protocol-redirector?r=surge:///install-module?url=https%3A%2F%2Fraw%2Egithubusercontent%2Ecom%2FPianCat%2FProxyRules%2Fmain%2FConfig%2FSurge%2FSurge_override%2Esgmodule) - 启用 IPv6 版本 ⭐ 推荐
-  - [一键导入 Surge_override_no_ipv6.sgmodule](https://intradeus.github.io/http-protocol-redirector?r=surge:///install-module?url=https%2F%2Fraw%2Egithubusercontent%2Ecom%2FPianCat%2FProxyRules%2Fmain%2FConfig%2FSurge%2FSurge_override_no_ipv6%2Esgmodule) - 禁用 IPv6 版本
+  - [一键导入 Surge_override.sgmodule](https://intradeus.github.io/http-protocol-redirector?r=surge:///install-module?url=https%3A%2F%2Fraw%2Egithubusercontent%2Ecom%2FHiganoneko%2FProxyRules%2Fmain%2FConfig%2FSurge%2FSurge_override%2Esgmodule) - 启用 IPv6 版本 ⭐ 推荐
+  - [一键导入 Surge_override_no_ipv6.sgmodule](https://intradeus.github.io/http-protocol-redirector?r=surge:///install-module?url=https%2F%2Fraw%2Egithubusercontent%2Ecom%2FHiganoneko%2FProxyRules%2Fmain%2FConfig%2FSurge%2FSurge_override_no_ipv6%2Esgmodule) - 禁用 IPv6 版本
 
 **配置文件 (.conf)**
-  - [一键导入 Surge_config.conf](https://intradeus.github.io/http-protocol-redirector?r=surge:///install-config?url=https%3A%2F%2Fraw%2Egithubusercontent%2Ecom%2FPianCat%2FProxyRules%2Fmain%2FConfig%2FSurge%2FSurge_config%2Econf) - 启用 IPv6 版本 ⭐ 推荐
-  - [一键导入 Surge_config_no_ipv6.conf](https://intradeus.github.io/http-protocol-redirector?r=surge:///install-config?url=https%3A%2F%2Fraw%2Egithubusercontent%2Ecom%2FPianCat%2FProxyRules%2Fmain%2FConfig%2FSurge%2FSurge_config_no_ipv6%2Econf) - 禁用 IPv6 版本
+  - [一键导入 Surge_config.conf](https://intradeus.github.io/http-protocol-redirector?r=surge:///install-config?url=https%3A%2F%2Fraw%2Egithubusercontent%2Ecom%2FHiganoneko%2FProxyRules%2Fmain%2FConfig%2FSurge%2FSurge_config%2Econf) - 启用 IPv6 版本 ⭐ 推荐
+  - [一键导入 Surge_config_no_ipv6.conf](https://intradeus.github.io/http-protocol-redirector?r=surge:///install-config?url=https%3A%2F%2Fraw%2Egithubusercontent%2Ecom%2FHiganoneko%2FProxyRules%2Fmain%2FConfig%2FSurge%2FSurge_config_no_ipv6%2Econf) - 禁用 IPv6 版本
 
 ### Loon
 
 **配置文件 (.lcf)**
 - 点击以下链接直接导入到 Loon（推荐）：
-  - [一键导入 Loon_config.lcf](https://intradeus.github.io/http-protocol-redirector?r=loon://import?sub=https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Loon/Loon_config.lcf) - 启用 IPv6 版本 ⭐ 推荐
-  - [一键导入 Loon_config_no_ipv6.lcf](https://intradeus.github.io/http-protocol-redirector?r=loon://import?sub=https://raw.githubusercontent.com/PianCat/ProxyRules/main/Config/Loon/Loon_config_no_ipv6.lcf) - 禁用 IPv6 版本
+  - [一键导入 Loon_config.lcf](https://intradeus.github.io/http-protocol-redirector?r=loon://import?sub=https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Loon/Loon_config.lcf) - 启用 IPv6 版本 ⭐ 推荐
+  - [一键导入 Loon_config_no_ipv6.lcf](https://intradeus.github.io/http-protocol-redirector?r=loon://import?sub=https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Loon/Loon_config_no_ipv6.lcf) - 禁用 IPv6 版本
 
 **使用方法：**
 1. 下载配置文件到本地
@@ -191,7 +191,7 @@ wget -P /path/to/config/mihomo_config.yaml https://raw.githubusercontent.com/Pia
 CustomRules:
   MyRule:
     name: "MyRule"
-    category: "PianCat"              # 规则源分类，对应 RemoteRulesLinkBase.yaml
+    category: "Higanoneko"              # 规则源分类，对应 RemoteRulesLinkBase.yaml
     behavior: "classical"             # domain / classical / ip
     remotefile: "./MyRule/MyRule.list" # 远程规则文件路径
     parenttag: "Game"                # 归入 Game 策略组

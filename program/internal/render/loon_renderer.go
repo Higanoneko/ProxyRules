@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/PianCat/ProxyRules/internal/catalog"
-	"github.com/PianCat/ProxyRules/internal/domain"
-	"github.com/PianCat/ProxyRules/internal/repository"
+	"github.com/Higanoneko/ProxyRules/internal/catalog"
+	"github.com/Higanoneko/ProxyRules/internal/domain"
+	"github.com/Higanoneko/ProxyRules/internal/repository"
 )
 
 var loonSectionOrder = []string{
@@ -66,7 +66,7 @@ func (r *LoonRenderer) Render(plan domain.PolicyPlan) (string, error) {
 		map[string]map[string]string{"General": r.generalOverrides(plan)},
 		replacements,
 		loonSectionOrder,
-		[]string{"# UpdateTime: 2025.11.05 18:00:00 +0000", "# Author: PianCat"},
+		[]string{"# UpdateTime: 2025.11.05 18:00:00 +0000", "# Author: Higanoneko"},
 	)
 }
 

@@ -7,9 +7,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/PianCat/ProxyRules/internal/domain"
-	"github.com/PianCat/ProxyRules/internal/projectroot"
-	"github.com/PianCat/ProxyRules/internal/service"
+	"github.com/Higanoneko/ProxyRules/internal/domain"
+	"github.com/Higanoneko/ProxyRules/internal/projectroot"
+	"github.com/Higanoneko/ProxyRules/internal/service"
 )
 
 type multiTargetFlag []string

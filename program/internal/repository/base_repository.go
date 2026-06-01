@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/PianCat/ProxyRules/internal/domain"
+	"github.com/Higanoneko/ProxyRules/internal/domain"
 	"gopkg.in/yaml.v3"
 )
 

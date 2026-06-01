@@ -1,6 +1,6 @@
 package catalog
 
-import "github.com/PianCat/ProxyRules/internal/domain"
+import "github.com/Higanoneko/ProxyRules/internal/domain"
 
 var policyTemplates = []domain.PolicyTemplate{
 	{
@@ -21,7 +21,7 @@ var policyTemplates = []domain.PolicyTemplate{
 	{Name: "TikTok", IconURL: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/TikTok.png", Strategy: domain.StrategyDefault},
 	{Name: "Steam", IconURL: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Steam.png", Strategy: domain.StrategyDefault},
 	{Name: "Game", IconURL: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Game.png", Strategy: domain.StrategyDefault},
-	{Name: "E-Hentai", IconURL: "https://cdn.jsdelivr.net/gh/PianCat/CustomProxyRuleset@main/Icons/Ehentai.png", Strategy: domain.StrategyDefault},
+	{Name: "E-Hentai", IconURL: "https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Ehentai.png", Strategy: domain.StrategyDefault},
 	{Name: "PornSite", IconURL: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Pornhub.png", Strategy: domain.StrategyDefault},
 	{
 		Name:                  "US Media",
@@ -47,13 +47,13 @@ var policyTemplates = []domain.PolicyTemplate{
 	{Name: "Google", IconURL: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google_Search.png", Strategy: domain.StrategyDefault},
 	{
 		Name:         "Google FCM",
-		IconURL:      "https://cdn.jsdelivr.net/gh/PianCat/CustomProxyRuleset@main/Icons/Firebase.png",
+		IconURL:      "https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Firebase.png",
 		Strategy:     domain.StrategyFixed,
 		FixedProxies: []string{"Google", "直接连接"},
 	},
 	{
 		Name:         "Sogou Privacy",
-		IconURL:      "https://cdn.jsdelivr.net/gh/PianCat/CustomProxyRuleset@main/Icons/Sougou.png",
+		IconURL:      "https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Sougou.png",
 		Strategy:     domain.StrategyFixed,
 		FixedProxies: []string{"直接连接", "REJECT"},
 	},

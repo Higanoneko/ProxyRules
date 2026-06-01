@@ -226,7 +226,7 @@ proxy-groups:
 
     proxies: *a1
   - name: E-Hentai
-    icon: https://cdn.jsdelivr.net/gh/PianCat/CustomProxyRuleset@main/Icons/Ehentai.png
+    icon: https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Ehentai.png
     type: select
 
     proxies: *a1
@@ -301,14 +301,14 @@ proxy-groups:
 
     proxies: *a1
   - name: Google FCM
-    icon: https://cdn.jsdelivr.net/gh/PianCat/CustomProxyRuleset@main/Icons/Firebase.png
+    icon: https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Firebase.png
     type: select
 
     proxies:
       - Google
       - 直接连接
   - name: Sogou Privacy
-    icon: https://cdn.jsdelivr.net/gh/PianCat/CustomProxyRuleset@main/Icons/Sougou.png
+    icon: https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Sougou.png
     type: select
 
     proxies:
@@ -456,7 +456,7 @@ rule-providers:
     behavior: classical
     format: text
     interval: 86400
-    url: https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/PornSite/PornSite.list
+    url: https://raw.githubusercontent.com/Higanoneko/CustomProxyRuleset/main/PornSite/PornSite.list
     path: ./ruleset/PornSite.list
   Stream_US:
     type: http
@@ -547,21 +547,21 @@ rule-providers:
     behavior: classical
     format: text
     interval: 86400
-    url: https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/Furrybar/Furrybar.list
+    url: https://raw.githubusercontent.com/Higanoneko/CustomProxyRuleset/main/Furrybar/Furrybar.list
     path: ./ruleset/Furrybar.list
   Playhorny:
     type: http
     behavior: classical
     format: text
     interval: 86400
-    url: https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/Playhorny/Playhorny.list
+    url: https://raw.githubusercontent.com/Higanoneko/CustomProxyRuleset/main/Playhorny/Playhorny.list
     path: ./ruleset/Playhorny.list
   Nikke:
     type: http
     behavior: classical
     format: text
     interval: 86400
-    url: https://raw.githubusercontent.com/PianCat/CustomProxyRuleset/main/Nikke/Nikke.list
+    url: https://raw.githubusercontent.com/Higanoneko/CustomProxyRuleset/main/Nikke/Nikke.list
     path: ./ruleset/Nikke.list
 
 rules:

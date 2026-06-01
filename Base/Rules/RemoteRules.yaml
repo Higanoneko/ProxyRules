@@ -128,7 +128,7 @@ BaseRules:
     name: "PornSite"
     policyname: "PornSite"
     tagname: "PornSite"
-    category: "PianCat"
+    category: "Higanoneko"
     behavior: "classical"
     remotefile: "./PornSite/PornSite.list"
 
@@ -247,7 +247,7 @@ CustomRules:
 # Furrybar
   Furrybar:
     name: "Furrybar"
-    category: "PianCat"
+    category: "Higanoneko"
     behavior: "classical"
     remotefile: "./Furrybar/Furrybar.list"
     parenttag: "PornSite"
@@ -255,7 +255,7 @@ CustomRules:
 # Playhorny
   Playhorny:
     name: "Playhorny"
-    category: "PianCat"
+    category: "Higanoneko"
     behavior: "classical"
     remotefile: "./Playhorny/Playhorny.list"
     parenttag: "Game"
@@ -263,7 +263,7 @@ CustomRules:
 # Nikke:
   Nikke:
     name: "Nikke"
-    category: "PianCat"
+    category: "Higanoneko"
     behavior: "classical"
     remotefile: "./Nikke/Nikke.list"
     parenttag: "Game"

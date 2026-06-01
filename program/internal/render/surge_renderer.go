@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/PianCat/ProxyRules/internal/catalog"
-	"github.com/PianCat/ProxyRules/internal/domain"
-	"github.com/PianCat/ProxyRules/internal/repository"
+	"github.com/Higanoneko/ProxyRules/internal/catalog"
+	"github.com/Higanoneko/ProxyRules/internal/domain"
+	"github.com/Higanoneko/ProxyRules/internal/repository"
 )
 
 var surgeSectionOrder = []string{"General", "Proxy", "Proxy Group", "Rule"}
@@ -44,7 +44,7 @@ func (r *SurgeRenderer) Render(plan domain.PolicyPlan) (string, error) {
 			"Rule":        rules,
 		},
 		surgeSectionOrder,
-		[]string{"# Surge Configuration", "# Author: PianCat", "# Update: 2025-11-26", "# Surge Version: 5.x"},
+		[]string{"# Surge Configuration", "# Author: Higanoneko", "# Update: 2025-11-26", "# Surge Version: 5.x"},
 	)
 }
 

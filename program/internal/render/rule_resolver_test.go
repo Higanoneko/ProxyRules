@@ -6,10 +6,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/PianCat/ProxyRules/internal/projectroot"
-	"github.com/PianCat/ProxyRules/internal/render"
-	"github.com/PianCat/ProxyRules/internal/repository"
-	"github.com/PianCat/ProxyRules/internal/service"
+	"github.com/Higanoneko/ProxyRules/internal/projectroot"
+	"github.com/Higanoneko/ProxyRules/internal/render"
+	"github.com/Higanoneko/ProxyRules/internal/repository"
+	"github.com/Higanoneko/ProxyRules/internal/service"
 	"gopkg.in/yaml.v3"
 )
 
