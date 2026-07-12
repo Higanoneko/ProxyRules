@@ -1,4 +1,4 @@
-# Generated at (UTC): 2026-06-01T11:37:30Z
+# Generated at (UTC): 2026-07-12T03:33:25Z
 
 mode: rule
 log-level: info
@@ -21,8 +21,8 @@ dns:
   proxy-server-nameserver:
     - https://doh.pub/dns-query
   nameserver:
-    - https://doh.pub/dns-query
     - https://cloudflare-dns.com/dns-query
+    - https://doh.pub/dns-query
     - https://dns.google/dns-query
   fake-ip-filter:
     - '*.lan'
