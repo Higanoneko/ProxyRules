@@ -48,6 +48,40 @@ func TestNormalizeTargetsIncludesEasytierForAll(t *testing.T) {
 	}
 }
 
+func TestGenerateMihomoWritesMihomo4RootFiles(t *testing.T) {
+	root := buildServiceProjectRoot()
+	buildService, err := NewBuildService(root)
+	if err != nil {
+		t.Fatalf("new build service: %v", err)
+	}
+
+	outputRoot := t.TempDir()
+	if err := buildService.Generate(
+		[]domain.Target{domain.TargetMihomo},
+		outputRoot,
+		CreateTestNodes(),
+	); err != nil {
+		t.Fatalf("generate: %v", err)
+	}
+
+	expectedFiles := []string{
+		filepath.Join(outputRoot, "Mihomo4Root", "Mihomo4Root_mihomo_config.yaml"),
+		filepath.Join(outputRoot, "Mihomo4Root", "Mihomo4Root_mihomo_config_no_ipv6.yaml"),
+		filepath.Join(outputRoot, "Mihomo4Root", "Mihomo4Root_mihomo_config_tun.yaml"),
+		filepath.Join(outputRoot, "Mihomo4Root", "Mihomo4Root_mihomo_config_tun_no_ipv6.yaml"),
+	}
+	for _, expectedFile := range expectedFiles {
+		if _, err := os.Stat(expectedFile); err != nil {
+			t.Fatalf("expected generated file %s: %v", expectedFile, err)
+		}
+	}
+
+	oldFile := filepath.Join(outputRoot, "Box4Root", "Box4Root_mihomo_config.yaml")
+	if _, err := os.Stat(oldFile); !os.IsNotExist(err) {
+		t.Fatalf("expected old Box4Root output to be removed, stat err: %v", err)
+	}
+}
+
 func buildServiceProjectRoot() string {
 	_, file, _, _ := runtime.Caller(0)
 	root, err := projectroot.Find(filepath.Dir(file))

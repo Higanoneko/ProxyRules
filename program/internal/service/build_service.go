@@ -15,6 +15,7 @@ type BuildService struct {
 	base         repository.BaseData
 	planner      *PolicyPlanBuilder
 	mihomo       *render.MihomoRenderer
+	mihomo4root  *render.Mihomo4RootRenderer
 	mihomoScript *render.MihomoScriptRenderer
 	stash        *render.StashRenderer
 	loon         *render.LoonRenderer
@@ -32,6 +33,7 @@ func NewBuildService(root string) (*BuildService, error) {
 		base:         base,
 		planner:      NewPolicyPlanBuilder(base),
 		mihomo:       render.NewMihomoRenderer(base),
+		mihomo4root:  render.NewMihomo4RootRenderer(base),
 		mihomoScript: render.NewMihomoScriptRenderer(base),
 		stash:        render.NewStashRenderer(base),
 		loon:         render.NewLoonRenderer(base),
@@ -124,16 +126,20 @@ func normalizeTargets(targets []domain.Target) map[domain.Target]bool {
 
 func (s *BuildService) generateMihomo(outputRoot string, planIPv6True domain.PolicyPlan, planIPv6False domain.PolicyPlan, generatedAt time.Time) error {
 	mihomoOutputDir := filepath.Join(outputRoot, "Mihomo")
-	box4RootOutputDir := filepath.Join(outputRoot, "Box4Root")
+	mihomo4RootOutputDir := filepath.Join(outputRoot, "Mihomo4Root")
 	if err := removeFiles(
 		filepath.Join(mihomoOutputDir, "Box4Root_mihomo_config.yaml"),
 		filepath.Join(mihomoOutputDir, "Box4Root_mihomo_config_no_ipv6.yaml"),
 		filepath.Join(mihomoOutputDir, "Box4Root_mihomo_config_tun.yaml"),
 		filepath.Join(mihomoOutputDir, "Box4Root_mihomo_config_tun_no_ipv6.yaml"),
-		filepath.Join(box4RootOutputDir, "Box4Root_mihomo_config.yaml"),
-		filepath.Join(box4RootOutputDir, "Box4Root_mihomo_config_no_ipv6.yaml"),
-		filepath.Join(box4RootOutputDir, "Box4Root_mihomo_config_tun.yaml"),
-		filepath.Join(box4RootOutputDir, "Box4Root_mihomo_config_tun_no_ipv6.yaml"),
+		filepath.Join(outputRoot, "Box4Root", "Box4Root_mihomo_config.yaml"),
+		filepath.Join(outputRoot, "Box4Root", "Box4Root_mihomo_config_no_ipv6.yaml"),
+		filepath.Join(outputRoot, "Box4Root", "Box4Root_mihomo_config_tun.yaml"),
+		filepath.Join(outputRoot, "Box4Root", "Box4Root_mihomo_config_tun_no_ipv6.yaml"),
+		filepath.Join(mihomo4RootOutputDir, "Mihomo4Root_mihomo_config.yaml"),
+		filepath.Join(mihomo4RootOutputDir, "Mihomo4Root_mihomo_config_no_ipv6.yaml"),
+		filepath.Join(mihomo4RootOutputDir, "Mihomo4Root_mihomo_config_tun.yaml"),
+		filepath.Join(mihomo4RootOutputDir, "Mihomo4Root_mihomo_config_tun_no_ipv6.yaml"),
 	); err != nil {
 		return err
 	}
@@ -157,23 +163,23 @@ func (s *BuildService) generateMihomo(outputRoot string, planIPv6True domain.Pol
 	}); err != nil {
 		return err
 	}
-	if err := writeRenderResult(filepath.Join(box4RootOutputDir, "Box4Root_mihomo_config_tun.yaml"), generatedAt, func() (string, error) {
-		return s.mihomo.RenderBox4Root(planIPv6True, true)
+	if err := writeRenderResult(filepath.Join(mihomo4RootOutputDir, "Mihomo4Root_mihomo_config_tun.yaml"), generatedAt, func() (string, error) {
+		return s.mihomo4root.RenderMihomo4Root(planIPv6True, true)
 	}); err != nil {
 		return err
 	}
-	if err := writeRenderResult(filepath.Join(box4RootOutputDir, "Box4Root_mihomo_config_tun_no_ipv6.yaml"), generatedAt, func() (string, error) {
-		return s.mihomo.RenderBox4Root(planIPv6False, true)
+	if err := writeRenderResult(filepath.Join(mihomo4RootOutputDir, "Mihomo4Root_mihomo_config_tun_no_ipv6.yaml"), generatedAt, func() (string, error) {
+		return s.mihomo4root.RenderMihomo4Root(planIPv6False, true)
 	}); err != nil {
 		return err
 	}
-	if err := writeRenderResult(filepath.Join(box4RootOutputDir, "Box4Root_mihomo_config.yaml"), generatedAt, func() (string, error) {
-		return s.mihomo.RenderBox4Root(planIPv6True, false)
+	if err := writeRenderResult(filepath.Join(mihomo4RootOutputDir, "Mihomo4Root_mihomo_config.yaml"), generatedAt, func() (string, error) {
+		return s.mihomo4root.RenderMihomo4Root(planIPv6True, false)
 	}); err != nil {
 		return err
 	}
-	if err := writeRenderResult(filepath.Join(box4RootOutputDir, "Box4Root_mihomo_config_no_ipv6.yaml"), generatedAt, func() (string, error) {
-		return s.mihomo.RenderBox4Root(planIPv6False, false)
+	if err := writeRenderResult(filepath.Join(mihomo4RootOutputDir, "Mihomo4Root_mihomo_config_no_ipv6.yaml"), generatedAt, func() (string, error) {
+		return s.mihomo4root.RenderMihomo4Root(planIPv6False, false)
 	}); err != nil {
 		return err
 	}

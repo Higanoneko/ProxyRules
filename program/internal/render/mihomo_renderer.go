@@ -83,29 +83,6 @@ func (r *MihomoRenderer) RenderStandard(plan domain.PolicyPlan, full bool) (stri
 	return addBlankLinesBeforeSections(content, []string{"dns:", "sniffer:", "geodata-mode:", "proxy-groups:", "rule-providers:", "rules:"}), nil
 }
 
-func (r *MihomoRenderer) RenderBox4Root(plan domain.PolicyPlan, tunEnabled bool) (string, error) {
-	head, err := r.base.Head("box4root")
-	if err != nil {
-		return "", err
-	}
-
-	rules, err := resolveMihomoRules(head, yamlHeadPlaceholders(plan), r.ruleResolver.MihomoRules(plan.Rules))
-	if err != nil {
-		return "", err
-	}
-
-	explicit, err := r.box4RootOverrides(plan, tunEnabled, rules)
-	if err != nil {
-		return "", err
-	}
-
-	document, err := ComposeYAML(head, explicit, yamlHeadPlaceholders(plan), nil, mihomoReplacePaths)
-	if err != nil {
-		return "", err
-	}
-	return renderYAMLDocument(document)
-}
-
 func (r *MihomoRenderer) FullDefaultsNode(plan domain.PolicyPlan) (*yaml.Node, error) {
 	head, err := r.base.Head("mihomo")
 	if err != nil {
@@ -148,24 +125,6 @@ func (r *MihomoRenderer) standardOverrides(plan domain.PolicyPlan, full bool, ru
 		appendMappingValue(root, "ipv6", newScalarNode(plan.DNS.IPv6))
 	}
 
-	return root, nil
-}
-
-func (r *MihomoRenderer) box4RootOverrides(plan domain.PolicyPlan, tunEnabled bool, rules []string) (*yaml.Node, error) {
-	providers, err := r.ruleResolver.MihomoRuleProviders(plan.Rules)
-	if err != nil {
-		return nil, err
-	}
-
-	root := newMappingNode()
-	appendMappingValue(root, "ipv6", newScalarNode(plan.DNS.IPv6))
-	tun := newMappingNode()
-	appendMappingValue(tun, "enable", newScalarNode(tunEnabled))
-	appendMappingValue(root, "tun", tun)
-	appendMappingValue(root, "dns", mihomoDNSNode(plan, true))
-	appendMappingValue(root, "proxy-groups", proxyGroupsNode(plan.Proxy.Groups))
-	appendMappingValue(root, "rule-providers", providers)
-	appendMappingValue(root, "rules", stringSequenceNode(rules))
 	return root, nil
 }
 

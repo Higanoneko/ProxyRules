@@ -30,7 +30,7 @@ Wireguard_Easytier/ -> Easytier_Wireguard 相关产物
   - `internal/service/`：生成流程
   - `internal/render/`：各工具渲染器
 - `Config/`
-  - 生成后的 Mihomo / Stash / Loon / Surge / Box4Root 配置
+  - 生成后的 Mihomo / Stash / Loon / Surge / Mihomo4Root 配置
 - `Wireguard_Easytier/`
   - Easytier 相关脚本与模块输出
 
@@ -46,7 +46,7 @@ Wireguard_Easytier/ -> Easytier_Wireguard 相关产物
 
 - Mihomo / Stash：把生成出的覆写文件或脚本导入到客户端，再让客户端加载你自己的订阅
 - Loon / Surge：生成带策略组和规则的配置骨架，再接入你自己的节点来源
-- Box4Root：生成可直接修改订阅地址的完整模板文件
+- Mihomo4Root：生成可直接修改订阅地址的完整模板文件
 
 如果你只是想做一套“自己的规则与模板风格”，只需要改 `Base/` 下面的文件，不需要改 Go 代码。规则定义完全由 `Base/Rules/RemoteRules.yaml` 的 `BaseRules` / `CustomRules` 分区驱动，新增规则零代码改动。
 
@@ -87,7 +87,7 @@ go run ./cmd/proxyrules --tool mihomo
 
 > `--tool mihomo` 会同时生成：
 > - `Config/Mihomo/`
-> - `Config/Box4Root/`
+> - `Config/Mihomo4Root/`
 
 只生成 Stash：
 
@@ -130,7 +130,7 @@ go test ./...
 输出到：
 
 - `Config/Mihomo/`
-- `Config/Box4Root/`
+- `Config/Mihomo4Root/`
 
 会生成：
 
@@ -143,10 +143,10 @@ go test ./...
 - `mihomo_convert_ipv6-1_full-1.js`
 - `mihomo_convert_ipv6-0_full-0.js`
 - `mihomo_convert_ipv6-0_full-1.js`
-- `Box4Root_mihomo_config.yaml`
-- `Box4Root_mihomo_config_no_ipv6.yaml`
-- `Box4Root_mihomo_config_tun.yaml`
-- `Box4Root_mihomo_config_tun_no_ipv6.yaml`
+- `Mihomo4Root_mihomo_config.yaml`
+- `Mihomo4Root_mihomo_config_no_ipv6.yaml`
+- `Mihomo4Root_mihomo_config_tun.yaml`
+- `Mihomo4Root_mihomo_config_tun_no_ipv6.yaml`
 
 说明：
 
@@ -154,8 +154,8 @@ go test ./...
 - `ipv6-0` 表示禁用 IPv6
 - `full-1` 表示完整配置
 - `full-0` 表示基础配置
-- `Box4Root_mihomo_config_tun*` 表示 `tun.enable = true`
-- `Box4Root_mihomo_config*` 表示 `tun.enable = false`
+- `Mihomo4Root_mihomo_config_tun*` 表示 `tun.enable = true`
+- `Mihomo4Root_mihomo_config*` 表示 `tun.enable = false`
 
 ### `--tool stash`
 
@@ -236,7 +236,7 @@ DNS:
 
 - `IP`：用于 `default-nameserver`
 - `Default_DoH`：用于主 `nameserver`
-- `Proxy_Server_DoH`：用于 Mihomo / Stash / Box4Root 的 `proxy-server-nameserver`
+- `Proxy_Server_DoH`：用于 Mihomo / Stash / Mihomo4Root 的 `proxy-server-nameserver`
 - `Direct_DoH`：用于 `direct-nameserver`
 - `Fallback_DoH`：保留在通用 DNS 模型中，作为补充上游池
 
@@ -251,7 +251,7 @@ DNS:
 
 影响：
 
-- Mihomo / Stash / Box4Root 的 `fake-ip-filter`
+- Mihomo / Stash / Mihomo4Root 的 `fake-ip-filter`
 - Loon / Surge 的真实 IP 相关配置
 
 ### 6.3 改端口：`Base/Ports.yaml`
@@ -387,7 +387,7 @@ fake-ip-filter: "$Fake_IP_Filter_List"
 - `"$DNS_Proxy_Server_DoH_List"`
 - `"$Fake_IP_Filter_List"`
 
-这些 DNS 占位符不仅会影响 Mihomo / Stash / Box4Root 的 YAML 输出，也会同时影响 Mihomo 的 `mihomo_convert_*.js` 与 `mihomo_convert_args.js`，因为 JS 的 DNS 模板现在与 Mihomo 头模板共用同一套 DNS 合成结果。
+这些 DNS 占位符不仅会影响 Mihomo / Stash / Mihomo4Root 的 YAML 输出，也会同时影响 Mihomo 的 `mihomo_convert_*.js` 与 `mihomo_convert_args.js`，因为 JS 的 DNS 模板现在与 Mihomo 头模板共用同一套 DNS 合成结果。
 
 以下是在 `rules` 字段上的额外占位符 `"$ProxyRules_Pack"`，当前标准写法是：
 
@@ -494,7 +494,7 @@ go run ./cmd/proxyrules --tool all
 重点检查：
 
 - `Config/Mihomo/`
-- `Config/Box4Root/`
+- `Config/Mihomo4Root/`
 - `Config/Stash/`
 - `Config/Loon/`
 - `Config/Surge/`
@@ -517,7 +517,7 @@ cd program
 go run ./cmd/proxyrules --tool mihomo,stash,loon,surge
 ```
 
-### 场景 B：我只想改 Mihomo / Box4Root 头部模板
+### 场景 B：我只想改 Mihomo / Mihomo4Root 头部模板
 
 改：
 
@@ -593,11 +593,11 @@ https://example.com/mihomo_convert_args.js#ipv6=1&full=0&threshold=2
 
 ## 11. 常见坑
 
-### 11.1 `--tool mihomo` 为什么还生成了 Box4Root
+### 11.1 `--tool mihomo` 为什么还生成了 Mihomo4Root
 
 这是设计如此。
 
-因为 Box4Root 使用 Mihomo 系渲染链路，所以它跟随 Mihomo 一起生成。
+因为 Mihomo4Root 使用 Mihomo 系渲染链路，所以它跟随 Mihomo 一起生成。
 
 ### 11.2 为什么我改了头模板，某些块又被程序覆盖了
 
@@ -607,7 +607,7 @@ https://example.com/mihomo_convert_args.js#ipv6=1&full=0&threshold=2
 - `rule-providers`
 - `rules`
 
-Mihomo / Stash / Box4Root 的 DNS 也会由程序把动态值写进去，但头模板中不属于动态字段的固定内容会被保留。
+Mihomo / Stash / Mihomo4Root 的 DNS 也会由程序把动态值写进去，但头模板中不属于动态字段的固定内容会被保留。
 
 ### 11.3 为什么 Easytier 单独生成时报错
 

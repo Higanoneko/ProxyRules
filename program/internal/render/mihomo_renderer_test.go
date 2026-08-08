@@ -12,7 +12,7 @@ import (
 	"github.com/Higanoneko/ProxyRules/internal/service"
 )
 
-func TestRenderBox4RootConfigPreservesTemplateAndCoreSections(t *testing.T) {
+func TestRenderMihomo4RootConfigPreservesTemplateAndCoreSections(t *testing.T) {
 	base, err := repository.NewBaseRepository(mihomoProjectRoot()).Load()
 	if err != nil {
 		t.Fatalf("load base: %v", err)
@@ -23,9 +23,9 @@ func TestRenderBox4RootConfigPreservesTemplateAndCoreSections(t *testing.T) {
 		t.Fatalf("build plan: %v", err)
 	}
 
-	content, err := render.NewMihomoRenderer(base).RenderBox4Root(plan, true)
+	content, err := render.NewMihomo4RootRenderer(base).RenderMihomo4Root(plan, true)
 	if err != nil {
-		t.Fatalf("render box4root: %v", err)
+		t.Fatalf("render mihomo4root: %v", err)
 	}
 
 	if !strings.Contains(content, "Box4Root") {
@@ -43,14 +43,14 @@ func TestRenderBox4RootConfigPreservesTemplateAndCoreSections(t *testing.T) {
 	}
 	for _, marker := range []string{"listen: 0.0.0.0:1053", "fake-ip-range: 198.18.0.1/16", "fake-ip-range6: fdfe:dcba:9876::1/64"} {
 		if !strings.Contains(content, marker) {
-			t.Fatalf("expected %s in box4root dns config", marker)
+			t.Fatalf("expected %s in mihomo4root dns config", marker)
 		}
 	}
 	if strings.Contains(content, "{DNS_IP_List}") {
 		t.Fatal("expected placeholders resolved")
 	}
 	if !strings.Contains(content, "tun:\n  enable: true") {
-		t.Fatal("expected tun enabled in box4root config")
+		t.Fatal("expected tun enabled in mihomo4root config")
 	}
 	if !strings.Contains(content, "\nrules:\n  - DST-PORT,53,DNS_Hijack\n") {
 		t.Fatal("expected DNS_Hijack rule from head template")
@@ -83,7 +83,7 @@ func TestRenderStandardConfigPreservesHeadDNSFields(t *testing.T) {
 	}
 }
 
-func TestRenderBox4RootConfigSupportsTunDisabled(t *testing.T) {
+func TestRenderMihomo4RootConfigSupportsTunDisabled(t *testing.T) {
 	base, err := repository.NewBaseRepository(mihomoProjectRoot()).Load()
 	if err != nil {
 		t.Fatalf("load base: %v", err)
@@ -94,13 +94,13 @@ func TestRenderBox4RootConfigSupportsTunDisabled(t *testing.T) {
 		t.Fatalf("build plan: %v", err)
 	}
 
-	content, err := render.NewMihomoRenderer(base).RenderBox4Root(plan, false)
+	content, err := render.NewMihomo4RootRenderer(base).RenderMihomo4Root(plan, false)
 	if err != nil {
-		t.Fatalf("render box4root disabled tun: %v", err)
+		t.Fatalf("render mihomo4root disabled tun: %v", err)
 	}
 
 	if !strings.Contains(content, "tun:\n  enable: false") {
-		t.Fatal("expected tun disabled in box4root config")
+		t.Fatal("expected tun disabled in mihomo4root config")
 	}
 }
 

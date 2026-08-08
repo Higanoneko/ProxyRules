@@ -1,6 +1,7 @@
-# Generated at (UTC): 2026-07-12T03:33:25Z
+# Generated at (UTC): 2026-08-08T01:59:55Z
 
 # Higanoneko's ProxyRules - Box4Root 复杂配置
+
 # 如不会配置，也可自行寻找懒人配置，例如(Surfing 模块配置)：https://raw.githubusercontent.com/GitMetaio/Surfing/refs/heads/main/box_bll/clash/config.yaml
 
 proxy-providers:
@@ -16,17 +17,18 @@ proxy-providers:
       timeout: 1000
       tolerance: 100
   # 多订阅按照下面照葫芦画瓢即可
-  # proxy2:
-  #   type: http
-  #   url: "填写订阅链接"
-  #   path: ./proxy_provider/proxy2.yaml
-  #   interval: 3600
-  #   health-check:
-  #     enable: true
-  #     url: https://cp.cloudflare.com
-  #     interval: 300
-  #     timeout: 1000
-  #     tolerance: 100
+# proxy2:
+#   type: http
+#   url: "填写订阅链接"
+#   path: ./proxy_provider/proxy2.yaml
+#   interval: 3600
+#   health-check:
+#     enable: true
+#     url: https://cp.cloudflare.com
+#     interval: 300
+#     timeout: 1000
+#     tolerance: 100
+
 mixed-port: 56365
 redir-port: 9797
 tproxy-port: 9898
@@ -39,6 +41,7 @@ tcp-concurrent: true
 log-level: error
 find-process-mode: always
 # global-client-fingerprint: random
+
 external-controller: 0.0.0.0:9090
 external-ui: ./dashboard
 external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
@@ -51,7 +54,7 @@ geox-url:
   mmdb: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
   asn: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/GeoLite2-ASN.mmdb"
 tun:
-  enable: false
+  enable: true
   device: umihomo
   stack: mixed
   dns-hijack: ['any:53', 'tcp://any:53']
@@ -242,6 +245,7 @@ proxy-groups:
   - name: 手动选择
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Round_Robin_1.png
     include-all: true
+    exclude-filter: (?i)DNS_Hijack
     type: select
   - name: AI
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/AI.png
@@ -423,7 +427,7 @@ proxy-groups:
   - name: 其他节点
     icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png
     include-all: true
-    exclude-filter: "(?i)香港|港|HK|hk|Hong Kong|HongKong|Hongkong|Hong kong|hongkong|hong kong|\U0001F1ED\U0001F1F0|台|新北|彰化|TW|Taiwan|TaiWan|Tai wan|Tai Wan|taiwan|tai wan|\U0001F1F9\U0001F1FC|新加坡|坡|狮城|SG|Singapore|\U0001F1F8\U0001F1EC|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|\U0001F1EF\U0001F1F5|美国|美|US|United States|\U0001F1FA\U0001F1F8"
+    exclude-filter: "(?i)香港|港|HK|hk|Hong Kong|HongKong|Hongkong|Hong kong|hongkong|hong kong|\U0001F1ED\U0001F1F0|台|新北|彰化|TW|Taiwan|TaiWan|Tai wan|Tai Wan|taiwan|tai wan|\U0001F1F9\U0001F1FC|新加坡|坡|狮城|SG|Singapore|\U0001F1F8\U0001F1EC|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|\U0001F1EF\U0001F1F5|美国|美|US|United States|\U0001F1FA\U0001F1F8|DNS_Hijack"
     type: select
   - name: GLOBAL
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png

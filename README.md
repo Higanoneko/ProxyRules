@@ -36,13 +36,13 @@
   - [mihomo_convert_ipv6-0_full-1.js](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Mihomo/mihomo_convert_ipv6-0_full-1.js) - 禁用 IPv6，完整配置
   - [mihomo_convert_ipv6-1_full-1.js](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Mihomo/mihomo_convert_ipv6-1_full-1.js) - 启用 IPv6，完整配置
 
-**Box4Root 配置 (.yaml)**
+**Mihomo4Root 配置 (.yaml)**
 
-用于 [Box4Root](https://github.com/boxproxy/box) 等运行在 Shell 环境中的工具。
-  - [Box4Root_mihomo_config.yaml](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Box4Root/Box4Root_mihomo_config.yaml) - 启用 IPv6，禁用 TUN。 ⭐ 推荐（需要更改 Box4Root 的运行模式为 Enhanced 等非 TUN 模式）
-  - [Box4Root_mihomo_config_no_ipv6.yaml](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Box4Root/Box4Root_mihomo_config_no_ipv6.yaml) - 禁用 IPv6，禁用 TUN。（需要更改 Box4Root 的运行模式为 Enhanced 等非 TUN 模式）
-  - [Box4Root_mihomo_config_tun.yaml](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Box4Root/Box4Root_mihomo_config_tun.yaml) - 启用 IPv6，启用 TUN。
-  - [Box4Root_mihomo_config_tun_no_ipv6.yaml](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Box4Root/Box4Root_mihomo_config_tun_no_ipv6.yaml) - 禁用 IPv6，启用 TUN。
+用于 [Box4Root](https://github.com/boxproxy/box) 、 [Surfing](https://github.com/GitMetaio/Surfing) 等运行在 Root Shell 环境中的工具。
+  - [Mihomo4Root_mihomo_config.yaml](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Mihomo4Root/Mihomo4Root_mihomo_config.yaml) - 启用 IPv6，禁用 TUN。 ⭐ 推荐（需要更改 Mihomo4Root 的运行模式为 Enhanced 等非 TUN 模式）
+  - [Mihomo4Root_mihomo_config_no_ipv6.yaml](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Mihomo4Root/Mihomo4Root_mihomo_config_no_ipv6.yaml) - 禁用 IPv6，禁用 TUN。（需要更改 Mihomo4Root 的运行模式为 Enhanced 等非 TUN 模式）
+  - [Mihomo4Root_mihomo_config_tun.yaml](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Mihomo4Root/Mihomo4Root_mihomo_config_tun.yaml) - 启用 IPv6，启用 TUN。
+  - [Mihomo4Root_mihomo_config_tun_no_ipv6.yaml](https://raw.githubusercontent.com/Higanoneko/ProxyRules/main/Config/Mihomo4Root/Mihomo4Root_mihomo_config_tun_no_ipv6.yaml) - 禁用 IPv6，启用 TUN。
 
 
 **Sparkle/Clash Party 使用方法**
