@@ -1,4 +1,4 @@
-# Generated at (UTC): 2026-08-08T02:02:51Z
+# Generated at (UTC): 2026-08-28T08:51:11Z
 
 mode: rule
 log-level: info
@@ -19,7 +19,6 @@ dns:
     - https://doh.pub/dns-query
   nameserver:
     - https://cloudflare-dns.com/dns-query
-    - https://doh.pub/dns-query
     - https://dns.google/dns-query
   fake-ip-filter:
     - '*.lan'

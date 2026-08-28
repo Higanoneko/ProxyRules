@@ -1,4 +1,4 @@
-# Generated at (UTC): 2026-08-08T02:02:51Z
+# Generated at (UTC): 2026-08-28T08:51:11Z
 
 # Higanoneko's ProxyRules - Box4Root 复杂配置
 # 如不会配置，也可自行寻找懒人配置，例如(Surfing 模块配置)：https://raw.githubusercontent.com/GitMetaio/Surfing/refs/heads/main/box_bll/clash/config.yaml
@@ -86,7 +86,6 @@ dns:
     - https://doh.pub/dns-query
   nameserver:
     - https://cloudflare-dns.com/dns-query
-    - https://doh.pub/dns-query
     - https://dns.google/dns-query
   fake-ip-filter:
     - '*.lan'
