@@ -5,9 +5,8 @@ https://github.com/Higanoneko/ProxyRules
 支持的传入参数：
 - ipv6: 启用 IPv6 支持（默认 true）
 - full: 输出完整配置（适合纯内核启动，默认 false）
+- dns: 启用 DNS 与域名嗅探（默认 true）
 - threshold: 国家节点数量小于该值时不显示分组（默认 0）
-
-注意：DNS 始终使用 FakeIP 模式
 */
 
 const NODE_SUFFIX = "节点";
@@ -207,10 +206,12 @@ function main(config) {
         "proxy-groups": proxyGroups,
         "rule-providers": RULE_PROVIDERS,
         rules: [...BASE_RULES],
-        sniffer: SNIFFER_CONFIG,
-        dns: buildDnsConfig(ipv6Enabled),
         "geodata-mode": true,
         "geox-url": GEOX_URL,
+        ...(dnsEnabled ? {
+            sniffer: SNIFFER_CONFIG,
+            dns: buildDnsConfig(ipv6Enabled),
+        } : {}),
     });
 
     return resultConfig;

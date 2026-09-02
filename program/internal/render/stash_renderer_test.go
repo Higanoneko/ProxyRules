@@ -35,6 +35,29 @@ func TestRenderStashConfigPreservesHeadDNSFields(t *testing.T) {
 	}
 }
 
+func TestRenderStashOverrideWithoutDNSOrSniffer(t *testing.T) {
+	base, err := repository.NewBaseRepository(stashProjectRoot()).Load()
+	if err != nil {
+		t.Fatalf("load base: %v", err)
+	}
+
+	plan, err := service.NewPolicyPlanBuilder(base).Build(true, nil)
+	if err != nil {
+		t.Fatalf("build plan: %v", err)
+	}
+
+	content, err := render.NewStashRenderer(base).RenderOverride(plan, false)
+	if err != nil {
+		t.Fatalf("render stash override without dns: %v", err)
+	}
+
+	for _, section := range []string{"dns:", "sniffer:"} {
+		if strings.Contains(content, "\n"+section) {
+			t.Fatalf("did not expect %s in dns-disabled override", section)
+		}
+	}
+}
+
 func stashProjectRoot() string {
 	_, file, _, _ := runtime.Caller(0)
 	root, err := projectroot.Find(filepath.Dir(file))

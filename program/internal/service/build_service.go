@@ -127,6 +127,9 @@ func normalizeTargets(targets []domain.Target) map[domain.Target]bool {
 func (s *BuildService) generateMihomo(outputRoot string, planIPv6True domain.PolicyPlan, planIPv6False domain.PolicyPlan, generatedAt time.Time) error {
 	mihomoOutputDir := filepath.Join(outputRoot, "Mihomo")
 	mihomo4RootOutputDir := filepath.Join(outputRoot, "Mihomo4Root")
+	if err := removeFiles(legacyMihomoOutputPaths(mihomoOutputDir)...); err != nil {
+		return err
+	}
 	if err := removeFiles(
 		filepath.Join(mihomoOutputDir, "Box4Root_mihomo_config.yaml"),
 		filepath.Join(mihomoOutputDir, "Box4Root_mihomo_config_no_ipv6.yaml"),
@@ -143,23 +146,43 @@ func (s *BuildService) generateMihomo(outputRoot string, planIPv6True domain.Pol
 	); err != nil {
 		return err
 	}
-	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_config_ipv6-1_full-0.yaml"), generatedAt, func() (string, error) {
-		return s.mihomo.RenderStandard(planIPv6True, false)
+	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_config_ipv6-1_dns-1_full-0.yaml"), generatedAt, func() (string, error) {
+		return s.mihomo.RenderStandard(planIPv6True, false, true)
 	}); err != nil {
 		return err
 	}
-	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_config_ipv6-1_full-1.yaml"), generatedAt, func() (string, error) {
-		return s.mihomo.RenderStandard(planIPv6True, true)
+	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_config_ipv6-1_dns-1_full-1.yaml"), generatedAt, func() (string, error) {
+		return s.mihomo.RenderStandard(planIPv6True, true, true)
 	}); err != nil {
 		return err
 	}
-	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_config_ipv6-0_full-0.yaml"), generatedAt, func() (string, error) {
-		return s.mihomo.RenderStandard(planIPv6False, false)
+	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_config_ipv6-0_dns-1_full-0.yaml"), generatedAt, func() (string, error) {
+		return s.mihomo.RenderStandard(planIPv6False, false, true)
 	}); err != nil {
 		return err
 	}
-	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_config_ipv6-0_full-1.yaml"), generatedAt, func() (string, error) {
-		return s.mihomo.RenderStandard(planIPv6False, true)
+	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_config_ipv6-0_dns-1_full-1.yaml"), generatedAt, func() (string, error) {
+		return s.mihomo.RenderStandard(planIPv6False, true, true)
+	}); err != nil {
+		return err
+	}
+	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_config_ipv6-1_dns-0_full-0.yaml"), generatedAt, func() (string, error) {
+		return s.mihomo.RenderStandard(planIPv6True, false, false)
+	}); err != nil {
+		return err
+	}
+	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_config_ipv6-1_dns-0_full-1.yaml"), generatedAt, func() (string, error) {
+		return s.mihomo.RenderStandard(planIPv6True, true, false)
+	}); err != nil {
+		return err
+	}
+	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_config_ipv6-0_dns-0_full-0.yaml"), generatedAt, func() (string, error) {
+		return s.mihomo.RenderStandard(planIPv6False, false, false)
+	}); err != nil {
+		return err
+	}
+	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_config_ipv6-0_dns-0_full-1.yaml"), generatedAt, func() (string, error) {
+		return s.mihomo.RenderStandard(planIPv6False, true, false)
 	}); err != nil {
 		return err
 	}
@@ -188,23 +211,43 @@ func (s *BuildService) generateMihomo(outputRoot string, planIPv6True domain.Pol
 	}); err != nil {
 		return err
 	}
-	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_convert_ipv6-1_full-0.js"), generatedAt, func() (string, error) {
-		return s.mihomoScript.RenderFixed(planIPv6True, false)
+	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_convert_ipv6-1_dns-1_full-0.js"), generatedAt, func() (string, error) {
+		return s.mihomoScript.RenderFixed(planIPv6True, false, true)
 	}); err != nil {
 		return err
 	}
-	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_convert_ipv6-1_full-1.js"), generatedAt, func() (string, error) {
-		return s.mihomoScript.RenderFixed(planIPv6True, true)
+	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_convert_ipv6-1_dns-1_full-1.js"), generatedAt, func() (string, error) {
+		return s.mihomoScript.RenderFixed(planIPv6True, true, true)
 	}); err != nil {
 		return err
 	}
-	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_convert_ipv6-0_full-0.js"), generatedAt, func() (string, error) {
-		return s.mihomoScript.RenderFixed(planIPv6False, false)
+	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_convert_ipv6-0_dns-1_full-0.js"), generatedAt, func() (string, error) {
+		return s.mihomoScript.RenderFixed(planIPv6False, false, true)
 	}); err != nil {
 		return err
 	}
-	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_convert_ipv6-0_full-1.js"), generatedAt, func() (string, error) {
-		return s.mihomoScript.RenderFixed(planIPv6False, true)
+	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_convert_ipv6-0_dns-1_full-1.js"), generatedAt, func() (string, error) {
+		return s.mihomoScript.RenderFixed(planIPv6False, true, true)
+	}); err != nil {
+		return err
+	}
+	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_convert_ipv6-1_dns-0_full-0.js"), generatedAt, func() (string, error) {
+		return s.mihomoScript.RenderFixed(planIPv6True, false, false)
+	}); err != nil {
+		return err
+	}
+	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_convert_ipv6-1_dns-0_full-1.js"), generatedAt, func() (string, error) {
+		return s.mihomoScript.RenderFixed(planIPv6True, true, false)
+	}); err != nil {
+		return err
+	}
+	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_convert_ipv6-0_dns-0_full-0.js"), generatedAt, func() (string, error) {
+		return s.mihomoScript.RenderFixed(planIPv6False, false, false)
+	}); err != nil {
+		return err
+	}
+	if err := writeRenderResult(filepath.Join(mihomoOutputDir, "mihomo_convert_ipv6-0_dns-0_full-1.js"), generatedAt, func() (string, error) {
+		return s.mihomoScript.RenderFixed(planIPv6False, true, false)
 	}); err != nil {
 		return err
 	}
@@ -221,8 +264,42 @@ func removeFiles(paths ...string) error {
 	return nil
 }
 
+func legacyMihomoOutputPaths(outputDir string) []string {
+	fileNames := []string{
+		"mihomo_config_ipv6-1_full-0.yaml",
+		"mihomo_config_ipv6-1_full-1.yaml",
+		"mihomo_config_ipv6-0_full-0.yaml",
+		"mihomo_config_ipv6-0_full-1.yaml",
+		"mihomo_config_ipv6-1_full-0_dns-0.yaml",
+		"mihomo_config_ipv6-1_full-1_dns-0.yaml",
+		"mihomo_config_ipv6-0_full-0_dns-0.yaml",
+		"mihomo_config_ipv6-0_full-1_dns-0.yaml",
+		"mihomo_convert_ipv6-1_full-0.js",
+		"mihomo_convert_ipv6-1_full-1.js",
+		"mihomo_convert_ipv6-0_full-0.js",
+		"mihomo_convert_ipv6-0_full-1.js",
+		"mihomo_convert_ipv6-1_full-0_dns-0.js",
+		"mihomo_convert_ipv6-1_full-1_dns-0.js",
+		"mihomo_convert_ipv6-0_full-0_dns-0.js",
+		"mihomo_convert_ipv6-0_full-1_dns-0.js",
+	}
+	paths := make([]string, 0, len(fileNames))
+	for _, fileName := range fileNames {
+		paths = append(paths, filepath.Join(outputDir, fileName))
+	}
+	return paths
+}
+
 func (s *BuildService) generateStash(outputRoot string, planIPv6True domain.PolicyPlan, planIPv6False domain.PolicyPlan, generatedAt time.Time) error {
 	outputDir := filepath.Join(outputRoot, "Stash")
+	if err := removeFiles(
+		filepath.Join(outputDir, "Stash_override.stoverride"),
+		filepath.Join(outputDir, "Stash_override_no_ipv6.stoverride"),
+		filepath.Join(outputDir, "Stash_override_dns-0.stoverride"),
+		filepath.Join(outputDir, "Stash_override_no_ipv6_dns-0.stoverride"),
+	); err != nil {
+		return err
+	}
 	if err := writeRenderResult(filepath.Join(outputDir, "Stash_config_full.yaml"), generatedAt, func() (string, error) {
 		return s.stash.RenderFull(planIPv6True)
 	}); err != nil {
@@ -233,13 +310,23 @@ func (s *BuildService) generateStash(outputRoot string, planIPv6True domain.Poli
 	}); err != nil {
 		return err
 	}
-	if err := writeRenderResult(filepath.Join(outputDir, "Stash_override.stoverride"), generatedAt, func() (string, error) {
-		return s.stash.RenderOverride(planIPv6True)
+	if err := writeRenderResult(filepath.Join(outputDir, "Stash_override_ipv6-1_dns-1.stoverride"), generatedAt, func() (string, error) {
+		return s.stash.RenderOverride(planIPv6True, true)
 	}); err != nil {
 		return err
 	}
-	if err := writeRenderResult(filepath.Join(outputDir, "Stash_override_no_ipv6.stoverride"), generatedAt, func() (string, error) {
-		return s.stash.RenderOverride(planIPv6False)
+	if err := writeRenderResult(filepath.Join(outputDir, "Stash_override_ipv6-0_dns-1.stoverride"), generatedAt, func() (string, error) {
+		return s.stash.RenderOverride(planIPv6False, true)
+	}); err != nil {
+		return err
+	}
+	if err := writeRenderResult(filepath.Join(outputDir, "Stash_override_ipv6-1_dns-0.stoverride"), generatedAt, func() (string, error) {
+		return s.stash.RenderOverride(planIPv6True, false)
+	}); err != nil {
+		return err
+	}
+	if err := writeRenderResult(filepath.Join(outputDir, "Stash_override_ipv6-0_dns-0.stoverride"), generatedAt, func() (string, error) {
+		return s.stash.RenderOverride(planIPv6False, false)
 	}); err != nil {
 		return err
 	}

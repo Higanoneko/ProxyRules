@@ -1,14 +1,27 @@
-# Generated at (UTC): 2026-08-28T08:51:11Z
+# Generated at (UTC): 2026-09-02T06:48:10Z
 
-name: Higanoneko Stash Override
-desc: Higanoneko's Config Override
-author: Higanoneko
-icon: https://fastly.jsdelivr.net/gh/shindgewongxj/WHATSINStash@master/icon/substore.png
-category: Override
+# Full Start From Here
+
+mixed-port: 56365
+allow-lan: true
+ipv6: false
 mode: rule
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: strict
+global-client-fingerprint: chrome
 log-level: info
+geodata-loader: standard
+external-controller: :9090
+external-ui: ./dashboard
+external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
+disable-keep-alive: true
+profile:
+  store-selected: true
+# Normal Start From Here
 
-dns: #!replace
+dns:
+  enable: true
   ipv6: false
   listen: 0.0.0.0:1053
   enhanced-mode: fake-ip
@@ -151,11 +164,33 @@ dns: #!replace
     - '*.10099.com.cn'
     - '*.microdone.cn'
 
-proxy-groups: #!replace
+sniffer:
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  skip-domain:
+    - "Mijia Cloud"
+    - "dlg.io.mi.com"
+    - "+.push.apple.com"
+
+geodata-mode: true
+geo-auto-update: true
+geo-update-interval: 24
+geox-url:
+  geoip: https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat
+  geosite: https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat
+  mmdb: https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb
+  asn: https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb
+
+proxy-groups:
   - name: 选择代理
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Proxy.png
     type: select
-
     proxies:
       - 香港节点
       - 台湾节点
@@ -172,7 +207,6 @@ proxy-groups: #!replace
   - name: AI
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/AI.png
     type: select
-
     proxies: &a1
       - 选择代理
       - 香港节点
@@ -186,52 +220,42 @@ proxy-groups: #!replace
   - name: Telegram
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png
     type: select
-
     proxies: *a1
   - name: YouTube
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png
     type: select
-
     proxies: *a1
   - name: Netflix
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Netflix.png
     type: select
-
     proxies: *a1
   - name: Spotify
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Spotify.png
     type: select
-
     proxies: *a1
   - name: TikTok
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/TikTok.png
     type: select
-
     proxies: *a1
   - name: Steam
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Steam.png
     type: select
-
     proxies: *a1
   - name: Game
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Game.png
     type: select
-
     proxies: *a1
   - name: E-Hentai
     icon: https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Ehentai.png
     type: select
-
     proxies: *a1
   - name: PornSite
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Pornhub.png
     type: select
-
     proxies: *a1
   - name: US Media
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png
     type: select
-
     proxies:
       - 美国节点
       - 选择代理
@@ -240,7 +264,6 @@ proxy-groups: #!replace
   - name: Taiwan Media
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png
     type: select
-
     proxies:
       - 台湾节点
       - 选择代理
@@ -249,7 +272,6 @@ proxy-groups: #!replace
   - name: Japan Media
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png
     type: select
-
     proxies:
       - 日本节点
       - 选择代理
@@ -258,12 +280,10 @@ proxy-groups: #!replace
   - name: Global Media
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/DomesticMedia.png
     type: select
-
     proxies: *a1
   - name: Apple
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Apple.png
     type: select
-
     proxies:
       - 直接连接
       - 选择代理
@@ -277,7 +297,6 @@ proxy-groups: #!replace
   - name: Microsoft
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Microsoft.png
     type: select
-
     proxies:
       - 直接连接
       - 选择代理
@@ -291,26 +310,22 @@ proxy-groups: #!replace
   - name: Google
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google_Search.png
     type: select
-
     proxies: *a1
   - name: Google FCM
     icon: https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Firebase.png
     type: select
-
     proxies:
       - Google
       - 直接连接
   - name: Sogou Privacy
     icon: https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Sougou.png
     type: select
-
     proxies:
       - 直接连接
       - REJECT
   - name: ADBlock
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/AdBlack.png
     type: select
-
     proxies:
       - REJECT-DROP
       - REJECT
@@ -318,7 +333,6 @@ proxy-groups: #!replace
   - name: 直接连接
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Direct.png
     type: select
-
     proxies:
       - DIRECT
       - 选择代理
@@ -372,8 +386,13 @@ proxy-groups: #!replace
     include-all: true
     exclude-filter: "(?i)香港|港|HK|hk|Hong Kong|HongKong|Hongkong|Hong kong|hongkong|hong kong|\U0001F1ED\U0001F1F0|台|新北|彰化|TW|Taiwan|TaiWan|Tai wan|Tai Wan|taiwan|tai wan|\U0001F1F9\U0001F1FC|新加坡|坡|狮城|SG|Singapore|\U0001F1F8\U0001F1EC|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|\U0001F1EF\U0001F1F5|美国|美|US|United States|\U0001F1FA\U0001F1F8"
     type: select
+  - name: GLOBAL
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png
+    include-all: true
+    type: select
+    proxies: *a1
 
-rule-providers: #!replace
+rule-providers:
   AI:
     type: http
     behavior: classical
@@ -557,7 +576,7 @@ rule-providers: #!replace
     url: https://raw.githubusercontent.com/Higanoneko/CustomProxyRuleset/main/Nikke/Nikke.list
     path: ./ruleset/Nikke.list
 
-rules: #!replace
+rules:
   - RULE-SET,AI,AI
   - RULE-SET,Telegram,Telegram
   - RULE-SET,YouTube,YouTube

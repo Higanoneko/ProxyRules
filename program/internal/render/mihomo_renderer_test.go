@@ -71,7 +71,7 @@ func TestRenderStandardConfigPreservesHeadDNSFields(t *testing.T) {
 		t.Fatalf("build plan: %v", err)
 	}
 
-	content, err := render.NewMihomoRenderer(base).RenderStandard(plan, false)
+	content, err := render.NewMihomoRenderer(base).RenderStandard(plan, false, true)
 	if err != nil {
 		t.Fatalf("render standard: %v", err)
 	}
@@ -79,6 +79,29 @@ func TestRenderStandardConfigPreservesHeadDNSFields(t *testing.T) {
 	for _, marker := range []string{"listen: 0.0.0.0:1053", "fake-ip-range: 198.18.0.1/16", "fake-ip-range6: fdfe:dcba:9876::1/64"} {
 		if !strings.Contains(content, marker) {
 			t.Fatalf("expected %s in standard dns config", marker)
+		}
+	}
+}
+
+func TestRenderStandardConfigWithoutDNSOrSniffer(t *testing.T) {
+	base, err := repository.NewBaseRepository(mihomoProjectRoot()).Load()
+	if err != nil {
+		t.Fatalf("load base: %v", err)
+	}
+
+	plan, err := service.NewPolicyPlanBuilder(base).Build(true, nil)
+	if err != nil {
+		t.Fatalf("build plan: %v", err)
+	}
+
+	content, err := render.NewMihomoRenderer(base).RenderStandard(plan, false, false)
+	if err != nil {
+		t.Fatalf("render standard without dns: %v", err)
+	}
+
+	for _, section := range []string{"dns:", "sniffer:"} {
+		if strings.Contains(content, "\n"+section) {
+			t.Fatalf("did not expect %s in dns-disabled config", section)
 		}
 	}
 }
@@ -121,6 +144,11 @@ func TestRenderArgsScriptContainsSharedPayload(t *testing.T) {
 	}
 
 	for _, marker := range []string{"const POLICY_TEMPLATES", "function buildPolicyGroup", "const RULE_PROVIDERS", "const DNS_TEMPLATE ="} {
+		if !strings.Contains(content, marker) {
+			t.Fatalf("expected %s in args script", marker)
+		}
+	}
+	for _, marker := range []string{`hasOwnProperty.call(args, "dns")`, "dnsEnabled: true", "...(dnsEnabled ? {"} {
 		if !strings.Contains(content, marker) {
 			t.Fatalf("expected %s in args script", marker)
 		}

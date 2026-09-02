@@ -1,4 +1,4 @@
-// Generated at (UTC): 2026-08-28T08:51:11Z
+// Generated at (UTC): 2026-09-02T06:48:10Z
 
 /*
 Higanoneko 的 Substore 订阅转换脚本
@@ -7,9 +7,8 @@ https://github.com/Higanoneko/ProxyRules
 支持的传入参数：
 - ipv6: 启用 IPv6 支持（默认 true）
 - full: 输出完整配置（适合纯内核启动，默认 false）
+- dns: 启用 DNS 与域名嗅探（默认 true）
 - threshold: 国家节点数量小于该值时不显示分组（默认 0）
-
-注意：DNS 始终使用 FakeIP 模式
 */
 
 const NODE_SUFFIX = "节点";
@@ -46,6 +45,7 @@ function parseNumber(value, defaultValue = 0) {
 // ============================================
 const ipv6Enabled = false;
 const fullConfig = true;
+const dnsEnabled = true;
 const countryThreshold = 0;
 // ============================================
 // 参数定义区域结束
@@ -217,10 +217,12 @@ function main(config) {
         "proxy-groups": proxyGroups,
         "rule-providers": RULE_PROVIDERS,
         rules: [...BASE_RULES],
-        sniffer: SNIFFER_CONFIG,
-        dns: buildDnsConfig(ipv6Enabled),
         "geodata-mode": true,
         "geox-url": GEOX_URL,
+        ...(dnsEnabled ? {
+            sniffer: SNIFFER_CONFIG,
+            dns: buildDnsConfig(ipv6Enabled),
+        } : {}),
     });
 
     return resultConfig;

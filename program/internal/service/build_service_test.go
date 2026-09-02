@@ -28,7 +28,10 @@ func TestBuildServiceGeneratesSectionTargets(t *testing.T) {
 
 	expectedFiles := []string{
 		filepath.Join(outputRoot, "Stash", "Stash_config_full.yaml"),
-		filepath.Join(outputRoot, "Stash", "Stash_override.stoverride"),
+		filepath.Join(outputRoot, "Stash", "Stash_override_ipv6-1_dns-1.stoverride"),
+		filepath.Join(outputRoot, "Stash", "Stash_override_ipv6-1_dns-0.stoverride"),
+		filepath.Join(outputRoot, "Stash", "Stash_override_ipv6-0_dns-1.stoverride"),
+		filepath.Join(outputRoot, "Stash", "Stash_override_ipv6-0_dns-0.stoverride"),
 		filepath.Join(outputRoot, "Loon", "Loon_config.lcf"),
 		filepath.Join(outputRoot, "Surge", "Surge_config.conf"),
 	}
@@ -65,6 +68,14 @@ func TestGenerateMihomoWritesMihomo4RootFiles(t *testing.T) {
 	}
 
 	expectedFiles := []string{
+		filepath.Join(outputRoot, "Mihomo", "mihomo_config_ipv6-1_dns-1_full-0.yaml"),
+		filepath.Join(outputRoot, "Mihomo", "mihomo_config_ipv6-1_dns-0_full-0.yaml"),
+		filepath.Join(outputRoot, "Mihomo", "mihomo_config_ipv6-0_dns-1_full-1.yaml"),
+		filepath.Join(outputRoot, "Mihomo", "mihomo_config_ipv6-0_dns-0_full-1.yaml"),
+		filepath.Join(outputRoot, "Mihomo", "mihomo_convert_ipv6-1_dns-1_full-0.js"),
+		filepath.Join(outputRoot, "Mihomo", "mihomo_convert_ipv6-1_dns-0_full-0.js"),
+		filepath.Join(outputRoot, "Mihomo", "mihomo_convert_ipv6-0_dns-1_full-1.js"),
+		filepath.Join(outputRoot, "Mihomo", "mihomo_convert_ipv6-0_dns-0_full-1.js"),
 		filepath.Join(outputRoot, "Mihomo4Root", "Mihomo4Root_mihomo_config.yaml"),
 		filepath.Join(outputRoot, "Mihomo4Root", "Mihomo4Root_mihomo_config_no_ipv6.yaml"),
 		filepath.Join(outputRoot, "Mihomo4Root", "Mihomo4Root_mihomo_config_tun.yaml"),

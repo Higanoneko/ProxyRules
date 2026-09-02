@@ -1,4 +1,4 @@
-// Generated at (UTC): 2026-08-28T08:51:11Z
+// Generated at (UTC): 2026-09-02T06:48:10Z
 
 /*
 Higanoneko 的 Substore 订阅转换脚本
@@ -7,9 +7,8 @@ https://github.com/Higanoneko/ProxyRules
 支持的传入参数：
 - ipv6: 启用 IPv6 支持（默认 true）
 - full: 输出完整配置（适合纯内核启动，默认 false）
+- dns: 启用 DNS 与域名嗅探（默认 true）
 - threshold: 国家节点数量小于该值时不显示分组（默认 0）
-
-注意：DNS 始终使用 FakeIP 模式
 */
 
 
@@ -70,6 +69,7 @@ function buildFeatureFlags(args) {
     const flags = {
         ipv6Enabled: true,
         fullConfig: false,
+        dnsEnabled: true,
         countryThreshold: 0,
     };
 
@@ -78,6 +78,9 @@ function buildFeatureFlags(args) {
     }
     if (args && Object.prototype.hasOwnProperty.call(args, "full")) {
         flags.fullConfig = parseBool(args.full);
+    }
+    if (args && Object.prototype.hasOwnProperty.call(args, "dns")) {
+        flags.dnsEnabled = parseBool(args.dns);
     }
     if (args && Object.prototype.hasOwnProperty.call(args, "threshold")) {
         flags.countryThreshold = parseNumber(args.threshold, 0);
@@ -90,6 +93,7 @@ const rawArgs = typeof $arguments !== "undefined" ? $arguments : {};
 const {
     ipv6Enabled,
     fullConfig,
+    dnsEnabled,
     countryThreshold,
 } = buildFeatureFlags(rawArgs);
 
@@ -259,10 +263,12 @@ function _originalMain(config) {
         "proxy-groups": proxyGroups,
         "rule-providers": RULE_PROVIDERS,
         rules: [...BASE_RULES],
-        sniffer: SNIFFER_CONFIG,
-        dns: buildDnsConfig(ipv6Enabled),
         "geodata-mode": true,
         "geox-url": GEOX_URL,
+        ...(dnsEnabled ? {
+            sniffer: SNIFFER_CONFIG,
+            dns: buildDnsConfig(ipv6Enabled),
+        } : {}),
     });
 
     return resultConfig;

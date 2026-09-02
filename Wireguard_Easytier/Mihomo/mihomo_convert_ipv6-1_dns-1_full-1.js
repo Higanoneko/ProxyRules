@@ -11,6 +11,31 @@ https://github.com/Higanoneko/ProxyRules
 - threshold: 国家节点数量小于该值时不显示分组（默认 0）
 */
 
+
+// ============================================
+// Wireguard_Easytier 用户配置区域
+// 请根据实际情况修改以下配置
+// ============================================
+const EASYTIER_CONFIG = {
+    proxy: {
+        name: "Easytier",
+        type: "wireguard",
+        server: "<填入 Endpoint 的 IP 或 域名>",
+        port: 11013,
+        ip: "<填入客户端 Address，例如 10.14.14.2>",
+        "public-key": "<填入服务端 PublicKey>",
+        "private-key": "<填入客户端 PrivateKey>",
+        udp: true
+    },
+    rules: [
+        "IP-CIDR,10.19.19.0/24,Easytier,no-resolve",
+        "IP-CIDR,10.11.45.0/24,Easytier,no-resolve"
+    ]
+};
+// ============================================
+// Wireguard_Easytier 用户配置区域结束
+// ============================================
+
 const NODE_SUFFIX = "节点";
 const DNS_BOOTSTRAP_LIST = ["119.29.29.29","2402:4e00::","1.1.1.1","2606:4700:4700::1111","8.8.8.8","2001:4860:4860::8888"];
 const DNS_TEMPLATE = {"enable":true,"ipv6":true,"listen":"0.0.0.0:1053","enhanced-mode":"fake-ip","fake-ip-range":"198.18.0.1/16","fake-ip-range6":"fdfe:dcba:9876::1/64","default-nameserver":["119.29.29.29","2402:4e00::","1.1.1.1","2606:4700:4700::1111","8.8.8.8","2001:4860:4860::8888"],"direct-nameserver":["https://doh.pub/dns-query"],"proxy-server-nameserver":["https://doh.pub/dns-query"],"nameserver":["https://cloudflare-dns.com/dns-query","https://dns.google/dns-query"],"fake-ip-filter":["*.lan","*.localdomain","*.example","*.invalid","*.localhost","*.test","*.local","*.home.arpa","time.*.com","time.*.gov","time.*.edu.cn","time.*.apple.com","time1.*.com","time2.*.com","time3.*.com","time4.*.com","time5.*.com","time6.*.com","time7.*.com","ntp.*.com","ntp1.*.com","ntp2.*.com","ntp3.*.com","ntp4.*.com","ntp5.*.com","ntp6.*.com","ntp7.*.com","*.time.edu.cn","*.ntp.org.cn","+.pool.ntp.org","time1.cloud.tencent.com","music.163.com","*.music.163.com","*.126.net","*.netease.com","musicapi.taihe.com","music.taihe.com","songsearch.kugou.com","trackercdn.kugou.com","*.kuwo.cn","api-jooxtt.sanook.com","api.joox.com","joox.com","*.tencent.com","*.qq.com","y.qq.com","*.y.qq.com","streamoc.music.tc.qq.com","mobileoc.music.tc.qq.com","isure.stream.qqmusic.qq.com","dl.stream.qqmusic.qq.com","aqqmusic.tc.qq.com","amobile.music.tc.qq.com","*.xiami.com","*.xiaomi.com","*.mi.com","*.music.migu.cn","music.migu.cn","*.msftconnecttest.com","*.msftncsi.com","msftconnecttest.com","msftncsi.com","localhost.ptlogin2.qq.com","localhost.sec.qq.com","+.srv.nintendo.net","+.stun.playstation.net","xbox.*.microsoft.com","+.battlenet.com.cn","+.wotgame.cn","+.wggames.cn","+.wowsgame.cn","+.wargaming.net","proxy.golang.org","stun.*.*","stun.*.*.*","stun.*.*.*.*","heartbeat.belkin.com","*.linksys.com","*.linksyssmartwifi.com","*.router.asus.com","mesu.apple.com","swscan.apple.com","swquery.apple.com","swdownload.apple.com","swcdn.apple.com","swdist.apple.com","lens.l.google.com","stun.l.google.com","+.nflxvideo.net","*.square-enix.com","*.finalfantasyxiv.com","*.ffxiv.com","*.direct","cable.auth.com","network-test.debian.org","detectportal.firefox.com","resolver1.opendns.com","*.xboxlive.com","global.turn.twilio.com","global.stun.twilio.com","app.yinxiang.com","injections.adguard.org","local.adguard.org","localhost.*.qq.com","localhost.*.weixin.qq.com","*.logon.battle.net","*.blzstatic.cn","*.mcdn.bilivideo.cn","*.cmpassport.com","id6.me","open.e.189.cn","opencloud.wostore.cn","id.mail.wo.cn","mdn.open.wo.cn","hmrz.wo.cn","nishub1.10010.com","enrichgw.10010.com","*.wosms.cn","*.jegotrip.com.cn","*.icitymobile.mobi","*.pingan.com.cn","*.cmbchina.com","*.10099.com.cn","*.microdone.cn"]};
@@ -40,37 +65,16 @@ function parseNumber(value, defaultValue = 0) {
     return Number.isNaN(parsed) ? defaultValue : parsed;
 }
 
-function buildFeatureFlags(args) {
-    const flags = {
-        ipv6Enabled: true,
-        fullConfig: false,
-        dnsEnabled: true,
-        countryThreshold: 0,
-    };
-
-    if (args && Object.prototype.hasOwnProperty.call(args, "ipv6")) {
-        flags.ipv6Enabled = parseBool(args.ipv6);
-    }
-    if (args && Object.prototype.hasOwnProperty.call(args, "full")) {
-        flags.fullConfig = parseBool(args.full);
-    }
-    if (args && Object.prototype.hasOwnProperty.call(args, "dns")) {
-        flags.dnsEnabled = parseBool(args.dns);
-    }
-    if (args && Object.prototype.hasOwnProperty.call(args, "threshold")) {
-        flags.countryThreshold = parseNumber(args.threshold, 0);
-    }
-
-    return flags;
-}
-
-const rawArgs = typeof $arguments !== "undefined" ? $arguments : {};
-const {
-    ipv6Enabled,
-    fullConfig,
-    dnsEnabled,
-    countryThreshold,
-} = buildFeatureFlags(rawArgs);
+// ============================================
+// 参数定义区域（可根据需要修改）
+// ============================================
+const ipv6Enabled = true;
+const fullConfig = true;
+const dnsEnabled = true;
+const countryThreshold = 0;
+// ============================================
+// 参数定义区域结束
+// ============================================
 
 function stripInlineFlag(pattern) {
     return String(pattern || "").replace(/^\(\?i\)/, "");
@@ -206,7 +210,7 @@ function buildDnsConfig(ipv6Enabled) {
     };
 }
 
-function main(config) {
+function _originalMain(config) {
     const proxies = config && Array.isArray(config.proxies) ? config.proxies : [];
     const resultConfig = { proxies };
 
@@ -247,4 +251,25 @@ function main(config) {
     });
 
     return resultConfig;
+}
+
+// ============ Wireguard_Easytier Start ============
+function _easytierEnhance(config) {
+    // 1. 确保基础结构存在
+    if (!config.proxies) config.proxies = [];
+    if (!config.rules) config.rules = [];
+
+    // 2. 将节点追加到代理列表末尾
+    config.proxies.push(EASYTIER_CONFIG.proxy);
+
+    // 3. 将 Easytier 规则插入到所有规则的最前面
+    config.rules = [...EASYTIER_CONFIG.rules, ...config.rules];
+
+    return config;
+}
+// ============ Wireguard_Easytier End ============
+
+// ============ Wireguard_Easytier Bridge ============
+function main(config) {
+    return _easytierEnhance(_originalMain(config));
 }

@@ -33,8 +33,8 @@ func (r *MihomoScriptRenderer) RenderArgs(plan domain.PolicyPlan) (string, error
 	return r.render(plan, argsParameterBlock())
 }
 
-func (r *MihomoScriptRenderer) RenderFixed(plan domain.PolicyPlan, full bool) (string, error) {
-	return r.render(plan, fixedParameterBlock(plan.DNS.IPv6, full))
+func (r *MihomoScriptRenderer) RenderFixed(plan domain.PolicyPlan, full bool, dnsEnabled bool) (string, error) {
+	return r.render(plan, fixedParameterBlock(plan.DNS.IPv6, full, dnsEnabled))
 }
 
 func (r *MihomoScriptRenderer) render(plan domain.PolicyPlan, parameterBlock string) (string, error) {
@@ -144,6 +144,7 @@ func argsParameterBlock() string {
     const flags = {
         ipv6Enabled: true,
         fullConfig: false,
+        dnsEnabled: true,
         countryThreshold: 0,
     };
 
@@ -152,6 +153,9 @@ func argsParameterBlock() string {
     }
     if (args && Object.prototype.hasOwnProperty.call(args, "full")) {
         flags.fullConfig = parseBool(args.full);
+    }
+    if (args && Object.prototype.hasOwnProperty.call(args, "dns")) {
+        flags.dnsEnabled = parseBool(args.dns);
     }
     if (args && Object.prototype.hasOwnProperty.call(args, "threshold")) {
         flags.countryThreshold = parseNumber(args.threshold, 0);
@@ -164,18 +168,20 @@ const rawArgs = typeof $arguments !== "undefined" ? $arguments : {};
 const {
     ipv6Enabled,
     fullConfig,
+    dnsEnabled,
     countryThreshold,
 } = buildFeatureFlags(rawArgs);`
 }
 
-func fixedParameterBlock(ipv6Enabled bool, fullConfig bool) string {
+func fixedParameterBlock(ipv6Enabled bool, fullConfig bool, dnsEnabled bool) string {
 	return fmt.Sprintf(`// ============================================
 // 参数定义区域（可根据需要修改）
 // ============================================
 const ipv6Enabled = %t;
 const fullConfig = %t;
+const dnsEnabled = %t;
 const countryThreshold = 0;
 // ============================================
 // 参数定义区域结束
-// ============================================`, ipv6Enabled, fullConfig)
+// ============================================`, ipv6Enabled, fullConfig, dnsEnabled)
 }

@@ -30,6 +30,9 @@ func generateEasytierBundle(mihomoOutputDir string, easytierSourcePath string, o
 	if err != nil {
 		return fmt.Errorf("read easytier source: %w", err)
 	}
+	if err := removeFiles(legacyMihomoOutputPaths(outputDir)...); err != nil {
+		return err
+	}
 
 	entries, err := os.ReadDir(mihomoOutputDir)
 	if err != nil {

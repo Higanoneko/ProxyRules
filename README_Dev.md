@@ -134,15 +134,23 @@ go test ./...
 
 会生成：
 
-- `mihomo_config_ipv6-1_full-0.yaml`
-- `mihomo_config_ipv6-1_full-1.yaml`
-- `mihomo_config_ipv6-0_full-0.yaml`
-- `mihomo_config_ipv6-0_full-1.yaml`
+- `mihomo_config_ipv6-1_dns-1_full-0.yaml`
+- `mihomo_config_ipv6-1_dns-1_full-1.yaml`
+- `mihomo_config_ipv6-0_dns-1_full-0.yaml`
+- `mihomo_config_ipv6-0_dns-1_full-1.yaml`
+- `mihomo_config_ipv6-1_dns-0_full-0.yaml`
+- `mihomo_config_ipv6-1_dns-0_full-1.yaml`
+- `mihomo_config_ipv6-0_dns-0_full-0.yaml`
+- `mihomo_config_ipv6-0_dns-0_full-1.yaml`
 - `mihomo_convert_args.js`
-- `mihomo_convert_ipv6-1_full-0.js`
-- `mihomo_convert_ipv6-1_full-1.js`
-- `mihomo_convert_ipv6-0_full-0.js`
-- `mihomo_convert_ipv6-0_full-1.js`
+- `mihomo_convert_ipv6-1_dns-1_full-0.js`
+- `mihomo_convert_ipv6-1_dns-1_full-1.js`
+- `mihomo_convert_ipv6-0_dns-1_full-0.js`
+- `mihomo_convert_ipv6-0_dns-1_full-1.js`
+- `mihomo_convert_ipv6-1_dns-0_full-0.js`
+- `mihomo_convert_ipv6-1_dns-0_full-1.js`
+- `mihomo_convert_ipv6-0_dns-0_full-0.js`
+- `mihomo_convert_ipv6-0_dns-0_full-1.js`
 - `Mihomo4Root_mihomo_config.yaml`
 - `Mihomo4Root_mihomo_config_no_ipv6.yaml`
 - `Mihomo4Root_mihomo_config_tun.yaml`
@@ -152,7 +160,9 @@ go test ./...
 
 - `ipv6-1` 表示启用 IPv6
 - `ipv6-0` 表示禁用 IPv6
+- `dns-1` 表示配置 DNS 和域名嗅探
 - `full-1` 表示完整配置
+- `dns-0` 表示不配置 DNS 和域名嗅探
 - `full-0` 表示基础配置
 - `Mihomo4Root_mihomo_config_tun*` 表示 `tun.enable = true`
 - `Mihomo4Root_mihomo_config*` 表示 `tun.enable = false`
@@ -163,8 +173,10 @@ go test ./...
 
 - `Stash_config_full.yaml`
 - `Stash_config_full_no_ipv6.yaml`
-- `Stash_override.stoverride`
-- `Stash_override_no_ipv6.stoverride`
+- `Stash_override_ipv6-1_dns-1.stoverride`
+- `Stash_override_ipv6-0_dns-1.stoverride`
+- `Stash_override_ipv6-1_dns-0.stoverride`
+- `Stash_override_ipv6-0_dns-0.stoverride`
 
 ### `--tool loon`
 
@@ -190,6 +202,7 @@ go test ./...
 额外说明：
 
 - 每次运行生成器时，都会同步刷新 `Wireguard_Easytier/Surge/Easytier.sgmodule`
+- Easytier 模块只注入 WireGuard 节点和路由规则，与 Mihomo、Stash 的 DNS/Sniffer 变体无关
 - 当选择 `--tool easytier` 时，还会额外生成 Mihomo 版 Easytier JS 产物
 
 注意：
@@ -576,17 +589,19 @@ go run ./cmd/proxyrules --tool mihomo --test
 - `ipv6=0|1`
 - `full=0|1`
 - `threshold=<数字>`
+- `dns=0|1`
 
 其中：
 
 - `ipv6`：是否启用 IPv6
 - `full`：是否使用完整配置
 - `threshold`：某国家节点数量小于该值时，不显示该国家分组
+- `dns`：是否配置 DNS 和域名嗅探
 
 示例：
 
 ```text
-https://example.com/mihomo_convert_args.js#ipv6=1&full=0&threshold=2
+https://example.com/mihomo_convert_args.js#ipv6=1&full=0&threshold=2&dns=0
 ```
 
 ---

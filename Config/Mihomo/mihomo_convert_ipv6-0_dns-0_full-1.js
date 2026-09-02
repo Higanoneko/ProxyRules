@@ -1,4 +1,4 @@
-// Generated at (UTC): 2026-08-28T08:51:11Z
+// Generated at (UTC): 2026-09-02T06:48:10Z
 
 /*
 Higanoneko 的 Substore 订阅转换脚本
@@ -7,35 +7,9 @@ https://github.com/Higanoneko/ProxyRules
 支持的传入参数：
 - ipv6: 启用 IPv6 支持（默认 true）
 - full: 输出完整配置（适合纯内核启动，默认 false）
+- dns: 启用 DNS 与域名嗅探（默认 true）
 - threshold: 国家节点数量小于该值时不显示分组（默认 0）
-
-注意：DNS 始终使用 FakeIP 模式
 */
-
-
-// ============================================
-// Wireguard_Easytier 用户配置区域
-// 请根据实际情况修改以下配置
-// ============================================
-const EASYTIER_CONFIG = {
-    proxy: {
-        name: "Easytier",
-        type: "wireguard",
-        server: "<填入 Endpoint 的 IP 或 域名>",
-        port: 11013,
-        ip: "<填入客户端 Address，例如 10.14.14.2>",
-        "public-key": "<填入服务端 PublicKey>",
-        "private-key": "<填入客户端 PrivateKey>",
-        udp: true
-    },
-    rules: [
-        "IP-CIDR,10.19.19.0/24,Easytier,no-resolve",
-        "IP-CIDR,10.11.45.0/24,Easytier,no-resolve"
-    ]
-};
-// ============================================
-// Wireguard_Easytier 用户配置区域结束
-// ============================================
 
 const NODE_SUFFIX = "节点";
 const DNS_BOOTSTRAP_LIST = ["119.29.29.29","1.1.1.1","8.8.8.8"];
@@ -71,6 +45,7 @@ function parseNumber(value, defaultValue = 0) {
 // ============================================
 const ipv6Enabled = false;
 const fullConfig = true;
+const dnsEnabled = false;
 const countryThreshold = 0;
 // ============================================
 // 参数定义区域结束
@@ -210,7 +185,7 @@ function buildDnsConfig(ipv6Enabled) {
     };
 }
 
-function _originalMain(config) {
+function main(config) {
     const proxies = config && Array.isArray(config.proxies) ? config.proxies : [];
     const resultConfig = { proxies };
 
@@ -242,32 +217,13 @@ function _originalMain(config) {
         "proxy-groups": proxyGroups,
         "rule-providers": RULE_PROVIDERS,
         rules: [...BASE_RULES],
-        sniffer: SNIFFER_CONFIG,
-        dns: buildDnsConfig(ipv6Enabled),
         "geodata-mode": true,
         "geox-url": GEOX_URL,
+        ...(dnsEnabled ? {
+            sniffer: SNIFFER_CONFIG,
+            dns: buildDnsConfig(ipv6Enabled),
+        } : {}),
     });
 
     return resultConfig;
-}
-
-// ============ Wireguard_Easytier Start ============
-function _easytierEnhance(config) {
-    // 1. 确保基础结构存在
-    if (!config.proxies) config.proxies = [];
-    if (!config.rules) config.rules = [];
-
-    // 2. 将节点追加到代理列表末尾
-    config.proxies.push(EASYTIER_CONFIG.proxy);
-
-    // 3. 将 Easytier 规则插入到所有规则的最前面
-    config.rules = [...EASYTIER_CONFIG.rules, ...config.rules];
-
-    return config;
-}
-// ============ Wireguard_Easytier End ============
-
-// ============ Wireguard_Easytier Bridge ============
-function main(config) {
-    return _easytierEnhance(_originalMain(config));
 }

@@ -40,37 +40,16 @@ function parseNumber(value, defaultValue = 0) {
     return Number.isNaN(parsed) ? defaultValue : parsed;
 }
 
-function buildFeatureFlags(args) {
-    const flags = {
-        ipv6Enabled: true,
-        fullConfig: false,
-        dnsEnabled: true,
-        countryThreshold: 0,
-    };
-
-    if (args && Object.prototype.hasOwnProperty.call(args, "ipv6")) {
-        flags.ipv6Enabled = parseBool(args.ipv6);
-    }
-    if (args && Object.prototype.hasOwnProperty.call(args, "full")) {
-        flags.fullConfig = parseBool(args.full);
-    }
-    if (args && Object.prototype.hasOwnProperty.call(args, "dns")) {
-        flags.dnsEnabled = parseBool(args.dns);
-    }
-    if (args && Object.prototype.hasOwnProperty.call(args, "threshold")) {
-        flags.countryThreshold = parseNumber(args.threshold, 0);
-    }
-
-    return flags;
-}
-
-const rawArgs = typeof $arguments !== "undefined" ? $arguments : {};
-const {
-    ipv6Enabled,
-    fullConfig,
-    dnsEnabled,
-    countryThreshold,
-} = buildFeatureFlags(rawArgs);
+// ============================================
+// 参数定义区域（可根据需要修改）
+// ============================================
+const ipv6Enabled = true;
+const fullConfig = true;
+const dnsEnabled = false;
+const countryThreshold = 0;
+// ============================================
+// 参数定义区域结束
+// ============================================
 
 function stripInlineFlag(pattern) {
     return String(pattern || "").replace(/^\(\?i\)/, "");

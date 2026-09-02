@@ -44,7 +44,7 @@ func NewMihomoRenderer(base repository.BaseData) *MihomoRenderer {
 	}
 }
 
-func (r *MihomoRenderer) RenderStandard(plan domain.PolicyPlan, full bool) (string, error) {
+func (r *MihomoRenderer) RenderStandard(plan domain.PolicyPlan, full bool, dnsEnabled bool) (string, error) {
 	head, err := r.base.Head("mihomo")
 	if err != nil {
 		return "", err
@@ -55,15 +55,12 @@ func (r *MihomoRenderer) RenderStandard(plan domain.PolicyPlan, full bool) (stri
 		return "", err
 	}
 
-	explicit, err := r.standardOverrides(plan, full, rules)
+	explicit, err := r.standardOverrides(plan, full, dnsEnabled, rules)
 	if err != nil {
 		return "", err
 	}
 
-	dropPaths := []string{}
-	if !full {
-		dropPaths = mihomoFullOnlyKeys
-	}
+	dropPaths := standardDropPaths(full, dnsEnabled)
 
 	document, err := ComposeYAML(
 		head,
@@ -106,14 +103,16 @@ func (r *MihomoRenderer) FullDefaultsNode(plan domain.PolicyPlan) (*yaml.Node, e
 	return root, nil
 }
 
-func (r *MihomoRenderer) standardOverrides(plan domain.PolicyPlan, full bool, rules []string) (*yaml.Node, error) {
+func (r *MihomoRenderer) standardOverrides(plan domain.PolicyPlan, full bool, dnsEnabled bool, rules []string) (*yaml.Node, error) {
 	providers, err := r.ruleResolver.MihomoRuleProviders(plan.Rules)
 	if err != nil {
 		return nil, err
 	}
 
 	root := newMappingNode()
-	appendMappingValue(root, "dns", mihomoDNSNode(plan, true))
+	if dnsEnabled {
+		appendMappingValue(root, "dns", mihomoDNSNode(plan, true))
+	}
 	appendMappingValue(root, "geodata-mode", newScalarNode(true))
 	appendMappingValue(root, "geox-url", geoxNode())
 	appendMappingValue(root, "proxy-groups", proxyGroupsNode(plan.Proxy.Groups))
@@ -126,6 +125,17 @@ func (r *MihomoRenderer) standardOverrides(plan domain.PolicyPlan, full bool, ru
 	}
 
 	return root, nil
+}
+
+func standardDropPaths(full bool, dnsEnabled bool) []string {
+	dropPaths := make([]string, 0, len(mihomoFullOnlyKeys)+2)
+	if !full {
+		dropPaths = append(dropPaths, mihomoFullOnlyKeys...)
+	}
+	if !dnsEnabled {
+		dropPaths = append(dropPaths, "dns", "sniffer")
+	}
+	return dropPaths
 }
 
 func resolveMihomoRules(head string, placeholders map[string]any, generatedRules []string) ([]string, error) {

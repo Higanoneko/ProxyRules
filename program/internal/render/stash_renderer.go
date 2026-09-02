@@ -21,7 +21,7 @@ func NewStashRenderer(base repository.BaseData) *StashRenderer {
 }
 
 func (r *StashRenderer) RenderFull(plan domain.PolicyPlan) (string, error) {
-	document, err := r.compose(plan)
+	document, err := r.compose(plan, true)
 	if err != nil {
 		return "", err
 	}
@@ -34,8 +34,8 @@ func (r *StashRenderer) RenderFull(plan domain.PolicyPlan) (string, error) {
 	return injectStashSubscriptionPlaceholders(content), nil
 }
 
-func (r *StashRenderer) RenderOverride(plan domain.PolicyPlan) (string, error) {
-	document, err := r.compose(plan)
+func (r *StashRenderer) RenderOverride(plan domain.PolicyPlan, dnsEnabled bool) (string, error) {
+	document, err := r.compose(plan, dnsEnabled)
 	if err != nil {
 		return "", err
 	}
@@ -67,7 +67,7 @@ func (r *StashRenderer) RenderOverride(plan domain.PolicyPlan) (string, error) {
 	return content, nil
 }
 
-func (r *StashRenderer) compose(plan domain.PolicyPlan) (*yaml.Node, error) {
+func (r *StashRenderer) compose(plan domain.PolicyPlan, dnsEnabled bool) (*yaml.Node, error) {
 	head, err := r.base.Head("stash")
 	if err != nil {
 		return nil, err
@@ -79,12 +79,21 @@ func (r *StashRenderer) compose(plan domain.PolicyPlan) (*yaml.Node, error) {
 	}
 
 	root := newMappingNode()
-	appendMappingValue(root, "dns", mihomoDNSNode(plan, false))
+	if dnsEnabled {
+		appendMappingValue(root, "dns", mihomoDNSNode(plan, false))
+	}
 	appendMappingValue(root, "proxy-groups", proxyGroupsNode(filterGroups(plan.Proxy.Groups, "GLOBAL")))
 	appendMappingValue(root, "rule-providers", providers)
 	appendMappingValue(root, "rules", stringSequenceNode(r.ruleResolver.MihomoRules(plan.Rules)))
 
-	return ComposeYAML(head, root, yamlHeadPlaceholders(plan), nil, []string{"proxy-groups", "rule-providers", "rules"})
+	return ComposeYAML(head, root, yamlHeadPlaceholders(plan), stashDropPaths(dnsEnabled), []string{"proxy-groups", "rule-providers", "rules"})
+}
+
+func stashDropPaths(dnsEnabled bool) []string {
+	if dnsEnabled {
+		return nil
+	}
+	return []string{"dns", "sniffer"}
 }
 
 func injectStashSubscriptionPlaceholders(content string) string {
