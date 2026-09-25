@@ -33,7 +33,7 @@ func (r *Mihomo4RootRenderer) RenderMihomo4Root(plan domain.PolicyPlan, tunEnabl
 		return "", err
 	}
 
-	groups := excludeDNSHijackFromGroups(plan.Proxy.Groups, "手动选择", "其他节点")
+	groups := excludeDNSHijackFromGroups(plan.Proxy.Groups)
 	explicit, err := r.mihomo4RootOverrides(plan, tunEnabled, rules, groups)
 	if err != nil {
 		return "", err
@@ -73,24 +73,15 @@ func (r *Mihomo4RootRenderer) mihomo4RootOverrides(
 	return root, nil
 }
 
-func excludeDNSHijackFromGroups(groups []domain.ProxyGroup, names ...string) []domain.ProxyGroup {
+func excludeDNSHijackFromGroups(groups []domain.ProxyGroup) []domain.ProxyGroup {
 	result := make([]domain.ProxyGroup, 0, len(groups))
 	for _, group := range groups {
-		if containsGroupName(names, group.Name) {
+		if group.ExcludeDNSHijack {
 			group.ExcludeFilter = appendExcludeFilter(group.ExcludeFilter, mihomo4RootDNSHijackProxy)
 		}
 		result = append(result, group)
 	}
 	return result
-}
-
-func containsGroupName(names []string, expected string) bool {
-	for _, name := range names {
-		if name == expected {
-			return true
-		}
-	}
-	return false
 }
 
 func appendExcludeFilter(existing string, extra string) string {

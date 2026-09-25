@@ -9,7 +9,6 @@ https://github.com/Higanoneko/ProxyRules
 - threshold: 国家节点数量小于该值时不显示分组（默认 0）
 */
 
-const NODE_SUFFIX = "节点";
 const DNS_BOOTSTRAP_LIST = __DNS_BOOTSTRAP_LIST__;
 const DNS_TEMPLATE = __DNS_TEMPLATE__;
 const MIXED_PORT = __MIXED_PORT__;
@@ -18,9 +17,8 @@ const RULE_PROVIDERS = __RULE_PROVIDERS__;
 const BASE_RULES = __RULES__;
 const SNIFFER_CONFIG = __SNIFFER__;
 const GEOX_URL = __GEOX_URL__;
-const COUNTRIES = __COUNTRIES__;
-const POLICY_TEMPLATES = __POLICY_TEMPLATES__;
-const ISP_EXCLUDE_PATTERN = __ISP_EXCLUDE_PATTERN__;
+const POLICY_GROUPS = __POLICY_GROUPS__;
+const NODE_EXCLUDE_PATTERN = __NODE_EXCLUDE_PATTERN__;
 
 function parseBool(value) {
     if (typeof value === "boolean") return value;
@@ -44,14 +42,12 @@ function stripInlineFlag(pattern) {
     return String(pattern || "").replace(/^\(\?i\)/, "");
 }
 
+const COUNTRY_GROUPS = POLICY_GROUPS.filter((group) => group.country && group.country !== "其他");
+const OTHER_GROUP = POLICY_GROUPS.find((group) => group.country === "其他");
 const countryPatternMap = Object.fromEntries(
-    COUNTRIES.map((country) => [
-        country.name,
-        new RegExp(stripInlineFlag(country.pattern), "i"),
-    ])
+    COUNTRY_GROUPS.map((group) => [group.name, new RegExp(stripInlineFlag(group.filter), "i")])
 );
-
-const ispRegex = new RegExp(stripInlineFlag(ISP_EXCLUDE_PATTERN), "i");
+const excludeRegex = new RegExp(stripInlineFlag(NODE_EXCLUDE_PATTERN), "i");
 
 function buildCountryInventory(proxies, threshold) {
     const counts = Object.create(null);
@@ -59,14 +55,14 @@ function buildCountryInventory(proxies, threshold) {
 
     for (const proxy of proxies) {
         const name = proxy && proxy.name ? proxy.name : "";
-        if (ispRegex.test(name)) {
+        if (excludeRegex.test(name)) {
             continue;
         }
 
         let matched = false;
-        for (const country of COUNTRIES) {
-            if (countryPatternMap[country.name].test(name)) {
-                counts[country.name] = (counts[country.name] || 0) + 1;
+        for (const group of COUNTRY_GROUPS) {
+            if (countryPatternMap[group.name].test(name)) {
+                counts[group.name] = (counts[group.name] || 0) + 1;
                 matched = true;
                 break;
             }
@@ -77,92 +73,50 @@ function buildCountryInventory(proxies, threshold) {
         }
     }
 
-    const countries = COUNTRIES
-        .map((country) => ({
-            name: country.name,
-            count: counts[country.name] || 0,
-            meta: country,
+    const countries = COUNTRY_GROUPS
+        .map((group) => ({
+            name: group.name,
+            count: counts[group.name] || 0,
         }))
         .filter((country) => country.count > 0 && country.count >= threshold);
 
     return {
         countries,
-        names: countries.map((country) => country.name),
+        names: countries.map((group) => group.name),
         hasOther: otherCount > 0,
     };
 }
 
-function buildList(...elements) {
-    return elements.flat().filter((value) => value !== null && typeof value !== "undefined" && value !== false && value !== "");
+function expandProxies(proxies, context) {
+    return proxies.flatMap((name) => {
+        if (name === "$CountryGroups") return context.countryGroupNames;
+        if (context.allCountryGroups.has(name) && !context.availableGroups.has(name)) return [];
+        return [name];
+    });
 }
 
-function buildDerivedLists(countryGroupNames, hasOther) {
-    const otherGroup = hasOther ? "其他节点" : null;
-    return {
-        selector: buildList(countryGroupNames, otherGroup, "手动选择", "DIRECT"),
-        defaults: buildList("选择代理", countryGroupNames, otherGroup, "手动选择", "直接连接"),
-        directFirst: buildList("直接连接", "选择代理", countryGroupNames, otherGroup, "手动选择"),
-    };
-}
-
-function buildPolicyGroup(template, context) {
-    const base = {
-        name: template.name,
-        icon: template.icon_url,
-        type: "select",
-    };
-
-    switch (template.strategy) {
-        case "selector":
-            return { ...base, proxies: context.selector };
-        case "manual":
-            return { ...base, "include-all": true };
-        case "default":
-            return { ...base, proxies: context.defaults };
-        case "media_preferred":
-            if (context.countryGroupSet.has(template.preferred_country_group)) {
-                return {
-                    ...base,
-                    proxies: [template.preferred_country_group, "选择代理", "手动选择", "直接连接"],
-                };
-            }
-            return { ...base, proxies: context.defaults };
-        case "direct_first":
-            return { ...base, proxies: context.directFirst };
-        case "fixed":
-            return { ...base, proxies: template.fixed_proxies || [] };
-        case "global":
-            return { ...base, "include-all": true, proxies: context.defaults };
-        default:
-            return base;
+function buildPolicyGroup(spec, context) {
+    const hasMissingCountry = (spec.proxies || []).some((name) =>
+        context.allCountryGroups.has(name) && !context.availableGroups.has(name)
+    );
+    const references = hasMissingCountry && spec.fallback_proxies && spec.fallback_proxies.length
+        ? spec.fallback_proxies
+        : (spec.proxies || []);
+    const proxies = expandProxies(references, context);
+    const group = { name: spec.name, icon: spec.icon, type: spec.type };
+    if (spec.include_all) group["include-all"] = true;
+    if (spec.filter) group.filter = spec.filter;
+    if (spec.exclude_filter) {
+        group["exclude-filter"] = spec.exclude_filter === "$CountryPatterns"
+            ? context.countryExcludePattern
+            : spec.exclude_filter;
     }
-}
-
-function buildCountryGroups(countryInventory) {
-    const groups = countryInventory.countries.map((country) => ({
-        name: `${country.name}${NODE_SUFFIX}`,
-        icon: country.meta.icon_url,
-        "include-all": true,
-        filter: country.meta.pattern,
-        type: "url-test",
-        url: "https://cp.cloudflare.com/generate_204",
-        interval: 60,
-        tolerance: 20,
-        lazy: false,
-    }));
-
-    if (countryInventory.hasOther) {
-        const excludePatterns = COUNTRIES.map((country) => stripInlineFlag(country.pattern)).filter(Boolean);
-        groups.push({
-            name: "其他节点",
-            icon: "https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png",
-            "include-all": true,
-            type: "select",
-            "exclude-filter": excludePatterns.length > 0 ? `(?i)${excludePatterns.join("|")}` : undefined,
-        });
-    }
-
-    return groups;
+    if (spec.url) group.url = spec.url;
+    if (spec.interval) group.interval = spec.interval;
+    if (spec.tolerance) group.tolerance = spec.tolerance;
+    if (Object.prototype.hasOwnProperty.call(spec, "lazy")) group.lazy = spec.lazy;
+    if (proxies.length) group.proxies = proxies;
+    return group;
 }
 
 function buildDnsConfig(ipv6Enabled) {
@@ -179,21 +133,19 @@ function main(config) {
     const resultConfig = { proxies };
 
     const countryInventory = buildCountryInventory(proxies, countryThreshold);
-    const countryGroupNames = countryInventory.names.map((country) => `${country}${NODE_SUFFIX}`);
-    const derived = buildDerivedLists(countryGroupNames, countryInventory.hasOther);
+    const countryGroupNames = countryInventory.names.concat(
+        countryInventory.hasOther && OTHER_GROUP ? [OTHER_GROUP.name] : []
+    );
     const context = {
-        ...derived,
-        countryGroupSet: new Set(countryGroupNames),
+        countryGroupNames,
+        availableGroups: new Set(countryGroupNames),
+        allCountryGroups: new Set(POLICY_GROUPS.filter((group) => group.country).map((group) => group.name)),
+        countryExcludePattern: `(?i)${COUNTRY_GROUPS.map((group) => stripInlineFlag(group.filter)).join("|")}`,
     };
 
-    const policyGroups = POLICY_TEMPLATES
-        .filter((template) => template.strategy !== "global")
-        .map((template) => buildPolicyGroup(template, context));
-    const globalGroups = POLICY_TEMPLATES
-        .filter((template) => template.strategy === "global")
-        .map((template) => buildPolicyGroup(template, context));
-    const countryGroups = buildCountryGroups(countryInventory);
-    const proxyGroups = [...policyGroups, ...countryGroups, ...globalGroups];
+    const proxyGroups = POLICY_GROUPS
+        .filter((spec) => !spec.surge_only && (!spec.country || context.availableGroups.has(spec.name)))
+        .map((spec) => buildPolicyGroup(spec, context));
 
     if (fullConfig) {
         Object.assign(resultConfig, FULL_CONFIG_DEFAULTS, {

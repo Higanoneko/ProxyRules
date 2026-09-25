@@ -33,6 +33,7 @@ type BaseData struct {
 	TestURLs          domain.TestURLs
 	Heads             map[string]string
 	RawRules          domain.RuleSections
+	PolicyConfig      domain.PolicyConfig
 	Categories        map[string]CategoryConfig
 	ToolMappings      map[string]map[string]string
 	FileTypeMappings  map[string]map[string]string
@@ -95,6 +96,14 @@ func (r *BaseRepository) Load() (BaseData, error) {
 	}
 
 	rules, err := readRuleSections(filepath.Join(baseDir, "Rules", "RemoteRules.yaml"))
+	if err != nil {
+		return BaseData{}, err
+	}
+
+	policyConfig, err := readPolicyConfig(filepath.Join(baseDir, "Rules", "PolicyConfig.yaml"))
+	if err != nil {
+		return BaseData{}, err
+	}
 
 	var linkBase linkBaseConfig
 	if err := readYAML(filepath.Join(baseDir, "Rules", "RemoteRulesLinkBase.yaml"), &linkBase); err != nil {
@@ -134,10 +143,70 @@ func (r *BaseRepository) Load() (BaseData, error) {
 		TestURLs:         testURLs,
 		Heads:            heads,
 		RawRules:         rules,
+		PolicyConfig:     policyConfig,
 		Categories:       linkBase.Categories,
 		ToolMappings:     linkBase.CategoriesToolsList,
 		FileTypeMappings: linkBase.CategoriesFiletypeMap,
 	}, nil
+}
+
+func readPolicyConfig(path string) (domain.PolicyConfig, error) {
+	content, err := os.ReadFile(path)
+	if err != nil {
+		return domain.PolicyConfig{}, fmt.Errorf("read %s: %w", path, err)
+	}
+	var document yaml.Node
+	if err := yaml.Unmarshal(content, &document); err != nil {
+		return domain.PolicyConfig{}, fmt.Errorf("unmarshal %s: %w", path, err)
+	}
+	if document.Kind != yaml.DocumentNode || len(document.Content) == 0 || document.Content[0].Kind != yaml.MappingNode {
+		return domain.PolicyConfig{}, fmt.Errorf("%s: expected top-level mapping", path)
+	}
+	root := document.Content[0]
+	excludeNode := findMappingValue(root, "NodeExcludePattern")
+	if excludeNode == nil || excludeNode.Kind != yaml.ScalarNode || strings.TrimSpace(excludeNode.Value) == "" {
+		return domain.PolicyConfig{}, fmt.Errorf("%s: missing NodeExcludePattern", path)
+	}
+	groupsNode := findMappingValue(root, "policyname")
+	if groupsNode == nil || groupsNode.Kind != yaml.MappingNode || len(groupsNode.Content) == 0 {
+		return domain.PolicyConfig{}, fmt.Errorf("%s: missing policyname entries", path)
+	}
+	groups := make([]domain.PolicyGroupSpec, 0, len(groupsNode.Content)/2)
+	seen := make(map[string]bool, len(groupsNode.Content)/2)
+	for i := 0; i < len(groupsNode.Content); i += 2 {
+		name := groupsNode.Content[i].Value
+		if strings.TrimSpace(name) == "" || seen[name] {
+			return domain.PolicyConfig{}, fmt.Errorf("%s: empty or duplicate policyname %q", path, name)
+		}
+		seen[name] = true
+		entry := groupsNode.Content[i+1]
+		if entry.Kind != yaml.MappingNode {
+			return domain.PolicyConfig{}, fmt.Errorf("%s: policyname %q must be a mapping", path, name)
+		}
+		for j := 0; j < len(entry.Content); j += 2 {
+			field := entry.Content[j].Value
+			if !isPolicyGroupField(field) {
+				return domain.PolicyConfig{}, fmt.Errorf("%s: policyname %q has unknown field %q", path, name, field)
+			}
+		}
+		var group domain.PolicyGroupSpec
+		if err := entry.Decode(&group); err != nil {
+			return domain.PolicyConfig{}, fmt.Errorf("%s: policyname %q: %w", path, name, err)
+		}
+		group.Name = name
+		groups = append(groups, group)
+	}
+	return domain.PolicyConfig{NodeExcludePattern: excludeNode.Value, Groups: groups}, nil
+}
+
+func isPolicyGroupField(field string) bool {
+	switch field {
+	case "Icon", "Type", "Proxies", "FallbackProxies", "IncludeAll", "Filter", "ExcludeFilter",
+		"URL", "Interval", "Tolerance", "Lazy", "Country", "LoonFilter", "MihomoOnly",
+		"ExcludeDNSHijack", "SurgeOnly", "PolicyPath":
+		return true
+	}
+	return false
 }
 
 func (d BaseData) Head(key string) (string, error) {

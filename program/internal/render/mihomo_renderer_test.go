@@ -143,7 +143,7 @@ func TestRenderArgsScriptContainsSharedPayload(t *testing.T) {
 		t.Fatalf("render args script: %v", err)
 	}
 
-	for _, marker := range []string{"const POLICY_TEMPLATES", "function buildPolicyGroup", "const RULE_PROVIDERS", "const DNS_TEMPLATE ="} {
+	for _, marker := range []string{"const POLICY_GROUPS", "function buildPolicyGroup", "const RULE_PROVIDERS", "const DNS_TEMPLATE ="} {
 		if !strings.Contains(content, marker) {
 			t.Fatalf("expected %s in args script", marker)
 		}
@@ -153,8 +153,8 @@ func TestRenderArgsScriptContainsSharedPayload(t *testing.T) {
 			t.Fatalf("expected %s in args script", marker)
 		}
 	}
-	if !strings.Contains(content, "const proxyGroups = [...policyGroups, ...countryGroups, ...globalGroups];") {
-		t.Fatal("expected GLOBAL groups to be appended after country groups")
+	if !strings.Contains(content, "const proxyGroups = POLICY_GROUPS") {
+		t.Fatal("expected runtime groups to follow PolicyConfig.yaml order")
 	}
 	for _, marker := range []string{"proxy-server-nameserver", "direct-nameserver"} {
 		if !strings.Contains(content, marker) {

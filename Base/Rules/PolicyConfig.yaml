@@ -1,0 +1,196 @@
+# PolicyConfig.yaml - 策略组定义（按顺序生成）
+#
+# 使用方法：
+# 1. policyname 下的键是生成后的策略组名称，顺序就是输出顺序。
+#    RemoteRules.yaml 的 policyname（含 parenttag 继承值）须指向这里的组名；
+#    DIRECT、REJECT、REJECT-DROP 是客户端内置策略，无需在这里定义。
+# 2. 修改 Icon、Type、Proxies、Filter 等字段并重新生成，即可同步更新各平台配置和 Mihomo 转换 JS。
+# 3. Proxies 中的 "$CountryGroups" 会展开为当前可用的国家/其他节点组。
+#    当指定的国家组未出现时，优先使用 FallbackProxies；否则省略该国家组引用。
+#    YAML 锚点用于复用列表，修改 &defaultProxies 可同步调整所有引用它的组。
+# 4. 带 Country 的组由节点名称动态决定是否出现；Country: 其他 表示未匹配的节点。
+#    国家组的 Filter 同时用于节点识别及各平台筛选。其他节点的
+#    ExcludeFilter: "$CountryPatterns" 会从所有国家组的 Filter 自动组合。
+# 5. LoonFilter 是 Loon [Remote Filter] 中的引用名；筛选表达式来自本组的
+#    Filter 或 ExcludeFilter。SurgeOnly 和 PolicyPath 用于 Surge 的订阅组（默认名 Proxies）。
+#
+# 字段：Icon（必填图标 URL）、Type（select/url-test）、Proxies（引用组列表）、
+# FallbackProxies（国家组缺席时的引用列表）、IncludeAll、Filter、ExcludeFilter、
+# URL、Interval、Tolerance、Lazy、Country、LoonFilter、MihomoOnly、
+# ExcludeDNSHijack、SurgeOnly、PolicyPath。
+# NodeExcludePattern 用于跳过家宽等节点，也参与“其他节点”的分类。
+
+NodeExcludePattern: '(?i)家宽|家庭|家庭宽带|商宽|商业宽带|星链|Starlink|落地'
+
+policyname:
+  选择代理:
+    Icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Proxy.png"
+    Type: select
+    Proxies: ["$CountryGroups", "手动选择", "DIRECT"]
+  手动选择:
+    Icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Round_Robin_1.png"
+    Type: select
+    IncludeAll: true
+    LoonFilter: ALL_Filter
+    ExcludeDNSHijack: true
+  AI:
+    Icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/AI.png"
+    Type: select
+    Proxies: &defaultProxies ["选择代理", "$CountryGroups", "手动选择", "直接连接"]
+  Telegram:
+    Icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png"
+    Type: select
+    Proxies: *defaultProxies
+  YouTube:
+    Icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png"
+    Type: select
+    Proxies: *defaultProxies
+  Netflix:
+    Icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Netflix.png"
+    Type: select
+    Proxies: *defaultProxies
+  Spotify:
+    Icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Spotify.png"
+    Type: select
+    Proxies: *defaultProxies
+  TikTok:
+    Icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/TikTok.png"
+    Type: select
+    Proxies: *defaultProxies
+  Steam:
+    Icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Steam.png"
+    Type: select
+    Proxies: *defaultProxies
+  Game:
+    Icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Game.png"
+    Type: select
+    Proxies: *defaultProxies
+  E-Hentai:
+    Icon: "https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Ehentai.png"
+    Type: select
+    Proxies: *defaultProxies
+  PornSite:
+    Icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Pornhub.png"
+    Type: select
+    Proxies: *defaultProxies
+  US Media:
+    Icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png"
+    Type: select
+    Proxies: ["美国节点", "选择代理", "手动选择", "直接连接"]
+    FallbackProxies: *defaultProxies
+  Taiwan Media:
+    Icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png"
+    Type: select
+    Proxies: ["台湾节点", "选择代理", "手动选择", "直接连接"]
+    FallbackProxies: *defaultProxies
+  Japan Media:
+    Icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png"
+    Type: select
+    Proxies: ["日本节点", "选择代理", "手动选择", "直接连接"]
+    FallbackProxies: *defaultProxies
+  Global Media:
+    Icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/DomesticMedia.png"
+    Type: select
+    Proxies: *defaultProxies
+  Apple:
+    Icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Apple.png"
+    Type: select
+    Proxies: &directFirst ["直接连接", "选择代理", "$CountryGroups", "手动选择"]
+  Microsoft:
+    Icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Microsoft.png"
+    Type: select
+    Proxies: *directFirst
+  Google:
+    Icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google_Search.png"
+    Type: select
+    Proxies: *defaultProxies
+  Google FCM:
+    Icon: "https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Firebase.png"
+    Type: select
+    Proxies: ["Google", "直接连接"]
+  Sogou Privacy:
+    Icon: "https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Sougou.png"
+    Type: select
+    Proxies: ["直接连接", "REJECT"]
+  ADBlock:
+    Icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/AdBlack.png"
+    Type: select
+    Proxies: ["REJECT-DROP", "REJECT", "直接连接"]
+  直接连接:
+    Icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Direct.png"
+    Type: select
+    Proxies: ["DIRECT", "选择代理"]
+  香港节点:
+    Icon: "https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png"
+    Type: url-test
+    Country: 香港
+    IncludeAll: true
+    Filter: '(?i)香港|港|HK|hk|Hong Kong|HongKong|Hongkong|Hong kong|hongkong|hong kong|🇭🇰'
+    LoonFilter: HK_Filter
+    URL: "https://cp.cloudflare.com/generate_204"
+    Interval: 60
+    Tolerance: 20
+    Lazy: false
+  台湾节点:
+    Icon: "https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png"
+    Type: url-test
+    Country: 台湾
+    IncludeAll: true
+    Filter: '(?i)台|新北|彰化|TW|Taiwan|TaiWan|Tai wan|Tai Wan|taiwan|tai wan|🇹🇼'
+    LoonFilter: TW_Filter
+    URL: "https://cp.cloudflare.com/generate_204"
+    Interval: 60
+    Tolerance: 20
+    Lazy: false
+  新加坡节点:
+    Icon: "https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png"
+    Type: url-test
+    Country: 新加坡
+    IncludeAll: true
+    Filter: '(?i)新加坡|坡|狮城|SG|Singapore|🇸🇬'
+    LoonFilter: SG_Filter
+    URL: "https://cp.cloudflare.com/generate_204"
+    Interval: 60
+    Tolerance: 20
+    Lazy: false
+  日本节点:
+    Icon: "https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png"
+    Type: url-test
+    Country: 日本
+    IncludeAll: true
+    Filter: '(?i)日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|🇯🇵'
+    LoonFilter: JP_Filter
+    URL: "https://cp.cloudflare.com/generate_204"
+    Interval: 60
+    Tolerance: 20
+    Lazy: false
+  美国节点:
+    Icon: "https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png"
+    Type: url-test
+    Country: 美国
+    IncludeAll: true
+    Filter: '(?i)美国|美|US|United States|🇺🇸'
+    LoonFilter: US_Filter
+    URL: "https://cp.cloudflare.com/generate_204"
+    Interval: 60
+    Tolerance: 20
+    Lazy: false
+  其他节点:
+    Icon: "https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png"
+    Type: select
+    Country: 其他
+    IncludeAll: true
+    ExcludeFilter: "$CountryPatterns"
+    LoonFilter: Other_Filter
+    ExcludeDNSHijack: true
+  GLOBAL:
+    Icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png"
+    Type: select
+    IncludeAll: true
+    Proxies: *defaultProxies
+    MihomoOnly: true
+  Proxies:
+    Icon: "https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Proxy.png"
+    Type: select
+    SurgeOnly: true
+    PolicyPath: "<Your Node List Link Here>"

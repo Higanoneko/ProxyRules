@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/Higanoneko/ProxyRules/internal/catalog"
 	"github.com/Higanoneko/ProxyRules/internal/domain"
 	"github.com/Higanoneko/ProxyRules/internal/repository"
 )
@@ -33,14 +32,15 @@ func (r *SurgeRenderer) Render(plan domain.PolicyPlan) (string, error) {
 	if err != nil {
 		return "", err
 	}
+	providerName := r.providerGroupName()
 
 	return ComposeSectioned(
 		head,
 		textHeadPlaceholders(plan, r.base),
 		map[string]map[string]string{"General": r.generalOverrides(plan)},
 		map[string][]string{
-			"Proxy":       r.proxyLines(),
-			"Proxy Group": r.proxyGroupLines(plan.Proxy.Groups),
+			"Proxy":       r.proxyLines(providerName),
+			"Proxy Group": r.proxyGroupLines(plan.Proxy.Groups, providerName),
 			"Rule":        rules,
 		},
 		surgeSectionOrder,
@@ -75,50 +75,66 @@ func (r *SurgeRenderer) generalOverrides(plan domain.PolicyPlan) map[string]stri
 	return overrides
 }
 
-func (r *SurgeRenderer) proxyLines() []string {
+func (r *SurgeRenderer) proxyLines(providerName string) []string {
 	return []string{
 		"# 在此添加你的代理节点",
-		"# 使用 #!include <ProfileName>.conf 关联其他配置，或在下方的 `Proxies` 中添加订阅地址（仅限单条），若使用 include 则需要删除下方的 policy-path 字段",
+		fmt.Sprintf("# 使用 #!include <ProfileName>.conf 关联其他配置，或在下方的 `%s` 中添加订阅地址（仅限单条），若使用 include 则需要删除下方的 policy-path 字段", providerName),
 	}
 }
 
-func (r *SurgeRenderer) proxyGroupLines(groups []domain.ProxyGroup) []string {
+func (r *SurgeRenderer) providerGroupName() string {
+	for _, spec := range r.base.PolicyConfig.Groups {
+		if spec.SurgeOnly {
+			return spec.Name
+		}
+	}
+	return ""
+}
+
+func (r *SurgeRenderer) proxyGroupLines(groups []domain.ProxyGroup, providerName string) []string {
 	lines := make([]string, 0, len(groups)+3)
+	groupsByName := make(map[string]domain.ProxyGroup, len(groups))
 	for _, group := range groups {
-		if group.Name == "GLOBAL" {
+		groupsByName[group.Name] = group
+	}
+	for _, spec := range r.base.PolicyConfig.Groups {
+		if spec.SurgeOnly {
+			lines = append(lines, "", "# "+spec.Name, fmt.Sprintf(
+				"%s = %s, policy-path=%s, update-interval=0, no-alert=0, hidden=0, include-all-proxies=1, icon-url=%s",
+				spec.Name, spec.Type, spec.PolicyPath, spec.Icon,
+			))
 			continue
 		}
-		lines = append(lines, r.proxyGroupLine(group))
+		if group, ok := groupsByName[spec.Name]; ok && !group.MihomoOnly {
+			lines = append(lines, r.proxyGroupLine(group, providerName))
+		}
 	}
-	lines = append(lines,
-		"",
-		"# Proxies",
-		"Proxies = select, policy-path=<Your Node List Link Here>, update-interval=0, no-alert=0, hidden=0, include-all-proxies=1, icon-url=https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Proxy.png",
-	)
 	return lines
 }
 
-func (r *SurgeRenderer) proxyGroupLine(group domain.ProxyGroup) string {
+func (r *SurgeRenderer) proxyGroupLine(group domain.ProxyGroup, providerName string) string {
 	switch group.Type {
 	case "select":
 		if group.IncludeAll {
 			if group.ExcludeFilter != "" {
 				return fmt.Sprintf(
-					"%s = select, include-other-group=Proxies, update-interval=0, policy-regex-filter=^(?!.*(%s)), icon-url=%s",
+					"%s = select, include-other-group=%s, update-interval=0, policy-regex-filter=^(?!.*(%s)), icon-url=%s",
 					group.Name,
-					r.countryPattern(group.Name),
+					providerName,
+					strings.TrimPrefix(group.ExcludeFilter, "(?i)"),
 					group.Icon,
 				)
 			}
-			return fmt.Sprintf("%s = select, include-other-group=Proxies, update-interval=0, icon-url=%s", group.Name, group.Icon)
+			return fmt.Sprintf("%s = select, include-other-group=%s, update-interval=0, icon-url=%s", group.Name, providerName, group.Icon)
 		}
 		return fmt.Sprintf("%s = select, %s, icon-url=%s", group.Name, strings.Join(group.Proxies, ", "), group.Icon)
 	case "url-test":
 		if group.Filter != "" {
 			return fmt.Sprintf(
-				"%s = smart, include-other-group=Proxies, update-interval=0, policy-regex-filter=(%s), icon-url=%s",
+				"%s = smart, include-other-group=%s, update-interval=0, policy-regex-filter=(%s), icon-url=%s",
 				group.Name,
-				r.countryPattern(group.Name),
+				providerName,
+				strings.TrimPrefix(group.Filter, "(?i)"),
 				group.Icon,
 			)
 		}
@@ -145,22 +161,4 @@ func (r *SurgeRenderer) ruleLines(bindings []domain.RuleBinding) ([]string, erro
 		"FINAL,选择代理,dns-failed",
 	)
 	return remoteRules, nil
-}
-
-func (r *SurgeRenderer) countryPattern(groupName string) string {
-	countryName := strings.TrimSuffix(groupName, "节点")
-	for _, country := range catalog.Countries() {
-		if country.Name == countryName {
-			return strings.ReplaceAll(country.Pattern, "(?i)", "")
-		}
-	}
-	if countryName != "其他" {
-		return ".*"
-	}
-
-	patterns := make([]string, 0, len(catalog.Countries()))
-	for _, country := range catalog.Countries() {
-		patterns = append(patterns, strings.ReplaceAll(country.Pattern, "(?i)", ""))
-	}
-	return strings.Join(patterns, "|")
 }

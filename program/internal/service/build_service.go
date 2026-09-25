@@ -47,9 +47,6 @@ func (s *BuildService) Generate(targets []domain.Target, outputRoot string, node
 		outputRoot = filepath.Join(s.root, "Config")
 	}
 	generatedAt := time.Now().UTC()
-	if err := copyEasytierSurgeModule(easytierSurgeModuleSourcePath(s.root), outputRoot, generatedAt); err != nil {
-		return err
-	}
 
 	requiresPolicyPlan := selectedTargets[domain.TargetMihomo] ||
 		selectedTargets[domain.TargetStash] ||
@@ -68,6 +65,9 @@ func (s *BuildService) Generate(targets []domain.Target, outputRoot string, node
 		if err != nil {
 			return err
 		}
+	}
+	if err := copyEasytierSurgeModule(easytierSurgeModuleSourcePath(s.root), outputRoot, generatedAt); err != nil {
+		return err
 	}
 
 	if selectedTargets[domain.TargetMihomo] {

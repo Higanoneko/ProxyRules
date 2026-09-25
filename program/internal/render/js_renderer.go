@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/Higanoneko/ProxyRules/internal/catalog"
 	"github.com/Higanoneko/ProxyRules/internal/domain"
 	"github.com/Higanoneko/ProxyRules/internal/repository"
 	"gopkg.in/yaml.v3"
@@ -88,15 +87,11 @@ func (r *MihomoScriptRenderer) render(plan domain.PolicyPlan, parameterBlock str
 	if err != nil {
 		return "", err
 	}
-	countriesJSON, err := json.Marshal(catalog.Countries())
+	policyGroupsJSON, err := json.Marshal(r.base.PolicyConfig.Groups)
 	if err != nil {
 		return "", err
 	}
-	policyTemplatesJSON, err := json.Marshal(catalog.PolicyTemplates())
-	if err != nil {
-		return "", err
-	}
-	ispExcludeJSON, err := json.Marshal(catalog.ISPExcludePattern)
+	nodeExcludeJSON, err := json.Marshal(r.base.PolicyConfig.NodeExcludePattern)
 	if err != nil {
 		return "", err
 	}
@@ -111,9 +106,8 @@ func (r *MihomoScriptRenderer) render(plan domain.PolicyPlan, parameterBlock str
 		"__RULES__", string(rulesJSON),
 		"__SNIFFER__", snifferJSON,
 		"__GEOX_URL__", geoXJSON,
-		"__COUNTRIES__", string(countriesJSON),
-		"__POLICY_TEMPLATES__", string(policyTemplatesJSON),
-		"__ISP_EXCLUDE_PATTERN__", string(ispExcludeJSON),
+		"__POLICY_GROUPS__", string(policyGroupsJSON),
+		"__NODE_EXCLUDE_PATTERN__", string(nodeExcludeJSON),
 	)
 	return replacer.Replace(mihomoRuntimeTemplate), nil
 }

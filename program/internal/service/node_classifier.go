@@ -5,31 +5,44 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/Higanoneko/ProxyRules/internal/catalog"
 	"github.com/Higanoneko/ProxyRules/internal/domain"
 )
 
 type NodeClassifier struct {
-	ispExcludeRegex *regexp.Regexp
-	countryRegexes  map[string]*regexp.Regexp
-	countries       []domain.CountryMeta
+	excludePattern string
+	excludeRegex   *regexp.Regexp
+	countryRegexes map[string]*regexp.Regexp
+	countries      []domain.CountryMeta
 }
 
-func NewNodeClassifier() *NodeClassifier {
-	countries := catalog.Countries()
-	countryRegexes := make(map[string]*regexp.Regexp, len(countries))
-	for _, country := range countries {
-		countryRegexes[country.Name] = regexp.MustCompile(country.Pattern)
+func NewNodeClassifier(config domain.PolicyConfig) (*NodeClassifier, error) {
+	excludeRegex, err := regexp.Compile(config.NodeExcludePattern)
+	if err != nil {
+		return nil, fmt.Errorf("NodeExcludePattern: %w", err)
+	}
+	countries := make([]domain.CountryMeta, 0)
+	countryRegexes := make(map[string]*regexp.Regexp)
+	for _, group := range config.Groups {
+		if group.Country == "" || group.Country == "其他" {
+			continue
+		}
+		countryRegex, err := regexp.Compile(group.Filter)
+		if err != nil {
+			return nil, fmt.Errorf("policyname %q Filter: %w", group.Name, err)
+		}
+		countries = append(countries, domain.CountryMeta{Name: group.Country, Pattern: group.Filter})
+		countryRegexes[group.Country] = countryRegex
 	}
 	return &NodeClassifier{
-		ispExcludeRegex: regexp.MustCompile(catalog.ISPExcludePattern),
-		countryRegexes:  countryRegexes,
-		countries:       countries,
-	}
+		excludePattern: config.NodeExcludePattern,
+		excludeRegex:   excludeRegex,
+		countryRegexes: countryRegexes,
+		countries:      countries,
+	}, nil
 }
 
 func (c *NodeClassifier) IdentifyCountry(nodeName string, excludeISP bool) (string, bool) {
-	if excludeISP && c.ispExcludeRegex.MatchString(nodeName) {
+	if excludeISP && c.excludeRegex.MatchString(nodeName) {
 		return "", false
 	}
 	for _, country := range c.countries {
@@ -44,71 +57,46 @@ func (c *NodeClassifier) ParseCountryInfos(nodeNames []string, minCount int) []d
 	counts := map[string]int{}
 	for _, nodeName := range nodeNames {
 		country, ok := c.IdentifyCountry(nodeName, true)
-		if !ok {
-			continue
+		if ok {
+			counts[country]++
 		}
-		counts[country]++
 	}
-
 	results := make([]domain.CountryInfo, 0, len(c.countries)+1)
 	for _, country := range c.countries {
-		count := counts[country.Name]
-		if count < minCount {
-			continue
+		if count := counts[country.Name]; count >= minCount {
+			results = append(results, domain.CountryInfo{Name: country.Name, Count: count, Pattern: country.Pattern})
 		}
-		results = append(results, domain.CountryInfo{
-			Name:    country.Name,
-			Count:   count,
-			Pattern: country.Pattern,
-			IconURL: country.IconURL,
-		})
 	}
-
-	if otherCount := counts["其他"]; otherCount > 0 {
-		results = append(results, domain.CountryInfo{
-			Name:    "其他",
-			Count:   otherCount,
-			Pattern: c.OtherPattern(),
-			IconURL: "https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png",
-		})
+	if count := counts["其他"]; count > 0 {
+		results = append(results, domain.CountryInfo{Name: "其他", Count: count, Pattern: c.OtherPattern()})
 	}
-
 	return results
 }
 
 func (c *NodeClassifier) DefaultCountryInfos() []domain.CountryInfo {
 	results := make([]domain.CountryInfo, 0, len(c.countries)+1)
 	for _, country := range c.countries {
-		results = append(results, domain.CountryInfo{
-			Name:    country.Name,
-			Count:   0,
-			Pattern: country.Pattern,
-			IconURL: country.IconURL,
-		})
+		results = append(results, domain.CountryInfo{Name: country.Name, Pattern: country.Pattern})
 	}
-	results = append(results, domain.CountryInfo{
-		Name:    "其他",
-		Count:   0,
-		Pattern: c.OtherPattern(),
-		IconURL: "https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png",
-	})
-	return results
+	return append(results, domain.CountryInfo{Name: "其他", Pattern: c.OtherPattern()})
 }
 
 func (c *NodeClassifier) OtherPattern() string {
-	excludePatterns := []string{
-		strings.ReplaceAll(catalog.ISPExcludePattern, "(?i)", ""),
-	}
+	patterns := []string{stripCaseFlag(c.excludePattern)}
 	for _, country := range c.countries {
-		excludePatterns = append(excludePatterns, strings.ReplaceAll(country.Pattern, "(?i)", ""))
+		patterns = append(patterns, stripCaseFlag(country.Pattern))
 	}
-	return fmt.Sprintf("^(?!.*(%s)).*$", strings.Join(excludePatterns, "|"))
+	return fmt.Sprintf("^(?!.*(%s)).*$", strings.Join(patterns, "|"))
 }
 
 func (c *NodeClassifier) CountryExcludePattern() string {
 	patterns := make([]string, 0, len(c.countries))
 	for _, country := range c.countries {
-		patterns = append(patterns, strings.ReplaceAll(country.Pattern, "(?i)", ""))
+		patterns = append(patterns, stripCaseFlag(country.Pattern))
 	}
 	return "(?i)" + strings.Join(patterns, "|")
+}
+
+func stripCaseFlag(pattern string) string {
+	return strings.TrimPrefix(pattern, "(?i)")
 }

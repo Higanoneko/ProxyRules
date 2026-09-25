@@ -82,7 +82,7 @@ func (r *StashRenderer) compose(plan domain.PolicyPlan, dnsEnabled bool) (*yaml.
 	if dnsEnabled {
 		appendMappingValue(root, "dns", mihomoDNSNode(plan, false))
 	}
-	appendMappingValue(root, "proxy-groups", proxyGroupsNode(filterGroups(plan.Proxy.Groups, "GLOBAL")))
+	appendMappingValue(root, "proxy-groups", proxyGroupsNode(filterGroups(plan.Proxy.Groups)))
 	appendMappingValue(root, "rule-providers", providers)
 	appendMappingValue(root, "rules", stringSequenceNode(r.ruleResolver.MihomoRules(plan.Rules)))
 
@@ -123,10 +123,10 @@ func injectStashSubscriptionPlaceholders(content string) string {
 	return strings.Join(result, "\n")
 }
 
-func filterGroups(groups []domain.ProxyGroup, excludedName string) []domain.ProxyGroup {
+func filterGroups(groups []domain.ProxyGroup) []domain.ProxyGroup {
 	filtered := make([]domain.ProxyGroup, 0, len(groups))
 	for _, group := range groups {
-		if group.Name == excludedName {
+		if group.MihomoOnly {
 			continue
 		}
 		filtered = append(filtered, group)

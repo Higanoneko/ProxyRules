@@ -24,6 +24,7 @@ Wireguard_Easytier/ -> Easytier_Wireguard 相关产物
   - `Test_URL.yaml`：连通性测试地址
   - `Head/`：各平台代理工具的头模板
   - `Rules/RemoteRules.yaml`：规则条目定义
+  - `Rules/PolicyConfig.yaml`：策略组定义（图标、代理引用、正则及平台选项），按 `policyname` 关联规则
   - `Rules/RemoteRulesLinkBase.yaml`：规则源 URL 模板与工具映射
 - `program/`
   - `cmd/proxyrules/`：CLI 入口
@@ -48,7 +49,7 @@ Wireguard_Easytier/ -> Easytier_Wireguard 相关产物
 - Loon / Surge：生成带策略组和规则的配置骨架，再接入你自己的节点来源
 - Mihomo4Root：生成可直接修改订阅地址的完整模板文件
 
-如果你只是想做一套“自己的规则与模板风格”，只需要改 `Base/` 下面的文件，不需要改 Go 代码。规则定义完全由 `Base/Rules/RemoteRules.yaml` 的 `BaseRules` / `CustomRules` 分区驱动，新增规则零代码改动。
+如果你想调整规则、策略组和模板风格，只需要改 `Base/` 下面的文件。规则条目由 `Base/Rules/RemoteRules.yaml` 的 `BaseRules` / `CustomRules` 分区驱动；策略组由 `Base/Rules/PolicyConfig.yaml` 按顺序生成。新增规则或策略组无需改 Go 代码。
 
 ---
 
@@ -344,23 +345,54 @@ CustomRules:
 | 字段 | 适用区域 | 必需 | 说明 |
 |------|---------|------|------|
 | `name` | 全部 | 是 | 规则显示名称 |
-| `policyname` | BaseRules | 是 | 归属的策略组名称（需在 `policy_templates.go` 已定义） |
+| `policyname` | 全部 | 缺少 `parenttag` 时必需 | 归属的策略组名称；需在 `PolicyConfig.yaml` 的 `policyname` 下定义同名组；`DIRECT` 等客户端内置策略除外 |
 | `tagname` | 全部 | 否 | 展示标签名，默认使用 `name` |
 | `category` | 全部 | 是 | 规则源分类，对应 `RemoteRulesLinkBase.yaml` |
 | `behavior` | 全部 | 是 | `domain` / `classical` / `ip` |
 | `remotefile` | 全部 | 是 | 远程规则文件路径，拼接基础 URL 形成完整下载链接 |
-| `parenttag` | 全部 | 否 | 父规则 RuleID，子规则从父规则继承 `policyname` |
+| `parenttag` | 全部 | 缺少 `policyname` 时必需 | 父规则 RuleID，子规则从父规则继承 `policyname`；同时填写时优先使用 `policyname` |
 | `surgeoption` | 全部 | 否 | Surge 专用参数（如 `extended-matching`） |
 
 适合做的事：
 
-- 新增规则组（在 `BaseRules` 或 `CustomRules` 下添加）
-- 删除不需要的规则组
+- 新增规则条目（在 `BaseRules` 或 `CustomRules` 下添加）
+- 删除不需要的规则条目
 - 调整规则归属策略组（改 `policyname` 或 `parenttag`）
 - 更换某个规则组对应的远程规则文件
 - **新增自定义规则只需编辑此文件，零 Go 代码改动**
 
-### 6.7 改规则源映射：`Base/Rules/RemoteRulesLinkBase.yaml`
+### 6.7 改策略组：`Base/Rules/PolicyConfig.yaml`
+
+`policyname` 节点下的键是**生成后的策略组名称**，区分大小写及空格。条目顺序就是生成顺序。规则的 `policyname`（或通过 `parenttag` 继承的值）必须与此处的键完全一致，客户端内置策略除外。
+
+```yaml
+policyname:
+  AI:
+    Icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/AI.png"
+    Type: select
+    Proxies: ["选择代理", "$CountryGroups", "手动选择", "直接连接"]
+  香港节点:
+    Icon: "https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png"
+    Type: url-test
+    Country: 香港
+    IncludeAll: true
+    Filter: '(?i)香港|港|HK|Hong Kong|🇭🇰'
+    LoonFilter: HK_Filter
+    URL: "https://cp.cloudflare.com/generate_204"
+    Interval: 60
+    Tolerance: 20
+    Lazy: false
+```
+
+- `Icon` 和 `Type` 是必填字段；`Type` 支持 `select`、`url-test`。`Proxies` 按列表顺序引用其他策略组或客户端内置策略。未知引用会报错。
+- `$CountryGroups` 会展开为当前可用的国家节点组。指定的国家组缺席时，优先使用 `FallbackProxies`；未配置回退列表时省略该国家组。可用 YAML 锚点让多个策略组共用一份引用列表。
+- `Country` 标记按节点名称动态出现的组；各国家组的 `Filter` 同时用于节点识别、Mihomo/Stash 筛选、Loon Remote Filter、Surge 筛选和转换 JS。`Country: 其他` 接收未匹配节点，其 `ExcludeFilter: "$CountryPatterns"` 由其他国家组的 `Filter` 自动组合。
+- 顶层 `NodeExcludePattern` 用于跳过家宽等节点。`LoonFilter` 指定 Loon 筛选器名；`IncludeAll`、`URL`、`Interval`、`Tolerance`、`Lazy` 控制组行为。
+- `MihomoOnly` 控制仅在 Mihomo 系输出的组，例如 `GLOBAL`；`ExcludeDNSHijack` 用于 Mihomo4Root；`SurgeOnly` 与 `PolicyPath` 用于 Surge 的订阅组，默认组名为 `Proxies`。
+- `DIRECT` 是客户端内置策略，并非生成的策略组，无需为它配置图标；生成的 `直接连接` 是另一个策略组，需要图标。
+- 新增普通策略组只需在 `policyname` 下加入条目；如要让规则归入新组，再把 `RemoteRules.yaml` 中对应规则的 `policyname` 指向它。重新生成后，各平台配置及 Mihomo 转换 JS 会同步更新。
+
+### 6.8 改规则源映射：`Base/Rules/RemoteRulesLinkBase.yaml`
 
 这里定义：
 
@@ -428,7 +460,7 @@ rules:
 
 如果 `rules` 中没有 `"$ProxyRules_Pack"`，生成器会回退到“普通生成模式”，直接使用默认生成的规则包，不会把头模板里的自定义 `rules` 与规则包做位置混排。
 
-### 7.3 文本头模板占位符
+### 7.2 文本头模板占位符
 
 在以下文本模板中使用：
 
@@ -494,6 +526,7 @@ real-ip = "$Fake_IP_Filter_list"
 编辑：
 
 - `Base/Rules/RemoteRules.yaml`
+- `Base/Rules/PolicyConfig.yaml`
 - `Base/Rules/RemoteRulesLinkBase.yaml`
 
 ### 第四步：生成并检查
@@ -671,13 +704,14 @@ go run ./cmd/proxyrules --tool all
 2. 修改 `Base/DNS.yaml`
 3. 修改 `Base/Head/` 下你关心的平台模板
 4. 如有需要，修改 `Base/Rules/RemoteRules.yaml`
-5. 执行：
+5. 如需调整或新增策略组，修改 `Base/Rules/PolicyConfig.yaml`
+6. 执行：
 
 ```bash
 cd program
 go run ./cmd/proxyrules --tool all
 ```
 
-6. 从 `Config/` 和 `Wireguard_Easytier/` 拿走生成结果
+7. 从 `Config/` 和 `Wireguard_Easytier/` 拿走生成结果
 
 做到这一步，你就已经拥有一套可持续维护、可重复生成的“自己的代理配置集”了。
