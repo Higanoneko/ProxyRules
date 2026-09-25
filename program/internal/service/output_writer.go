@@ -10,6 +10,8 @@ import (
 
 const generatedAtLabel = "Generated at (UTC): "
 
+const surgeManagedConfigURLPrefix = "https://raw.githubusercontent.com/Higanoneko/ProxyRules/refs/heads/main/Config/Surge/"
+
 func writeFile(path string, content string) error {
 	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
 		return err
@@ -37,11 +39,25 @@ func prependGeneratedHeader(path string, content string, generatedAt time.Time) 
 	if filepath.Ext(path) == ".sgmodule" {
 		return prependGeneratedHeaderAfterMetadata(content, headerLine)
 	}
+	header := headerLine
+	if managedConfigLine := surgeManagedConfigLine(path); managedConfigLine != "" {
+		header += "\n" + managedConfigLine
+		content = strings.TrimLeft(content, "\r\n")
+	}
 
 	if strings.HasSuffix(content, "\n") {
-		return headerLine + "\n\n" + content
+		return header + "\n\n" + content
 	}
-	return headerLine + "\n\n" + content + "\n"
+	return header + "\n\n" + content + "\n"
+}
+
+func surgeManagedConfigLine(path string) string {
+	switch filepath.Base(path) {
+	case "Surge_config.conf", "Surge_config_no_ipv6.conf":
+		return "#!MANAGED-CONFIG " + surgeManagedConfigURLPrefix + filepath.Base(path) + " interval=43200"
+	default:
+		return ""
+	}
 }
 
 func prependGeneratedHeaderAfterMetadata(content string, headerLine string) string {
