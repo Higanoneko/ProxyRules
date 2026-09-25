@@ -1,10 +1,12 @@
-# Generated at (UTC): 2026-09-02T07:01:27Z
+# Generated at (UTC): 2026-09-25T05:53:36Z
 
 name: Higanoneko Stash Override
 desc: Higanoneko's Config Override
 author: Higanoneko
 icon: https://fastly.jsdelivr.net/gh/shindgewongxj/WHATSINStash@master/icon/substore.png
 category: Override
+# Update Date: 2026.09.25 13:30
+# author: Higanoneko
 mode: rule
 log-level: info
 
