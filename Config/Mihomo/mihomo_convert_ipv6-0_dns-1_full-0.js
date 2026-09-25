@@ -1,4 +1,4 @@
-// Generated at (UTC): 2026-09-25T05:53:36Z
+// Generated at (UTC): 2026-09-25T12:07:58Z
 
 /*
 Higanoneko 的 Substore 订阅转换脚本
@@ -11,7 +11,6 @@ https://github.com/Higanoneko/ProxyRules
 - threshold: 国家节点数量小于该值时不显示分组（默认 0）
 */
 
-const NODE_SUFFIX = "节点";
 const DNS_BOOTSTRAP_LIST = ["119.29.29.29","1.1.1.1","8.8.8.8"];
 const DNS_TEMPLATE = {"enable":true,"ipv6":false,"listen":"0.0.0.0:1053","enhanced-mode":"fake-ip","fake-ip-range":"198.18.0.1/16","fake-ip-range6":"fdfe:dcba:9876::1/64","default-nameserver":["119.29.29.29","1.1.1.1","8.8.8.8"],"direct-nameserver":["https://doh.pub/dns-query"],"proxy-server-nameserver":["https://doh.pub/dns-query"],"nameserver":["https://cloudflare-dns.com/dns-query","https://dns.google/dns-query"],"fake-ip-filter":["*.lan","*.localdomain","*.example","*.invalid","*.localhost","*.test","*.local","*.home.arpa","time.*.com","time.*.gov","time.*.edu.cn","time.*.apple.com","time1.*.com","time2.*.com","time3.*.com","time4.*.com","time5.*.com","time6.*.com","time7.*.com","ntp.*.com","ntp1.*.com","ntp2.*.com","ntp3.*.com","ntp4.*.com","ntp5.*.com","ntp6.*.com","ntp7.*.com","*.time.edu.cn","*.ntp.org.cn","+.pool.ntp.org","time1.cloud.tencent.com","music.163.com","*.music.163.com","*.126.net","*.netease.com","musicapi.taihe.com","music.taihe.com","songsearch.kugou.com","trackercdn.kugou.com","*.kuwo.cn","api-jooxtt.sanook.com","api.joox.com","joox.com","*.tencent.com","*.qq.com","y.qq.com","*.y.qq.com","streamoc.music.tc.qq.com","mobileoc.music.tc.qq.com","isure.stream.qqmusic.qq.com","dl.stream.qqmusic.qq.com","aqqmusic.tc.qq.com","amobile.music.tc.qq.com","*.xiami.com","*.xiaomi.com","*.mi.com","*.music.migu.cn","music.migu.cn","*.msftconnecttest.com","*.msftncsi.com","msftconnecttest.com","msftncsi.com","localhost.ptlogin2.qq.com","localhost.sec.qq.com","+.srv.nintendo.net","+.stun.playstation.net","xbox.*.microsoft.com","+.battlenet.com.cn","+.wotgame.cn","+.wggames.cn","+.wowsgame.cn","+.wargaming.net","proxy.golang.org","stun.*.*","stun.*.*.*","stun.*.*.*.*","heartbeat.belkin.com","*.linksys.com","*.linksyssmartwifi.com","*.router.asus.com","mesu.apple.com","swscan.apple.com","swquery.apple.com","swdownload.apple.com","swcdn.apple.com","swdist.apple.com","lens.l.google.com","stun.l.google.com","+.nflxvideo.net","*.square-enix.com","*.finalfantasyxiv.com","*.ffxiv.com","*.direct","cable.auth.com","network-test.debian.org","detectportal.firefox.com","resolver1.opendns.com","*.xboxlive.com","global.turn.twilio.com","global.stun.twilio.com","app.yinxiang.com","injections.adguard.org","local.adguard.org","localhost.*.qq.com","localhost.*.weixin.qq.com","*.logon.battle.net","*.blzstatic.cn","*.mcdn.bilivideo.cn","*.cmpassport.com","id6.me","open.e.189.cn","opencloud.wostore.cn","id.mail.wo.cn","mdn.open.wo.cn","hmrz.wo.cn","nishub1.10010.com","enrichgw.10010.com","*.wosms.cn","*.jegotrip.com.cn","*.icitymobile.mobi","*.pingan.com.cn","*.cmbchina.com","*.10099.com.cn","*.microdone.cn"]};
 const MIXED_PORT = 56365;
@@ -20,9 +19,8 @@ const RULE_PROVIDERS = {"AI":{"type":"http","behavior":"classical","format":"yam
 const BASE_RULES = ["RULE-SET,AI,AI","RULE-SET,Telegram,Telegram","RULE-SET,YouTube,YouTube","RULE-SET,YouTubeMusic,YouTube","RULE-SET,Netflix,Netflix","RULE-SET,TikTok,TikTok","RULE-SET,Spotify,Spotify","RULE-SET,Steam,Steam","RULE-SET,Game,Game","RULE-SET,E-Hentai,E-Hentai","RULE-SET,PornSite,PornSite","RULE-SET,Stream_US,US Media","RULE-SET,Stream_TW,Taiwan Media","RULE-SET,Stream_JP,Japan Media","RULE-SET,Stream_Global,Global Media","RULE-SET,Apple,Apple","RULE-SET,Microsoft,Microsoft","RULE-SET,Google,Google","RULE-SET,GoogleFCM,Google FCM","RULE-SET,SogouPrivacy,Sogou Privacy","RULE-SET,ADBlock,ADBlock","RULE-SET,LocalNetwork,DIRECT","RULE-SET,LocalNetworkIP,DIRECT","RULE-SET,Furrybar,PornSite","RULE-SET,Playhorny,Game","RULE-SET,Nikke,Game","GEOIP,CN,直接连接","MATCH,选择代理"];
 const SNIFFER_CONFIG = {"skip-domain":["Mijia Cloud","dlg.io.mi.com","+.push.apple.com"],"sniff":{"HTTP":{"override-destination":true,"ports":[80,"8080-8880"]},"QUIC":{"ports":[443,8443]},"TLS":{"ports":[443,8443]}}};
 const GEOX_URL = {"geoip":"https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat","geosite":"https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat","mmdb":"https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb","asn":"https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb"};
-const COUNTRIES = [{"name":"香港","pattern":"(?i)香港|港|HK|hk|Hong Kong|HongKong|Hongkong|Hong kong|hongkong|hong kong|🇭🇰","icon_url":"https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png"},{"name":"台湾","pattern":"(?i)台|新北|彰化|TW|Taiwan|TaiWan|Tai wan|Tai Wan|taiwan|tai wan|🇹🇼","icon_url":"https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png"},{"name":"新加坡","pattern":"(?i)新加坡|坡|狮城|SG|Singapore|🇸🇬","icon_url":"https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png"},{"name":"日本","pattern":"(?i)日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|🇯🇵","icon_url":"https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png"},{"name":"美国","pattern":"(?i)美国|美|US|United States|🇺🇸","icon_url":"https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png"}];
-const POLICY_TEMPLATES = [{"name":"选择代理","icon_url":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Proxy.png","strategy":"selector"},{"name":"手动选择","icon_url":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Round_Robin_1.png","strategy":"manual"},{"name":"AI","icon_url":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/AI.png","strategy":"default"},{"name":"Telegram","icon_url":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png","strategy":"default"},{"name":"YouTube","icon_url":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png","strategy":"default"},{"name":"Netflix","icon_url":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Netflix.png","strategy":"default"},{"name":"Spotify","icon_url":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Spotify.png","strategy":"default"},{"name":"TikTok","icon_url":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/TikTok.png","strategy":"default"},{"name":"Steam","icon_url":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Steam.png","strategy":"default"},{"name":"Game","icon_url":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Game.png","strategy":"default"},{"name":"E-Hentai","icon_url":"https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Ehentai.png","strategy":"default"},{"name":"PornSite","icon_url":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Pornhub.png","strategy":"default"},{"name":"US Media","icon_url":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png","strategy":"media_preferred","preferred_country_group":"美国节点"},{"name":"Taiwan Media","icon_url":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png","strategy":"media_preferred","preferred_country_group":"台湾节点"},{"name":"Japan Media","icon_url":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png","strategy":"media_preferred","preferred_country_group":"日本节点"},{"name":"Global Media","icon_url":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/DomesticMedia.png","strategy":"default"},{"name":"Apple","icon_url":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Apple.png","strategy":"direct_first"},{"name":"Microsoft","icon_url":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Microsoft.png","strategy":"direct_first"},{"name":"Google","icon_url":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google_Search.png","strategy":"default"},{"name":"Google FCM","icon_url":"https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Firebase.png","strategy":"fixed","fixed_proxies":["Google","直接连接"]},{"name":"Sogou Privacy","icon_url":"https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Sougou.png","strategy":"fixed","fixed_proxies":["直接连接","REJECT"]},{"name":"ADBlock","icon_url":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/AdBlack.png","strategy":"fixed","fixed_proxies":["REJECT-DROP","REJECT","直接连接"]},{"name":"直接连接","icon_url":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Direct.png","strategy":"fixed","fixed_proxies":["DIRECT","选择代理"]},{"name":"GLOBAL","icon_url":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png","strategy":"global"}];
-const ISP_EXCLUDE_PATTERN = "(?i)家宽|家庭|家庭宽带|商宽|商业宽带|星链|Starlink|落地";
+const POLICY_GROUPS = [{"name":"选择代理","icon":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Proxy.png","type":"select","proxies":["$CountryGroups","手动选择","DIRECT"]},{"name":"手动选择","icon":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Round_Robin_1.png","type":"select","include_all":true,"loon_filter":"ALL_Filter","exclude_dns_hijack":true},{"name":"AI","icon":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/AI.png","type":"select","proxies":["选择代理","$CountryGroups","手动选择","直接连接"]},{"name":"Telegram","icon":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png","type":"select","proxies":["选择代理","$CountryGroups","手动选择","直接连接"]},{"name":"YouTube","icon":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png","type":"select","proxies":["选择代理","$CountryGroups","手动选择","直接连接"]},{"name":"Netflix","icon":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Netflix.png","type":"select","proxies":["选择代理","$CountryGroups","手动选择","直接连接"]},{"name":"Spotify","icon":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Spotify.png","type":"select","proxies":["选择代理","$CountryGroups","手动选择","直接连接"]},{"name":"TikTok","icon":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/TikTok.png","type":"select","proxies":["选择代理","$CountryGroups","手动选择","直接连接"]},{"name":"Steam","icon":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Steam.png","type":"select","proxies":["选择代理","$CountryGroups","手动选择","直接连接"]},{"name":"Game","icon":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Game.png","type":"select","proxies":["选择代理","$CountryGroups","手动选择","直接连接"]},{"name":"E-Hentai","icon":"https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Ehentai.png","type":"select","proxies":["选择代理","$CountryGroups","手动选择","直接连接"]},{"name":"PornSite","icon":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Pornhub.png","type":"select","proxies":["选择代理","$CountryGroups","手动选择","直接连接"]},{"name":"US Media","icon":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png","type":"select","proxies":["美国节点","选择代理","手动选择","直接连接"],"fallback_proxies":["选择代理","$CountryGroups","手动选择","直接连接"]},{"name":"Taiwan Media","icon":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png","type":"select","proxies":["台湾节点","选择代理","手动选择","直接连接"],"fallback_proxies":["选择代理","$CountryGroups","手动选择","直接连接"]},{"name":"Japan Media","icon":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png","type":"select","proxies":["日本节点","选择代理","手动选择","直接连接"],"fallback_proxies":["选择代理","$CountryGroups","手动选择","直接连接"]},{"name":"Global Media","icon":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/DomesticMedia.png","type":"select","proxies":["选择代理","$CountryGroups","手动选择","直接连接"]},{"name":"Apple","icon":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Apple.png","type":"select","proxies":["直接连接","选择代理","$CountryGroups","手动选择"]},{"name":"Microsoft","icon":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Microsoft.png","type":"select","proxies":["直接连接","选择代理","$CountryGroups","手动选择"]},{"name":"Google","icon":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google_Search.png","type":"select","proxies":["选择代理","$CountryGroups","手动选择","直接连接"]},{"name":"Google FCM","icon":"https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Firebase.png","type":"select","proxies":["Google","直接连接"]},{"name":"Sogou Privacy","icon":"https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Sougou.png","type":"select","proxies":["直接连接","REJECT"]},{"name":"ADBlock","icon":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/AdBlack.png","type":"select","proxies":["REJECT-DROP","REJECT","直接连接"]},{"name":"直接连接","icon":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Direct.png","type":"select","proxies":["DIRECT","选择代理"]},{"name":"香港节点","icon":"https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png","type":"url-test","include_all":true,"filter":"(?i)香港|港|HK|hk|Hong Kong|HongKong|Hongkong|Hong kong|hongkong|hong kong|🇭🇰","url":"https://cp.cloudflare.com/generate_204","interval":60,"tolerance":20,"lazy":false,"country":"香港","loon_filter":"HK_Filter"},{"name":"台湾节点","icon":"https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png","type":"url-test","include_all":true,"filter":"(?i)台|新北|彰化|TW|Taiwan|TaiWan|Tai wan|Tai Wan|taiwan|tai wan|🇹🇼","url":"https://cp.cloudflare.com/generate_204","interval":60,"tolerance":20,"lazy":false,"country":"台湾","loon_filter":"TW_Filter"},{"name":"新加坡节点","icon":"https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png","type":"url-test","include_all":true,"filter":"(?i)新加坡|坡|狮城|SG|Singapore|🇸🇬","url":"https://cp.cloudflare.com/generate_204","interval":60,"tolerance":20,"lazy":false,"country":"新加坡","loon_filter":"SG_Filter"},{"name":"日本节点","icon":"https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png","type":"url-test","include_all":true,"filter":"(?i)日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|🇯🇵","url":"https://cp.cloudflare.com/generate_204","interval":60,"tolerance":20,"lazy":false,"country":"日本","loon_filter":"JP_Filter"},{"name":"美国节点","icon":"https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png","type":"url-test","include_all":true,"filter":"(?i)美国|美|US|United States|🇺🇸","url":"https://cp.cloudflare.com/generate_204","interval":60,"tolerance":20,"lazy":false,"country":"美国","loon_filter":"US_Filter"},{"name":"其他节点","icon":"https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png","type":"select","include_all":true,"exclude_filter":"$CountryPatterns","country":"其他","loon_filter":"Other_Filter","exclude_dns_hijack":true},{"name":"GLOBAL","icon":"https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png","type":"select","proxies":["选择代理","$CountryGroups","手动选择","直接连接"],"include_all":true,"mihomo_only":true},{"name":"Proxies","icon":"https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Proxy.png","type":"select","surge_only":true,"policy_path":"\u003cYour Node List Link Here\u003e"}];
+const NODE_EXCLUDE_PATTERN = "(?i)家宽|家庭|家庭宽带|商宽|商业宽带|星链|Starlink|落地";
 
 function parseBool(value) {
     if (typeof value === "boolean") return value;
@@ -55,14 +53,12 @@ function stripInlineFlag(pattern) {
     return String(pattern || "").replace(/^\(\?i\)/, "");
 }
 
+const COUNTRY_GROUPS = POLICY_GROUPS.filter((group) => group.country && group.country !== "其他");
+const OTHER_GROUP = POLICY_GROUPS.find((group) => group.country === "其他");
 const countryPatternMap = Object.fromEntries(
-    COUNTRIES.map((country) => [
-        country.name,
-        new RegExp(stripInlineFlag(country.pattern), "i"),
-    ])
+    COUNTRY_GROUPS.map((group) => [group.name, new RegExp(stripInlineFlag(group.filter), "i")])
 );
-
-const ispRegex = new RegExp(stripInlineFlag(ISP_EXCLUDE_PATTERN), "i");
+const excludeRegex = new RegExp(stripInlineFlag(NODE_EXCLUDE_PATTERN), "i");
 
 function buildCountryInventory(proxies, threshold) {
     const counts = Object.create(null);
@@ -70,14 +66,14 @@ function buildCountryInventory(proxies, threshold) {
 
     for (const proxy of proxies) {
         const name = proxy && proxy.name ? proxy.name : "";
-        if (ispRegex.test(name)) {
+        if (excludeRegex.test(name)) {
             continue;
         }
 
         let matched = false;
-        for (const country of COUNTRIES) {
-            if (countryPatternMap[country.name].test(name)) {
-                counts[country.name] = (counts[country.name] || 0) + 1;
+        for (const group of COUNTRY_GROUPS) {
+            if (countryPatternMap[group.name].test(name)) {
+                counts[group.name] = (counts[group.name] || 0) + 1;
                 matched = true;
                 break;
             }
@@ -88,92 +84,50 @@ function buildCountryInventory(proxies, threshold) {
         }
     }
 
-    const countries = COUNTRIES
-        .map((country) => ({
-            name: country.name,
-            count: counts[country.name] || 0,
-            meta: country,
+    const countries = COUNTRY_GROUPS
+        .map((group) => ({
+            name: group.name,
+            count: counts[group.name] || 0,
         }))
         .filter((country) => country.count > 0 && country.count >= threshold);
 
     return {
         countries,
-        names: countries.map((country) => country.name),
+        names: countries.map((group) => group.name),
         hasOther: otherCount > 0,
     };
 }
 
-function buildList(...elements) {
-    return elements.flat().filter((value) => value !== null && typeof value !== "undefined" && value !== false && value !== "");
+function expandProxies(proxies, context) {
+    return proxies.flatMap((name) => {
+        if (name === "$CountryGroups") return context.countryGroupNames;
+        if (context.allCountryGroups.has(name) && !context.availableGroups.has(name)) return [];
+        return [name];
+    });
 }
 
-function buildDerivedLists(countryGroupNames, hasOther) {
-    const otherGroup = hasOther ? "其他节点" : null;
-    return {
-        selector: buildList(countryGroupNames, otherGroup, "手动选择", "DIRECT"),
-        defaults: buildList("选择代理", countryGroupNames, otherGroup, "手动选择", "直接连接"),
-        directFirst: buildList("直接连接", "选择代理", countryGroupNames, otherGroup, "手动选择"),
-    };
-}
-
-function buildPolicyGroup(template, context) {
-    const base = {
-        name: template.name,
-        icon: template.icon_url,
-        type: "select",
-    };
-
-    switch (template.strategy) {
-        case "selector":
-            return { ...base, proxies: context.selector };
-        case "manual":
-            return { ...base, "include-all": true };
-        case "default":
-            return { ...base, proxies: context.defaults };
-        case "media_preferred":
-            if (context.countryGroupSet.has(template.preferred_country_group)) {
-                return {
-                    ...base,
-                    proxies: [template.preferred_country_group, "选择代理", "手动选择", "直接连接"],
-                };
-            }
-            return { ...base, proxies: context.defaults };
-        case "direct_first":
-            return { ...base, proxies: context.directFirst };
-        case "fixed":
-            return { ...base, proxies: template.fixed_proxies || [] };
-        case "global":
-            return { ...base, "include-all": true, proxies: context.defaults };
-        default:
-            return base;
+function buildPolicyGroup(spec, context) {
+    const hasMissingCountry = (spec.proxies || []).some((name) =>
+        context.allCountryGroups.has(name) && !context.availableGroups.has(name)
+    );
+    const references = hasMissingCountry && spec.fallback_proxies && spec.fallback_proxies.length
+        ? spec.fallback_proxies
+        : (spec.proxies || []);
+    const proxies = expandProxies(references, context);
+    const group = { name: spec.name, icon: spec.icon, type: spec.type };
+    if (spec.include_all) group["include-all"] = true;
+    if (spec.filter) group.filter = spec.filter;
+    if (spec.exclude_filter) {
+        group["exclude-filter"] = spec.exclude_filter === "$CountryPatterns"
+            ? context.countryExcludePattern
+            : spec.exclude_filter;
     }
-}
-
-function buildCountryGroups(countryInventory) {
-    const groups = countryInventory.countries.map((country) => ({
-        name: `${country.name}${NODE_SUFFIX}`,
-        icon: country.meta.icon_url,
-        "include-all": true,
-        filter: country.meta.pattern,
-        type: "url-test",
-        url: "https://cp.cloudflare.com/generate_204",
-        interval: 60,
-        tolerance: 20,
-        lazy: false,
-    }));
-
-    if (countryInventory.hasOther) {
-        const excludePatterns = COUNTRIES.map((country) => stripInlineFlag(country.pattern)).filter(Boolean);
-        groups.push({
-            name: "其他节点",
-            icon: "https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png",
-            "include-all": true,
-            type: "select",
-            "exclude-filter": excludePatterns.length > 0 ? `(?i)${excludePatterns.join("|")}` : undefined,
-        });
-    }
-
-    return groups;
+    if (spec.url) group.url = spec.url;
+    if (spec.interval) group.interval = spec.interval;
+    if (spec.tolerance) group.tolerance = spec.tolerance;
+    if (Object.prototype.hasOwnProperty.call(spec, "lazy")) group.lazy = spec.lazy;
+    if (proxies.length) group.proxies = proxies;
+    return group;
 }
 
 function buildDnsConfig(ipv6Enabled) {
@@ -190,21 +144,19 @@ function main(config) {
     const resultConfig = { proxies };
 
     const countryInventory = buildCountryInventory(proxies, countryThreshold);
-    const countryGroupNames = countryInventory.names.map((country) => `${country}${NODE_SUFFIX}`);
-    const derived = buildDerivedLists(countryGroupNames, countryInventory.hasOther);
+    const countryGroupNames = countryInventory.names.concat(
+        countryInventory.hasOther && OTHER_GROUP ? [OTHER_GROUP.name] : []
+    );
     const context = {
-        ...derived,
-        countryGroupSet: new Set(countryGroupNames),
+        countryGroupNames,
+        availableGroups: new Set(countryGroupNames),
+        allCountryGroups: new Set(POLICY_GROUPS.filter((group) => group.country).map((group) => group.name)),
+        countryExcludePattern: `(?i)${COUNTRY_GROUPS.map((group) => stripInlineFlag(group.filter)).join("|")}`,
     };
 
-    const policyGroups = POLICY_TEMPLATES
-        .filter((template) => template.strategy !== "global")
-        .map((template) => buildPolicyGroup(template, context));
-    const globalGroups = POLICY_TEMPLATES
-        .filter((template) => template.strategy === "global")
-        .map((template) => buildPolicyGroup(template, context));
-    const countryGroups = buildCountryGroups(countryInventory);
-    const proxyGroups = [...policyGroups, ...countryGroups, ...globalGroups];
+    const proxyGroups = POLICY_GROUPS
+        .filter((spec) => !spec.surge_only && (!spec.country || context.availableGroups.has(spec.name)))
+        .map((spec) => buildPolicyGroup(spec, context));
 
     if (fullConfig) {
         Object.assign(resultConfig, FULL_CONFIG_DEFAULTS, {

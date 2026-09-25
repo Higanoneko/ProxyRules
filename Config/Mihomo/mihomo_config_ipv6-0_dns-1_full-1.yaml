@@ -1,4 +1,4 @@
-# Generated at (UTC): 2026-09-25T05:53:36Z
+# Generated at (UTC): 2026-09-25T12:07:58Z
 
 # Update Date: 2026.09.25 13:30
 # author: Higanoneko
@@ -285,7 +285,7 @@ proxy-groups:
   - name: Apple
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Apple.png
     type: select
-    proxies:
+    proxies: &a2
       - 直接连接
       - 选择代理
       - 香港节点
@@ -298,16 +298,7 @@ proxy-groups:
   - name: Microsoft
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Microsoft.png
     type: select
-    proxies:
-      - 直接连接
-      - 选择代理
-      - 香港节点
-      - 台湾节点
-      - 新加坡节点
-      - 日本节点
-      - 美国节点
-      - 其他节点
-      - 手动选择
+    proxies: *a2
   - name: Google
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google_Search.png
     type: select

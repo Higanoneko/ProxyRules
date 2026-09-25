@@ -1,4 +1,4 @@
-# Generated at (UTC): 2026-09-25T05:53:36Z
+# Generated at (UTC): 2026-09-25T12:07:58Z
 
 # Update Date: 2026.09.25 13:30
 # author: Higanoneko
@@ -36,7 +36,7 @@ https://raw.githubusercontent.com/Peng-YM/Loon-Gallery/master/loon-gallery.plugi
 # Your Node or Proxy Subscription Links Here
 
 [Remote Filter]
-# 全部节点筛选
+# 手动选择筛选
 ALL_Filter = NameRegex, FilterKey = ".*"
 
 # 香港节点筛选
@@ -54,9 +54,8 @@ JP_Filter = NameRegex, FilterKey = "(?i)日本|川日|东京|大阪|泉日|埼�
 # 美国节点筛选
 US_Filter = NameRegex, FilterKey = "(?i)美国|美|US|United States|🇺🇸"
 
-# 其他节点筛选（排除以上所有地区）
-# 使用负向预查来排除特定关键词：不含香港、台湾、新加坡、日本、美国
-Other_Filter = NameRegex, FilterKey = "^(?!.*(香港|港|HK|hk|Hong Kong|HongKong|Hongkong|Hong kong|hongkong|hong kong|🇭🇰|台|新北|彰化|TW|Taiwan|TaiWan|Tai wan|Tai Wan|taiwan|tai wan|🇹🇼|美国|美|US|United States|🇺🇸|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|🇯🇵|新加坡|坡|狮城|SG|Singapore|🇸🇬))"
+# 其他节点筛选
+Other_Filter = NameRegex, FilterKey = "^(?!.*(香港|港|HK|hk|Hong Kong|HongKong|Hongkong|Hong kong|hongkong|hong kong|🇭🇰|台|新北|彰化|TW|Taiwan|TaiWan|Tai wan|Tai Wan|taiwan|tai wan|🇹🇼|新加坡|坡|狮城|SG|Singapore|🇸🇬|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|🇯🇵|美国|美|US|United States|🇺🇸))"
 
 [Proxy Group]
 选择代理 = select, 香港节点, 台湾节点, 新加坡节点, 日本节点, 美国节点, 其他节点, 手动选择, DIRECT, img-url = https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Proxy.png
