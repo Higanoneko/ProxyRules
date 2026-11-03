@@ -8,7 +8,6 @@ mode: rule
 unified-delay: true
 tcp-concurrent: true
 find-process-mode: strict
-global-client-fingerprint: chrome
 log-level: info
 geodata-loader: standard
 external-controller: :9090
