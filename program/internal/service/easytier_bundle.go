@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Higanoneko/ProxyRules/internal/postprocess"
+	"github.com/luluape/ProxyRules/internal/postprocess"
 )
 
 func easytierJSSourcePath(projectRoot string) string {

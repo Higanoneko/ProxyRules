@@ -7,10 +7,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Higanoneko/ProxyRules/internal/domain"
-	"github.com/Higanoneko/ProxyRules/internal/projectroot"
-	"github.com/Higanoneko/ProxyRules/internal/render"
-	"github.com/Higanoneko/ProxyRules/internal/repository"
+	"github.com/luluape/ProxyRules/internal/domain"
+	"github.com/luluape/ProxyRules/internal/projectroot"
+	"github.com/luluape/ProxyRules/internal/render"
+	"github.com/luluape/ProxyRules/internal/repository"
 )
 
 func TestBuildPolicyPlanKeepsCoreSections(t *testing.T) {

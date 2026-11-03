@@ -1,6 +1,6 @@
 package render
 
-import "github.com/Higanoneko/ProxyRules/internal/domain"
+import "github.com/luluape/ProxyRules/internal/domain"
 
 type genericDNSView struct {
 	BootstrapResolvers []string

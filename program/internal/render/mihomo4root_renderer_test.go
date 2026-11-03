@@ -6,9 +6,9 @@ import (
 
 	"gopkg.in/yaml.v3"
 
-	"github.com/Higanoneko/ProxyRules/internal/render"
-	"github.com/Higanoneko/ProxyRules/internal/repository"
-	"github.com/Higanoneko/ProxyRules/internal/service"
+	"github.com/luluape/ProxyRules/internal/render"
+	"github.com/luluape/ProxyRules/internal/repository"
+	"github.com/luluape/ProxyRules/internal/service"
 )
 
 type mihomo4RootTestGroup struct {

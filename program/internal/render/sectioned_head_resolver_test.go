@@ -3,8 +3,8 @@ package render
 import (
 	"testing"
 
-	"github.com/Higanoneko/ProxyRules/internal/domain"
-	"github.com/Higanoneko/ProxyRules/internal/repository"
+	"github.com/luluape/ProxyRules/internal/domain"
+	"github.com/luluape/ProxyRules/internal/repository"
 )
 
 func TestApplyTextPlaceholdersSupportsDollarSyntax(t *testing.T) {
@@ -22,9 +22,9 @@ real-ip = "$Fake_IP_Filter_list"
 	})
 
 	for expected, label := range map[string]string{
-		`dns-server = 119.29.29.29, 1.1.1.1,system`:                                  "dns-server",
-		`doh-server = https://doh.pub/dns-query, https://dns.google/dns-query`:       "doh-server",
-		`real-ip = *.lan, *.local`:                                                    "real-ip",
+		`dns-server = 119.29.29.29, 1.1.1.1,system`:                            "dns-server",
+		`doh-server = https://doh.pub/dns-query, https://dns.google/dns-query`: "doh-server",
+		`real-ip = *.lan, *.local`:                                             "real-ip",
 	} {
 		if !containsString(result, expected) {
 			t.Fatalf("expected %s placeholder replacement, got:\n%s", label, result)
