@@ -1,4 +1,4 @@
-# Generated at (UTC): 2026-09-30T17:26:09Z
+# Generated at (UTC): 2026-11-03T13:12:46Z
 
 # Update Date: 2026.09.25 13:30
 # author: Higanoneko
@@ -284,7 +284,7 @@ proxy-groups:
     type: select
     proxies: *a1
   - name: E-Hentai
-    icon: https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Ehentai.png
+    icon: https://cdn.jsdelivr.net/gh/luluape/CustomProxyRuleset@main/Icons/Ehentai.png
     type: select
     proxies: *a1
   - name: PornSite
@@ -341,13 +341,13 @@ proxy-groups:
     type: select
     proxies: *a1
   - name: Google FCM
-    icon: https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Firebase.png
+    icon: https://cdn.jsdelivr.net/gh/luluape/CustomProxyRuleset@main/Icons/Firebase.png
     type: select
     proxies:
       - Google
       - 直接连接
   - name: Sogou Privacy
-    icon: https://cdn.jsdelivr.net/gh/Higanoneko/CustomProxyRuleset@main/Icons/Sougou.png
+    icon: https://cdn.jsdelivr.net/gh/luluape/CustomProxyRuleset@main/Icons/Sougou.png
     type: select
     proxies:
       - 直接连接
@@ -496,7 +496,7 @@ rule-providers:
     behavior: classical
     format: text
     interval: 86400
-    url: https://raw.githubusercontent.com/Higanoneko/CustomProxyRuleset/main/PornSite/PornSite.list
+    url: https://raw.githubusercontent.com/luluape/CustomProxyRuleset/main/PornSite/PornSite.list
     path: ./ruleset/PornSite.list
   Stream_US:
     type: http
@@ -587,21 +587,21 @@ rule-providers:
     behavior: classical
     format: text
     interval: 86400
-    url: https://raw.githubusercontent.com/Higanoneko/CustomProxyRuleset/main/Furrybar/Furrybar.list
+    url: https://raw.githubusercontent.com/luluape/CustomProxyRuleset/main/Furrybar/Furrybar.list
     path: ./ruleset/Furrybar.list
   Playhorny:
     type: http
     behavior: classical
     format: text
     interval: 86400
-    url: https://raw.githubusercontent.com/Higanoneko/CustomProxyRuleset/main/Playhorny/Playhorny.list
+    url: https://raw.githubusercontent.com/luluape/CustomProxyRuleset/main/Playhorny/Playhorny.list
     path: ./ruleset/Playhorny.list
   Nikke:
     type: http
     behavior: classical
     format: text
     interval: 86400
-    url: https://raw.githubusercontent.com/Higanoneko/CustomProxyRuleset/main/Nikke/Nikke.list
+    url: https://raw.githubusercontent.com/luluape/CustomProxyRuleset/main/Nikke/Nikke.list
     path: ./ruleset/Nikke.list
 rules:
   - DST-PORT,53,DNS_Hijack
