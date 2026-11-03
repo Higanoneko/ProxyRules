@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/Higanoneko/ProxyRules/internal/domain"
-	"github.com/Higanoneko/ProxyRules/internal/repository"
+	"github.com/luluape/ProxyRules/internal/domain"
+	"github.com/luluape/ProxyRules/internal/repository"
 	"gopkg.in/yaml.v3"
 )
 

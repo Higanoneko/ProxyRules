@@ -1,6 +1,6 @@
 /*
 Higanoneko 的 Substore 订阅转换脚本
-https://github.com/Higanoneko/ProxyRules
+https://github.com/luluape/ProxyRules
 
 支持的传入参数：
 - ipv6: 用于 full 或 dns 覆写中的 IPv6 设置（默认 true）

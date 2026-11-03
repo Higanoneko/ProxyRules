@@ -59,7 +59,7 @@ Categories:
     url: "https://raw.githubusercontent.com/dler-io/Rules/main/{proxytools}/Provider/{remotefile}.{filetype}"
 
   Higanoneko:
-    url: "https://raw.githubusercontent.com/Higanoneko/CustomProxyRuleset/main/{remotefile}"
+    url: "https://raw.githubusercontent.com/luluape/CustomProxyRuleset/main/{remotefile}"
 
 # 工具类型映射配置
 # 定义不同规则源中，各工具类型对应的 proxytools 映射值

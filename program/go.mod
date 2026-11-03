@@ -1,4 +1,4 @@
-module github.com/Higanoneko/ProxyRules
+module github.com/luluape/ProxyRules
 
 go 1.23.0
 

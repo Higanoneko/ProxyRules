@@ -6,9 +6,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Higanoneko/ProxyRules/internal/render"
-	"github.com/Higanoneko/ProxyRules/internal/repository"
-	"github.com/Higanoneko/ProxyRules/internal/service"
+	"github.com/luluape/ProxyRules/internal/render"
+	"github.com/luluape/ProxyRules/internal/repository"
+	"github.com/luluape/ProxyRules/internal/service"
 )
 
 func TestRenderMihomoScriptOverwritesOnlyEnabledSections(t *testing.T) {

@@ -10,7 +10,7 @@ import (
 
 const generatedAtLabel = "Generated at (UTC): "
 
-const surgeManagedConfigURLPrefix = "https://raw.githubusercontent.com/Higanoneko/ProxyRules/refs/heads/main/Config/Surge/"
+const surgeManagedConfigURLPrefix = "https://raw.githubusercontent.com/luluape/ProxyRules/refs/heads/main/Config/Surge/"
 
 func writeFile(path string, content string) error {
 	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {

@@ -52,3 +52,5 @@ htmlcov/
 
 # Temporary folders
 Temp/
+# Local Go build artifacts
+/program/proxyrules
