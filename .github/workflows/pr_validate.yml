@@ -56,6 +56,9 @@ jobs:
       - name: Verify Egern configuration fragment
         run: python scripts/generate_egern_config.py --check
 
+      - name: Test Egern safe profile merging
+        run: python scripts/test_merge_egern.py
+
       - name: Test Go generator
         working-directory: program
         run: go test ./...
