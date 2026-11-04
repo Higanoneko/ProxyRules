@@ -9,6 +9,7 @@ const (
 	TargetLoon     Target = "loon"
 	TargetSurge    Target = "surge"
 	TargetEasytier Target = "easytier"
+	TargetEgern    Target = "egern"
 )
 
 type Mode string

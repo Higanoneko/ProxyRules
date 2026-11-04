@@ -1,0 +1,31 @@
+domain_set:
+- 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe
+- ds-linear-abematv.akamaized.net
+domain_suffix_set:
+- dmm.com
+- hulu.jp
+- tver.jp
+- abema.io
+- abema.tv
+- ameba.jp
+- dmc.nico
+- ameblo.jp
+- dmm.co.jp
+- socdm.com
+- happyon.jp
+- amebame.com
+- hayabusa.io
+- abema-tv.com
+- hayabusa.dev
+- nicovideo.jp
+- winticket.jp
+- amebaownd.com
+- hjholdings.jp
+- hayabusa.media
+- amebaowndme.com
+- dmm-extension.com
+- dokusho-ojikan.jp
+- location-plus.nhk.jp
+user_agent_set:
+- AbemaTV*
+- Niconico*

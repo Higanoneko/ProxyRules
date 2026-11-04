@@ -1,0 +1,20 @@
+no_resolve: true
+domain_set:
+- global-lobby.nikke-kr.com
+- cloud.nikke-kr.com
+- sg-vas.intlgame.com
+- aws-na-dr.intlgame.com
+- data-aws-na.intlgame.com
+- pc.crashsight-us.iegcom.com
+- down.anticheatexpert.com
+- catalog.gamepass.com
+- na1.centauriglobal.com
+ip_cidr_set:
+- 43.152.114.31/32
+domain_suffix_set:
+- nikke-kr.com
+- intlgame.com
+- iegcom.com
+- anticheatexpert.com
+- gamepass.com
+- centauriglobal.com

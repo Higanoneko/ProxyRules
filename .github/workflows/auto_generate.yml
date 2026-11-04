@@ -100,6 +100,12 @@ jobs:
       - name: Verify Egern rule sets
         run: python3 scripts/convert_egern.py --check
 
+      - name: Generate external Egern classical rules
+        run: python3 scripts/convert_egern_classical.py --allow-unsupported-process --write
+
+      - name: Generate remaining Egern rules
+        run: python3 scripts/convert_egern_remaining.py --write
+
       - name: Test Loyalsoldier synchronization
         run: python3 scripts/test_sync_loyalsoldier.py
 
@@ -127,6 +133,15 @@ jobs:
         working-directory: program
         run: |
           go run ./cmd/proxyrules --tool all
+
+      - name: Validate native Egern generator
+        run: |
+          cd program
+          EGERN_SUBSCRIPTION_URL=https://example.com/test-subscription \
+            go run ./cmd/proxyrules --tool egern --output "$RUNNER_TEMP/proxyrules-egern"
+          cd ..
+          python3 scripts/validate_egern_native.py \
+            --config-dir "$RUNNER_TEMP/proxyrules-egern/Egern"
 
       - name: Check for changes
         id: check_changes

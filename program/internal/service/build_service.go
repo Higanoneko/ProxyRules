@@ -20,6 +20,7 @@ type BuildService struct {
 	stash        *render.StashRenderer
 	loon         *render.LoonRenderer
 	surge        *render.SurgeRenderer
+	egern        *render.EgernRenderer
 }
 
 func NewBuildService(root string) (*BuildService, error) {
@@ -38,6 +39,7 @@ func NewBuildService(root string) (*BuildService, error) {
 		stash:        render.NewStashRenderer(base),
 		loon:         render.NewLoonRenderer(base),
 		surge:        render.NewSurgeRenderer(base),
+		egern:        render.NewEgernRenderer(),
 	}, nil
 }
 
@@ -51,7 +53,8 @@ func (s *BuildService) Generate(targets []domain.Target, outputRoot string, node
 	requiresPolicyPlan := selectedTargets[domain.TargetMihomo] ||
 		selectedTargets[domain.TargetStash] ||
 		selectedTargets[domain.TargetLoon] ||
-		selectedTargets[domain.TargetSurge]
+		selectedTargets[domain.TargetSurge] ||
+		selectedTargets[domain.TargetEgern]
 
 	var planIPv6True domain.PolicyPlan
 	var planIPv6False domain.PolicyPlan
@@ -65,6 +68,9 @@ func (s *BuildService) Generate(targets []domain.Target, outputRoot string, node
 		if err != nil {
 			return err
 		}
+	}
+	if err := s.validateEgernTarget(selectedTargets, outputRoot); err != nil {
+		return err
 	}
 	if err := copyEasytierSurgeModule(easytierSurgeModuleSourcePath(s.root), outputRoot, generatedAt); err != nil {
 		return err
@@ -87,6 +93,11 @@ func (s *BuildService) Generate(targets []domain.Target, outputRoot string, node
 	}
 	if selectedTargets[domain.TargetSurge] {
 		if err := s.generateSurge(outputRoot, planIPv6True, planIPv6False, generatedAt); err != nil {
+			return err
+		}
+	}
+	if selectedTargets[domain.TargetEgern] {
+		if err := s.generateEgern(outputRoot, planIPv6True, planIPv6False, generatedAt); err != nil {
 			return err
 		}
 	}
