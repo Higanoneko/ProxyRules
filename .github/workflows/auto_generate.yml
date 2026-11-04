@@ -36,7 +36,11 @@ jobs:
       - name: Download Loyalsoldier rules
         run: |
           mkdir -p /tmp/proxyrules-loyalsoldier
-          for file in direct.txt proxy.txt telegramcidr.txt; do
+          for file in \
+            reject.txt icloud.txt apple.txt google.txt \
+            proxy.txt direct.txt private.txt gfw.txt \
+            tld-not-cn.txt telegramcidr.txt cncidr.txt \
+            lancidr.txt applications.txt; do
             curl --fail --location --retry 3 --connect-timeout 10 --max-time 120 \
               "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/$file" \
               --output "/tmp/proxyrules-loyalsoldier/$file"
@@ -48,9 +52,19 @@ jobs:
           from pathlib import Path
 
           limits = {
-              "direct": 50000,
+              "reject": 1,
+              "icloud": 1,
+              "apple": 1,
+              "google": 1,
               "proxy": 10000,
+              "direct": 50000,
+              "private": 1,
+              "gfw": 1,
+              "tld-not-cn": 1,
               "telegramcidr": 5,
+              "cncidr": 1,
+              "lancidr": 1,
+              "applications": 1,
           }
 
           for name, minimum in limits.items():

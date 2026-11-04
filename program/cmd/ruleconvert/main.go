@@ -24,9 +24,19 @@ func main() {
 	output := "../Rules"
 
 	sources := []source{
-		{"direct", "domain"},
+		{"reject", "domain"},
+		{"icloud", "domain"},
+		{"apple", "domain"},
+		{"google", "domain"},
 		{"proxy", "domain"},
+		{"direct", "domain"},
+		{"private", "domain"},
+		{"gfw", "domain"},
+		{"tld-not-cn", "domain"},
 		{"telegramcidr", "ipcidr"},
+		{"cncidr", "ipcidr"},
+		{"lancidr", "ipcidr"},
+		{"applications", "classical"},
 	}
 
 	for _, src := range sources {
@@ -74,6 +84,20 @@ func main() {
 				default:
 					check(validateDomain(value))
 					converted = "DOMAIN," + value
+				}
+			case "classical":
+				parts := strings.SplitN(value, ",", 2)
+				if len(parts) != 2 || strings.TrimSpace(parts[1]) == "" {
+					check(fmt.Errorf("%s: invalid classical rule %q", src.Name, value))
+				}
+				switch parts[0] {
+				case "PROCESS-NAME", "PROCESS-PATH",
+					"DOMAIN", "DOMAIN-SUFFIX", "DOMAIN-KEYWORD",
+					"IP-CIDR", "IP-CIDR6", "GEOIP",
+					"DST-PORT", "SRC-PORT", "NETWORK":
+					converted = value
+				default:
+					check(fmt.Errorf("%s: unsupported classical rule %q", src.Name, value))
 				}
 			case "ipcidr":
 				prefix, err := netip.ParsePrefix(value)
