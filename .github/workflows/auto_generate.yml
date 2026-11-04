@@ -8,6 +8,8 @@ on:
     paths:
       - 'Base/**'
       - 'program/**'
+  schedule:
+    - cron: '0 19 * * *'
   workflow_dispatch:
 
 permissions:
@@ -31,6 +33,54 @@ jobs:
           go-version: '1.23'
           cache: false
 
+      - name: Download Loyalsoldier rules
+        run: |
+          mkdir -p /tmp/proxyrules-loyalsoldier
+          for file in direct.txt proxy.txt telegramcidr.txt; do
+            curl --fail --location --retry 3 --connect-timeout 10 --max-time 120 \
+              "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/$file" \
+              --output "/tmp/proxyrules-loyalsoldier/$file"
+          done
+
+      - name: Validate upstream rules
+        run: |
+          python3 - <<'CHECK'
+          from pathlib import Path
+
+          limits = {
+              "direct": 50000,
+              "proxy": 10000,
+              "telegramcidr": 5,
+          }
+
+          for name, minimum in limits.items():
+              path = Path(f"/tmp/proxyrules-loyalsoldier/{name}.txt")
+              assert path.is_file(), f"Missing: {path}"
+
+              lines = [
+                  line.strip()
+                  for line in path.read_text().splitlines()
+                  if line.strip().startswith("- ")
+              ]
+
+              assert len(lines) >= minimum, (
+                  f"{name}: only {len(lines)} rules, "
+                  f"expected at least {minimum}"
+              )
+
+              print(f"OK {name}: {len(lines)} rules")
+          CHECK
+
+      - name: Convert Loyalsoldier rules
+        working-directory: program
+        run: |
+          go run ./cmd/ruleconvert
+
+      - name: Test generator
+        working-directory: program
+        run: |
+          go test ./...
+
       - name: Generate configuration files
         working-directory: program
         run: |
@@ -39,7 +89,7 @@ jobs:
       - name: Check for changes
         id: check_changes
         run: |
-          if [ -n "$(git status --porcelain Config Wireguard_Easytier)" ]; then
+          if [ -n "$(git status --porcelain Config Wireguard_Easytier Rules)" ]; then
             echo "has_changes=true" >> $GITHUB_OUTPUT
             echo "Changes detected in Config/Wireguard_Easytier directory"
             git status --short Config Wireguard_Easytier
@@ -53,7 +103,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add Config/ Wireguard_Easytier/
+          git add Config/ Wireguard_Easytier/ Rules/
 
           BASE_COMMIT_MSG=$(git log -1 --pretty=format:"%s" -- Base/)
           git commit -m "Generator: $BASE_COMMIT_MSG" || exit 0

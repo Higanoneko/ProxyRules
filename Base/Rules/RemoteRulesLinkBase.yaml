@@ -61,10 +61,18 @@ Categories:
   Higanoneko:
     url: "https://raw.githubusercontent.com/luluape/CustomProxyRuleset/main/{remotefile}"
 
+  Loyalsoldier:
+    url: "https://raw.githubusercontent.com/luluape/ProxyRules/main/Rules/{proxytools}/{remotefile}.{filetype}"
+
 # 工具类型映射配置
 # 定义不同规则源中，各工具类型对应的 proxytools 映射值
 # 当原 proxytools 为特定值时，使用映射值；否则 fallback 到通用值
 Categories_Tools_List:
+  Loyalsoldier:
+    Mihomo: "Mihomo"
+    Loon: "Loon"
+    fallback: "Surge"
+
   Sukka:
     Mihomo: "Clash"
     fallback: "List"
@@ -85,6 +93,10 @@ Categories_Tools_List:
     fallback: "Surge"
 
 Categories_Filetype_List:
+  Loyalsoldier:
+    Mihomo: "yaml"
+    fallback: "list"
+
   Sukka:
     Mihomo: "txt"
     fallback: "conf"
