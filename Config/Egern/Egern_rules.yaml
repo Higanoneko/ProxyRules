@@ -1,0 +1,17 @@
+rules:
+- rule_set:
+    match: https://raw.githubusercontent.com/luluape/ProxyRules/main/Rules/Egern/telegramcidr.yaml
+    policy: Telegram
+    update_interval: 86400
+- rule_set:
+    match: https://raw.githubusercontent.com/luluape/ProxyRules/main/Rules/Egern/lancidr.yaml
+    policy: DIRECT
+    update_interval: 86400
+- rule_set:
+    match: https://raw.githubusercontent.com/luluape/ProxyRules/main/Rules/Egern/direct.yaml
+    policy: DIRECT
+    update_interval: 86400
+- rule_set:
+    match: https://raw.githubusercontent.com/luluape/ProxyRules/main/Rules/Egern/proxy.yaml
+    policy: 选择代理
+    update_interval: 86400
