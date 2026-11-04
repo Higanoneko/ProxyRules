@@ -94,6 +94,12 @@ jobs:
       - name: Install Python dependencies
         run: python3 -m pip install --user PyYAML ruamel.yaml
 
+      - name: Generate Egern rule sets
+        run: python3 scripts/convert_egern.py --write
+
+      - name: Verify Egern rule sets
+        run: python3 scripts/convert_egern.py --check
+
       - name: Test Loyalsoldier synchronization
         run: python3 scripts/test_sync_loyalsoldier.py
 
