@@ -38,6 +38,9 @@ jobs:
       - name: Install Python dependencies
         run: python -m pip install PyYAML ruamel.yaml
 
+      - name: Verify Egern rule sets
+        run: python scripts/convert_egern.py --check
+
       - name: Test synchronization
         run: python scripts/test_sync_loyalsoldier.py
 
