@@ -50,6 +50,12 @@ jobs:
       - name: Validate Loyalsoldier catalog
         run: python scripts/validate_loyalsoldier.py
 
+      - name: Test Egern configuration generator
+        run: python scripts/test_egern_config.py
+
+      - name: Verify Egern configuration fragment
+        run: python scripts/generate_egern_config.py --check
+
       - name: Test Go generator
         working-directory: program
         run: go test ./...

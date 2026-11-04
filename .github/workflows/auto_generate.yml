@@ -109,6 +109,15 @@ jobs:
       - name: Validate Loyalsoldier catalog
         run: python3 scripts/validate_loyalsoldier.py
 
+      - name: Generate Egern configuration fragment
+        run: python3 scripts/generate_egern_config.py --write
+
+      - name: Test Egern configuration generator
+        run: python3 scripts/test_egern_config.py
+
+      - name: Verify Egern configuration fragment
+        run: python3 scripts/generate_egern_config.py --check
+
       - name: Test generator
         working-directory: program
         run: |
