@@ -41,6 +41,12 @@ jobs:
       - name: Verify Egern rule sets
         run: python scripts/convert_egern.py --check
 
+      - name: Check native Egern converter syntax
+        run: |
+          python -m py_compile scripts/convert_egern_classical.py
+          python -m py_compile scripts/convert_egern_remaining.py
+          python -m py_compile scripts/validate_egern_native.py
+
       - name: Test synchronization
         run: python scripts/test_sync_loyalsoldier.py
 
@@ -66,6 +72,15 @@ jobs:
       - name: Generate all configurations
         working-directory: program
         run: go run ./cmd/proxyrules --tool all
+
+      - name: Generate and validate native Egern profiles
+        run: |
+          cd program
+          EGERN_SUBSCRIPTION_URL=https://example.com/test-subscription \
+            go run ./cmd/proxyrules --tool egern --output "$RUNNER_TEMP/proxyrules-egern"
+          cd ..
+          python scripts/validate_egern_native.py \
+            --config-dir "$RUNNER_TEMP/proxyrules-egern/Egern"
 
       - name: Verify generated configurations
         run: |

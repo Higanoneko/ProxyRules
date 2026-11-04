@@ -34,7 +34,7 @@ func main() {
 	var outputPath string
 	var testMode bool
 
-	flag.Var(&toolFlags, "tool", "目标工具，可重复传入或使用逗号分隔：mihomo,stash,loon,surge,easytier,all")
+	flag.Var(&toolFlags, "tool", "目标工具，可重复传入或使用逗号分隔：mihomo,stash,loon,surge,egern,easytier,all")
 	flag.StringVar(&outputPath, "output", "", "输出目录，默认为项目根目录下的 Config")
 	flag.BoolVar(&testMode, "test", false, "使用测试节点生成配置")
 	flag.Parse()
@@ -99,6 +99,8 @@ func parseTargets(values []string) ([]domain.Target, error) {
 			targets = append(targets, domain.TargetSurge)
 		case "easytier":
 			targets = append(targets, domain.TargetEasytier)
+		case "egern":
+			targets = append(targets, domain.TargetEgern)
 		default:
 			return nil, fmt.Errorf("unsupported tool: %s", value)
 		}

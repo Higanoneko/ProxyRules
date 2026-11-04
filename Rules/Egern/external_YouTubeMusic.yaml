@@ -1,0 +1,7 @@
+domain_set:
+- music.youtube.com
+user_agent_set:
+- '*YouTubeMusic*'
+- '*com.google.ios.youtubemusic*'
+- YouTubeMusic*
+- com.google.ios.youtubemusic*

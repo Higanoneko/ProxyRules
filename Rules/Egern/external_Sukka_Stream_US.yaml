@@ -1,0 +1,55 @@
+domain_set:
+- 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe
+- tubi.tv
+- vudu.com
+- tubitv.com
+- www.tubi.tv
+- www.tubitv.com
+- athome.fandango.com
+- prod-api.crackle.com
+- edge.api.brightcove.com
+- cbsi.live.ott.irdeto.com
+- dashasiafox.akamaized.net
+- cbsservice.aws.syncbak.com
+- staticasiafox.akamaized.net
+- bcbolt446c5271-a.akamaihd.net
+- cbsplaylistserver.aws.syncbak.com
+domain_suffix_set:
+- fox.com
+- hulu.jp
+- hulu.tv
+- hulu.us
+- sho.com
+- cbsi.com
+- hulu.com
+- pluto.tv
+- dnitv.com
+- foxdcg.com
+- happyon.jp
+- huluim.com
+- uplynk.com
+- foxplus.com
+- showtime.com
+- cbsivideo.com
+- disco-api.com
+- encoretvb.com
+- hjholdings.jp
+- peacocktv.com
+- cbsaavideo.com
+- hulustream.com
+- theplatform.com
+- discoveryplus.in
+- discoveryplus.com
+- paramountplus.com
+- discoveryplus.co.uk
+- production-public.tubi.io
+user_agent_set:
+- FOX NOW*
+- FOXPlus*
+- Hulu*
+- encoreTVB*
+- TVer-Release*
+- DPlus*
+- discovery+*
+- PPlus*
+- PeacockMobile*
