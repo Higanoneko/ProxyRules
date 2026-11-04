@@ -53,6 +53,14 @@ BaseRules:
     behavior: "classical"
     remotefile: "./non_ip/telegram"
 
+  LS_TelegramIP:
+    name: "LS_TelegramIP"
+    policyname: "Telegram"
+    tagname: "Loyalsoldier Telegram IP"
+    category: "Loyalsoldier"
+    behavior: "ipcidr"
+    remotefile: "telegramcidr"
+
 # Youtube
   YouTube:
     name: "YouTube"
@@ -267,3 +275,19 @@ CustomRules:
     behavior: "classical"
     remotefile: "./Nikke/Nikke.list"
     parenttag: "Game"
+# Loyalsoldier general rules
+  LS_Direct:
+    name: "LS_Direct"
+    policyname: "直接连接"
+    tagname: "Loyalsoldier Direct"
+    category: "Loyalsoldier"
+    behavior: "domain"
+    remotefile: "direct"
+
+  LS_Proxy:
+    name: "LS_Proxy"
+    policyname: "选择代理"
+    tagname: "Loyalsoldier Proxy"
+    category: "Loyalsoldier"
+    behavior: "domain"
+    remotefile: "proxy"

@@ -1,4 +1,4 @@
-# Generated at (UTC): 2026-11-03T14:18:31Z
+# Generated at (UTC): 2026-11-04T01:07:50Z
 
 # Update Date: 2026.09.25 13:30
 # author: Higanoneko
@@ -91,6 +91,7 @@ ADBlock = select, REJECT-DROP, REJECT, 直接连接, img-url = https://cdn.jsdel
 [Remote Rule]
 https://raw.githubusercontent.com/dler-io/Rules/main/Surge/Surge 3/Provider/AI Suite.list, policy = AI, tag = AI, enabled = true
 https://ruleset.skk.moe/List/non_ip/telegram.conf, policy = Telegram, tag = Telegram, enabled = true
+https://raw.githubusercontent.com/luluape/ProxyRules/main/Rules/Loon/telegramcidr.list, policy = Telegram, tag = Loyalsoldier Telegram IP, enabled = true
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/YouTube/YouTube.list, policy = YouTube, tag = YouTube, enabled = true
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/YouTubeMusic/YouTubeMusic.list, policy = YouTube, tag = YouTube Music, enabled = true
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Netflix/Netflix.list, policy = Netflix, tag = Netflix, enabled = true
@@ -115,6 +116,8 @@ https://ruleset.skk.moe/List/ip/lan.conf, policy = DIRECT, tag = LocalNetwork, e
 https://raw.githubusercontent.com/luluape/CustomProxyRuleset/main/Furrybar/Furrybar.list, policy = PornSite, tag = Furrybar, enabled = true
 https://raw.githubusercontent.com/luluape/CustomProxyRuleset/main/Playhorny/Playhorny.list, policy = Game, tag = Playhorny, enabled = true
 https://raw.githubusercontent.com/luluape/CustomProxyRuleset/main/Nikke/Nikke.list, policy = Game, tag = Nikke, enabled = true
+https://raw.githubusercontent.com/luluape/ProxyRules/main/Rules/Loon/direct.list, policy = 直接连接, tag = Loyalsoldier Direct, enabled = true
+https://raw.githubusercontent.com/luluape/ProxyRules/main/Rules/Loon/proxy.list, policy = 选择代理, tag = Loyalsoldier Proxy, enabled = true
 
 [Rule]
 GEOIP, CN, 直接连接

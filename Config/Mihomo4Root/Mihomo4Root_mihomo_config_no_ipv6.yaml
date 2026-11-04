@@ -1,4 +1,4 @@
-# Generated at (UTC): 2026-11-03T14:18:31Z
+# Generated at (UTC): 2026-11-04T01:07:50Z
 
 # Update Date: 2026.09.25 13:30
 # author: Higanoneko
@@ -435,6 +435,13 @@ rule-providers:
     interval: 86400
     url: https://ruleset.skk.moe/Clash/non_ip/telegram.txt
     path: ./ruleset/Telegram.list
+  LS_TelegramIP:
+    type: http
+    behavior: ipcidr
+    format: yaml
+    interval: 86400
+    url: https://raw.githubusercontent.com/luluape/ProxyRules/main/Rules/Mihomo/telegramcidr.yaml
+    path: ./ruleset/LS_TelegramIP.yaml
   YouTube:
     type: http
     behavior: classical
@@ -603,10 +610,25 @@ rule-providers:
     interval: 86400
     url: https://raw.githubusercontent.com/luluape/CustomProxyRuleset/main/Nikke/Nikke.list
     path: ./ruleset/Nikke.list
+  LS_Direct:
+    type: http
+    behavior: domain
+    format: yaml
+    interval: 86400
+    url: https://raw.githubusercontent.com/luluape/ProxyRules/main/Rules/Mihomo/direct.yaml
+    path: ./ruleset/LS_Direct.yaml
+  LS_Proxy:
+    type: http
+    behavior: domain
+    format: yaml
+    interval: 86400
+    url: https://raw.githubusercontent.com/luluape/ProxyRules/main/Rules/Mihomo/proxy.yaml
+    path: ./ruleset/LS_Proxy.yaml
 rules:
   - DST-PORT,53,DNS_Hijack
   - RULE-SET,AI,AI
   - RULE-SET,Telegram,Telegram
+  - RULE-SET,LS_TelegramIP,Telegram
   - RULE-SET,YouTube,YouTube
   - RULE-SET,YouTubeMusic,YouTube
   - RULE-SET,Netflix,Netflix
@@ -631,5 +653,7 @@ rules:
   - RULE-SET,Furrybar,PornSite
   - RULE-SET,Playhorny,Game
   - RULE-SET,Nikke,Game
+  - RULE-SET,LS_Direct,直接连接
+  - RULE-SET,LS_Proxy,选择代理
   - GEOIP,CN,直接连接
   - MATCH,选择代理
