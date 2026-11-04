@@ -92,7 +92,13 @@ jobs:
           go run ./cmd/ruleconvert
 
       - name: Install Python dependencies
-        run: python3 -m pip install --user PyYAML
+        run: python3 -m pip install --user PyYAML ruamel.yaml
+
+      - name: Test Loyalsoldier synchronization
+        run: python3 scripts/test_sync_loyalsoldier.py
+
+      - name: Check Loyalsoldier synchronization
+        run: python3 scripts/sync_loyalsoldier.py --check
 
       - name: Validate Loyalsoldier catalog
         run: python3 scripts/validate_loyalsoldier.py
