@@ -1,4 +1,4 @@
-# Generated at (UTC): 2026-11-04T01:52:47Z
+# Generated at (UTC): 2026-11-04T03:04:45Z
 
 name: Higanoneko Stash Override
 desc: Higanoneko's Config Override
@@ -538,6 +538,13 @@ rule-providers: #!replace
     interval: 86400
     url: https://ruleset.skk.moe/Clash/ip/lan.txt
     path: ./ruleset/LocalNetworkIP.list
+  LS_LanCIDR:
+    type: http
+    behavior: ipcidr
+    format: yaml
+    interval: 86400
+    url: https://raw.githubusercontent.com/luluape/ProxyRules/main/Rules/Mihomo/lancidr.yaml
+    path: ./ruleset/LS_LanCIDR.yaml
   Furrybar:
     type: http
     behavior: classical
@@ -599,6 +606,7 @@ rules: #!replace
   - RULE-SET,ADBlock,ADBlock
   - RULE-SET,LocalNetwork,DIRECT
   - RULE-SET,LocalNetworkIP,DIRECT
+  - RULE-SET,LS_LanCIDR,DIRECT
   - RULE-SET,Furrybar,PornSite
   - RULE-SET,Playhorny,Game
   - RULE-SET,Nikke,Game

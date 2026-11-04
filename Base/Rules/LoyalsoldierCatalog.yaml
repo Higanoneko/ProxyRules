@@ -1,0 +1,93 @@
+version: 1
+rules:
+  reject:
+    behavior: domain
+    policy: REJECT
+    enabled: false
+    rule_id: LS_Reject
+    section: BaseRules
+    after: ADBlock
+  icloud:
+    behavior: domain
+    policy: Apple
+    enabled: false
+    rule_id: LS_iCloud
+    section: BaseRules
+    after: Apple
+  apple:
+    behavior: domain
+    policy: Apple
+    enabled: false
+    rule_id: LS_Apple
+    section: BaseRules
+    after: LS_iCloud
+  google:
+    behavior: domain
+    policy: Google
+    enabled: false
+    rule_id: LS_Google
+    section: BaseRules
+    after: Google
+  proxy:
+    behavior: domain
+    policy: 选择代理
+    enabled: true
+    rule_id: LS_Proxy
+    section: CustomRules
+    after: LS_Direct
+  direct:
+    behavior: domain
+    policy: 直接连接
+    enabled: true
+    rule_id: LS_Direct
+    section: CustomRules
+    after: Nikke
+  private:
+    behavior: domain
+    policy: DIRECT
+    enabled: false
+    rule_id: LS_Private
+    section: BaseRules
+    after: LS_LanCIDR
+  gfw:
+    behavior: domain
+    policy: 选择代理
+    enabled: false
+    rule_id: LS_GFW
+    section: CustomRules
+    after: LS_Proxy
+  tld-not-cn:
+    behavior: domain
+    policy: 选择代理
+    enabled: false
+    rule_id: LS_TLDNotCN
+    section: CustomRules
+    after: LS_GFW
+  telegramcidr:
+    behavior: ipcidr
+    policy: Telegram
+    enabled: true
+    rule_id: LS_TelegramIP
+    section: BaseRules
+    after: Telegram
+  cncidr:
+    behavior: ipcidr
+    policy: DIRECT
+    enabled: false
+    rule_id: LS_CNCIDR
+    section: BaseRules
+    after: LS_Private
+  lancidr:
+    behavior: ipcidr
+    policy: DIRECT
+    enabled: true
+    rule_id: LS_LanCIDR
+    section: BaseRules
+    after: LocalNetworkIP
+  applications:
+    behavior: classical
+    policy: DIRECT
+    enabled: false
+    rule_id: LS_Applications
+    section: CustomRules
+    after: null

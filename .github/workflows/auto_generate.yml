@@ -8,6 +8,7 @@ on:
     paths:
       - 'Base/**'
       - 'program/**'
+      - 'scripts/**'
   schedule:
     - cron: '0 19 * * *'
   workflow_dispatch:
@@ -89,6 +90,18 @@ jobs:
         working-directory: program
         run: |
           go run ./cmd/ruleconvert
+
+      - name: Install Python dependencies
+        run: python3 -m pip install --user PyYAML ruamel.yaml
+
+      - name: Test Loyalsoldier synchronization
+        run: python3 scripts/test_sync_loyalsoldier.py
+
+      - name: Check Loyalsoldier synchronization
+        run: python3 scripts/sync_loyalsoldier.py --check
+
+      - name: Validate Loyalsoldier catalog
+        run: python3 scripts/validate_loyalsoldier.py
 
       - name: Test generator
         working-directory: program
