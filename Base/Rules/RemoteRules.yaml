@@ -248,6 +248,13 @@ BaseRules:
     category: "Sukka"
     behavior: "classical"
     remotefile: "./ip/lan"
+  LS_LanCIDR:
+    name: "LS_LanCIDR"
+    policyname: "DIRECT"
+    tagname: "Loyalsoldier LAN CIDR"
+    category: "Loyalsoldier"
+    behavior: "ipcidr"
+    remotefile: "lancidr"
 
 # Custom Rules Start from here
 

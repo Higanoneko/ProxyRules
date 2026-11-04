@@ -1,0 +1,70 @@
+# Loyalsoldier 完整规则目录
+# 仅用于登记规则及策略，不代表自动启用
+
+version: 1
+
+rules:
+  reject:
+    behavior: domain
+    policy: REJECT
+    enabled: false
+
+  icloud:
+    behavior: domain
+    policy: Apple
+    enabled: false
+
+  apple:
+    behavior: domain
+    policy: Apple
+    enabled: false
+
+  google:
+    behavior: domain
+    policy: Google
+    enabled: false
+
+  proxy:
+    behavior: domain
+    policy: 选择代理
+    enabled: true
+
+  direct:
+    behavior: domain
+    policy: 直接连接
+    enabled: true
+
+  private:
+    behavior: domain
+    policy: DIRECT
+    enabled: false
+
+  gfw:
+    behavior: domain
+    policy: 选择代理
+    enabled: false
+
+  tld-not-cn:
+    behavior: domain
+    policy: 选择代理
+    enabled: false
+
+  telegramcidr:
+    behavior: ipcidr
+    policy: Telegram
+    enabled: true
+
+  cncidr:
+    behavior: ipcidr
+    policy: DIRECT
+    enabled: false
+
+  lancidr:
+    behavior: ipcidr
+    policy: DIRECT
+    enabled: false
+
+  applications:
+    behavior: classical
+    policy: DIRECT
+    enabled: false
