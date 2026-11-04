@@ -46,6 +46,7 @@ jobs:
           python -m py_compile scripts/convert_egern_classical.py
           python -m py_compile scripts/convert_egern_remaining.py
           python -m py_compile scripts/validate_egern_native.py
+          python -m py_compile scripts/publish_egern_template.py
 
       - name: Test synchronization
         run: python scripts/test_sync_loyalsoldier.py
@@ -81,6 +82,14 @@ jobs:
           cd ..
           python scripts/validate_egern_native.py \
             --config-dir "$RUNNER_TEMP/proxyrules-egern/Egern"
+
+      - name: Validate credential-free Egern template publication
+        run: |
+          python scripts/publish_egern_template.py \
+            --source "$RUNNER_TEMP/proxyrules-egern/Egern" \
+            --destination "$RUNNER_TEMP/egern-public-preview"
+          python scripts/validate_egern_native.py \
+            --config-dir "$RUNNER_TEMP/egern-public-preview"
 
       - name: Verify generated configurations
         run: |

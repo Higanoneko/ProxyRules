@@ -17,10 +17,26 @@
 | [Stash](#Stash) | ✅ 已支持 | `.yaml` 覆写文件 和 `.stoverride` 覆写文件 |
 | [Loon](#Loon) | ✅ 已支持 | `.lcf` 配置文件 |
 | [Surge](#Surge) | ✅ 已支持 | `.conf` 配置文件 |
+| [Egern](#egern-beta) | 🧪 Beta | 29 个策略组、30 组规则；公开无凭据模板 |
 | QuantumultX | ❌ 未支持 | 与其他代理工具配置差异较大，暂不支持 |
 
 
 ## 快速开始
+
+### Egern (Beta)
+
+Egern native generator now shares the project's **29 policy groups** and **30 remote rule sets**.
+The public files are **templates**, not ready-to-connect subscriptions:
+
+- [Egern IPv6 template](Config/Egern/Egern_config.yaml)
+- [Egern no-IPv6 template](Config/Egern/Egern_config_no_ipv6.yaml)
+- [Client test and compatibility notes](docs/EGERN_COMPATIBILITY.md)
+
+Download the desired YAML file, replace
+`https://example.invalid/REPLACE_WITH_YOUR_EGERN_SUBSCRIPTION` **on your own device**
+with your Egern-compatible HTTPS subscription URL, and then import the local file.
+Do not commit or publicly share the personalized YAML. The template contains no nodes.
+
 
 ### Mihomo (Clash Meta)
 

@@ -143,6 +143,13 @@ jobs:
           python3 scripts/validate_egern_native.py \
             --config-dir "$RUNNER_TEMP/proxyrules-egern/Egern"
 
+      - name: Publish credential-free Egern templates
+        run: |
+          python3 scripts/publish_egern_template.py \
+            --source "$RUNNER_TEMP/proxyrules-egern/Egern" \
+            --destination Config/Egern
+          python3 scripts/validate_egern_native.py --config-dir Config/Egern
+
       - name: Check for changes
         id: check_changes
         run: |
